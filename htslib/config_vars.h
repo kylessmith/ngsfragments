@@ -1,0 +1,5 @@
+#define HTS_CC "/home/ksmith10/anaconda3/envs/cfdna_new/bin/lib.macosx-10.9-x86_64-3.9"
+#define HTS_CPPFLAGS "-DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -isystem /home/ksmith10/anaconda3/envs/cfdna_new/include"
+#define HTS_CFLAGS "-Wall -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/ksmith10/anaconda3/envs/cfdna_new/include -fvisibility=hidden"
+#define HTS_LDFLAGS "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,-rpath,/home/ksmith10/anaconda3/envs/cfdna_new/lib -Wl,-rpath-link,/home/ksmith10/anaconda3/envs/cfdna_new/lib -L/home/ksmith10/anaconda3/envs/cfdna_new/lib -fvisibility=hidden "
+#define HTS_LIBS "-ldeflate -llzma -lbz2 -lz -lm   -lcurl -lcrypto"
