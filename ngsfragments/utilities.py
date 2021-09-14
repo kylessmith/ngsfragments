@@ -4,10 +4,12 @@ import numpy as np
 import pandas as pd
 import os
 from pathlib import Path
+import gzip
 
 # Set data directory
 data_dir = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
 data_dir = os.path.join(data_dir, "data")
+
 
 def wps_peaks(frags, wps_dict, shift=0, merge_distance=5, min_length=50, max_length=150):
     """
@@ -36,7 +38,7 @@ def normalize_wps(wps_dict, window=1000, smooth=True, smooth_window=21, polyorde
             wps_dict[chrom].iloc[:] = normalize_signal(wps_dict[chrom].values, window, smooth, smooth_window, polyorder, n_threads, use_mean=True)
 
 
-def window_scores(scores, bed_fn="hg19_TSS.bed", upstream=1000, downstream=1000, stranded=False):
+def window_scores(scores, bed_fn="hg19_TSS.bed.gz", upstream=1000, downstream=1000, stranded=False):
     """
     Calculate scores for each postion within a window
     """
@@ -57,8 +59,17 @@ def window_scores(scores, bed_fn="hg19_TSS.bed", upstream=1000, downstream=1000,
     # Determine ranges for each chromosome
     ranges = {chrom:(scores[chrom].index.values[0], scores[chrom].index.values[-1]) for chrom in scores}
 
+    # Check is gzipped
+    open_func = open
+    is_gzip = False
+    if bed_fn.endswith(".gz"):
+        is_gzip = True
+        open_func = gzip.open
+    
     # Iterate over BED records
-    for i, line in enumerate(open(bed_fn, "r")):
+    for i, line in enumerate(open_func(bed_fn, "r")):
+        if is_gzip:
+            line = line.decode()
         field = line.strip().split("\t") # find fields
         chrom = field[0]
         gene = field[-1]
