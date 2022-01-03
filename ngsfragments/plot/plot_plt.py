@@ -11,7 +11,7 @@ matplotlib.rcParams['pdf.fonttype'] = 42
 matplotlib.rcParams['ps.fonttype'] = 42
 
 
-def plot_cnv(cnv_object, title=None, show=True, save=None, ax=None):
+def plot_cnv(frags, bins, cnvs, cnv_column="median", title=None, show=True, save=None, ax=None):
     """
     Plot the CNVs
     """
@@ -22,34 +22,30 @@ def plot_cnv(cnv_object, title=None, show=True, save=None, ax=None):
             fig, ax = plt.subplots(figsize=(10,5), tight_layout=True)
 
     # Determine whether chroms are
-    indexes = np.sort(np.unique(cnv_object.bins.loc[:,"seqnames"].values, return_index=True)[1])
-    chroms = cnv_object.bins.loc[:,"seqnames"].values[indexes]
-    chrom_index = {}
-    for chrom in chroms:
-        chrom_index[chrom] = cnv_object.bins.loc[:,"seqnames"].values == chrom
+    chroms = cnvs.index.unique_labels
 
     # Determine last position
-    last_chrom = list(cnv_object.chrom_shift.keys())[-1]
-    last_position = cnv_object.chrom_shift[last_chrom]
-    last_position += int(cnv_object.bins.loc[chrom_index[last_chrom],"end"].values[-1]) + 10
+    last_chrom = chroms[-1]
+    last_position = frags.chrom_shift[last_chrom]
+    last_position += int(bins.loc[last_chrom,:].index.extract_ends()[-1]) + 10
 
     # Iterate over chroms
-    for chrom in chrom_index:
-        bins = cnv_object.bins.loc[chrom_index[chrom], :]
-        shift = cnv_object.chrom_shift[chrom]
-        ax.scatter(bins.loc[:,"start"].values+shift, bins.loc[:,"ratios"].values, s=1, color="black")
+    for chrom in chroms:
+        chrom_bins = bins.loc[chrom, "ratios"]
+        shift = frags.chrom_shift[chrom]
+        ax.scatter(chrom_bins.index.extract_starts() + shift, chrom_bins.values, s=1, color="black")
         ax.axvline(x=shift, color="grey", linestyle="--", linewidth=1.0, solid_capstyle="round")
 
     # Plot segments
     cnv_types = {"NEUT":"grey", "GAIN":"red", "HETD":"blue", "AMP":"darkred"}
-    for i in range(cnv_object.segments_df.shape[0]):
-        segment = cnv_object.segments_df.iloc[i,:]
-        cnv_type = segment.loc["Corrected_Call"]
+    for i in range(cnvs.shape[0]):
+        segment = cnvs.iloc[i,:]
+        cnv_type = segment.df.loc[:,"Corrected_Call"].values[0]
         color =  cnv_types[cnv_type] if cnv_type in cnv_types else "darkred"
-        start = segment.loc["start"] + cnv_object.chrom_shift[segment.loc["chrom"]]
-        end = segment.loc["end"] + cnv_object.chrom_shift[segment.loc["chrom"]]
+        start = segment.index.extract_starts()[0] + frags.chrom_shift[segment.index.extract_labels()[0]]
+        end = segment.index.extract_ends()[0] + frags.chrom_shift[segment.index.extract_labels()[0]]
         ax.plot([start, end],
-                  [segment.loc["median"], segment.loc["median"]],
+                  [segment.loc[:,"median"].values, segment.loc[:,"median"].values],
                   color=color, solid_capstyle="butt", linewidth=2.5)
 
     # Plot 0 line
@@ -57,10 +53,10 @@ def plot_cnv(cnv_object, title=None, show=True, save=None, ax=None):
 
     # Plot chromosome names
     text_x = []
-    for chrom in chrom_index:
-        text_x.append(cnv_object.chrom_shift[chrom] + (cnv_object.genome[chrom] / 2))
+    for chrom in chroms:
+        text_x.append(frags.chrom_shift[chrom] + (frags.genome[chrom] / 2))
     ax.set_xticks(text_x)
-    ax.set_xticklabels(list(cnv_object.genome.keys()), rotation=90)
+    ax.set_xticklabels(chroms, rotation=90)
     
     # Set titles
     if title != None:
@@ -71,20 +67,20 @@ def plot_cnv(cnv_object, title=None, show=True, save=None, ax=None):
     ax.set_xlim((0,last_position))
 
     # Plot arrows if segments of the chart
-    off_chart = np.logical_or(cnv_object.segments_df.loc[:,"median"].values >= 5.0,
-                              cnv_object.segments_df.loc[:,"median"].values <= -3.0)
+    off_chart = np.logical_or(cnvs.df.loc[:,"median"].values >= 5.0,
+                              cnvs.df.loc[:,"median"].values <= -3.0)
     if np.sum(off_chart) > 0:
-        off_segments = cnv_object.segments_df.loc[off_chart,:]
+        off_segments = cnvs.loc[off_chart,:]
         for i in range(off_segments.shape[0]):
             segment = off_segments.iloc[i,:]
-            cnv_type = segment.loc["Corrected_Call"]
+            cnv_type = segment.df.loc[:,"Corrected_Call"].values[0]
             color =  cnv_types[cnv_type] if cnv_type in cnv_types else "darkred"
-            start = segment.loc["start"] + cnv_object.chrom_shift[segment.loc["chrom"]]
+            start = segment.starts[0] + frags.chrom_shift[segment.index.extract_labels()[0]]
             start = start / last_position # convert to ratio
-            end = segment.loc["end"] + cnv_object.chrom_shift[segment.loc["chrom"]]
+            end = segment.index.extract_ends()[0] + frags.chrom_shift[segment.index.extract_labels()[0]]
             end = end / last_position # convert to ratio
             position = (start + end) / 2.0 # take middle
-            median = segment.loc["median"]
+            median = segment.loc[:,"median"]
 
             if median >= 5.0:
                 ax.annotate('', xy=(position, 1.01), xycoords='axes fraction', xytext=(position, 1.075),

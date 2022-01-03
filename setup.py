@@ -145,7 +145,9 @@ build_type = "optimized"
 
 # Descriptions of package
 SHORTDESC = "Python package for Next Generation Sequencing fragment manipulation"
-DESC = """A python package for Next Generation Sequencing fragment manipulation."""
+#DESC = """A python package for Next Generation Sequencing fragment manipulation."""
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 # Directories (relative to the top-level directory where setup.py resides) in which to look for data files.
 datadirs  = ("tests", "data")
@@ -431,7 +433,8 @@ metadata = dict(
     author_email = "kyle.smith@stjude.org",
     url = "https://github.com/kylessmtih/ngsfragments",
     description = SHORTDESC,
-    long_description = DESC,
+    long_description = long_description,
+    long_description_content_type = "text/markdown",
     # CHANGE THIS
     license = "GPL2",
     # free-form text field
@@ -440,7 +443,6 @@ metadata = dict(
                     "Environment :: Console",
                     "Intended Audience :: Developers",
                     "Intended Audience :: Science/Research",
-                    "License :: GPL2", 
                     "Operating System :: POSIX :: Linux",
                     "Programming Language :: Cython",
                     "Programming Language :: Python",
@@ -451,8 +453,8 @@ metadata = dict(
                     "Topic :: Software Development :: Libraries",
                     "Topic :: Software Development :: Libraries :: Python Modules"
                     ],
-    setup_requires = ["cython", "numpy","ailist","cbseg","bcpseg", "pysam"],
-    install_requires = ["numpy","ailist","cbseg","bcpseg","intervalframe", "statsmodels", "h5py"],
+    setup_requires = ["cython", "numpy","ailist","cbseg","bcpseg", "pysam", "matplotlib","seaborn","bokeh","scipy"],
+    install_requires = ["numpy","ailist","cbseg","bcpseg","intervalframe", "statsmodels", "h5py","pysam"],
     provides = ["ngsfragments"],
     keywords = ["next generation sequencing fragment"],
     ext_modules = [Extension(**opts) for opts in modules],
