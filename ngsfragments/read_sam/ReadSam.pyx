@@ -1,5 +1,6 @@
 #cython: embedsignature=True
 #cython: profile=False
+#cython: language_level=3
 
 cimport cython
 from libc.stdint cimport uint32_t, uint8_t, uint64_t, int64_t
@@ -48,3 +49,4 @@ def read_fragments(str samfile_name, int min_size, int max_size, int paired, int
 	fragments.set_list(cintervals)
 
 	return fragments
+	

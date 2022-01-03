@@ -1,3 +1,5 @@
+# cython: language_level=3
+
 from cython.parallel import prange
 import numpy as np
 cimport numpy as np

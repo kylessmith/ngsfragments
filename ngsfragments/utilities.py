@@ -38,7 +38,7 @@ def normalize_wps(wps_dict, window=1000, smooth=True, smooth_window=21, polyorde
             wps_dict[chrom].iloc[:] = normalize_signal(wps_dict[chrom].values, window, smooth, smooth_window, polyorder, n_threads, use_mean=True)
 
 
-def window_scores(scores, bed_fn="hg19_TSS.bed.gz", upstream=1000, downstream=1000, stranded=False):
+def window_scores(scores, bed_fn="hg19_TSS.bed.gz", upstream=1000, downstream=1000, stranded=False, verbose=False):
     """
     Calculate scores for each postion within a window
     """
@@ -47,7 +47,7 @@ def window_scores(scores, bed_fn="hg19_TSS.bed.gz", upstream=1000, downstream=10
     if Path(bed_fn).is_file() == False:
         bed_fn = os.path.join(data_dir, bed_fn)
         if Path(bed_fn).is_file():
-            print("Found file:", bed_fn)
+            if verbose: print("Found file:", bed_fn)
         else:
             raise FileExistsError("Could not find bed file.")
 
@@ -205,8 +205,6 @@ def get_genes(bed_fn):
     return np.array(genes)
 
 
-
-
 def bin_coverage(frags, bin_size=100000, min_length=None, max_length=None):
     """
     """
@@ -281,7 +279,7 @@ def bin_array(scores, bin_size=100000, method="mean"):
     return bin_results
 
 
-def interval_annoate(intervals, scores_dict, method = "mean"):
+def interval_annotate(intervals, scores_dict, method = "mean"):
     """
     """
 

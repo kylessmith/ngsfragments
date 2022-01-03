@@ -240,12 +240,12 @@ def correct_neutral(segments, bins):
     return
 
 
-def median_variance(segments, bins):
+def median_variance(segments, bins, key):
     """
     Calculate median segment variance
     """
 
-    segments.annotate(bins, "ratios", "var")
+    segments.annotate(bins, key, "var")
     median_variance = np.median(segments.df.loc[:,"var"].values)
 
     return median_variance
@@ -261,6 +261,7 @@ def train_hmm(bins, normal = [0.1, 0.5, 0.9], ploidy = [2], gender=None, estimat
                                      gender=gender, estimatePloidy=estimatePloidy,
                                      minSegmentBins=minSegmentBins, maxCN=maxCN,
                                      verbose=verbose, **kwargs)
+    
     # Find optimal segments
     optimal_result = np.argmax(hmm_loglik.loc[:,"loglik"].values)
     #hmm_segments = hmm_results[optimal_result]["results"]["segs"]
@@ -273,6 +274,7 @@ def train_hmm(bins, normal = [0.1, 0.5, 0.9], ploidy = [2], gender=None, estimat
     hmm_states["n"] = hmm_results[optimal_result]["results"]["n"][0,-1]
     hmm_states["phi"] = hmm_results[optimal_result]["results"]["phi"][0,-1]
     hmm_states["sp"] = hmm_results[optimal_result]["results"]["sp"][0,-1]
+    hmm_states["Frac_genome_subclonal"] = float(hmm_loglik.iloc[optimal_result].loc["Frac_genome_subclonal"])
     hmm_states["cn"] = hmm_results[optimal_result]["cna"]
 
     return hmm_states
@@ -290,40 +292,40 @@ def validate_distributions(segments, bins):
 
 
 def write_seg_file(segments, out_fn, sample=None):
-        """
-        """
-        
-       # Open output file
-        out = open(out_fn, "w")
-        fmt = "{sample}\t{chrom}\t{start}\t{end}\t{n_bins}\t{log2_ratio_median}\n"
-        out.write(fmt.replace('}','').replace('{',''))
-        
-        # Determine sample name
-        if sample is None:
-            sample = "sample_" + str(int(np.random.random() * 100000000))
+    """
+    """
+    
+    # Open output file
+    out = open(out_fn, "w")
+    fmt = "{sample}\t{chrom}\t{start}\t{end}\t{n_bins}\t{log2_ratio_median}\n"
+    out.write(fmt.replace('}','').replace('{',''))
+    
+    # Determine sample name
+    if sample is None:
+        sample = "sample_" + str(int(np.random.random() * 100000000))
 
-        segs_df = segments.df.loc[:,["median"]]
-        segs_df.loc[:,"chrom"] = segments.index.extract_labels()
-        segs_df.loc[:,"start"] = segments.starts
-        segs_df.loc[:,"end"] = segments.ends
+    segs_df = segments.df.loc[:,["median"]]
+    segs_df.loc[:,"chrom"] = segments.index.extract_labels()
+    segs_df.loc[:,"start"] = segments.starts
+    segs_df.loc[:,"end"] = segments.ends
 
-        # Determine whether chroms are
-        indexes = np.sort(np.unique(self.bins.loc[:,"seqnames"].values, return_index=True)[1])
-        chroms = self.bins.loc[:,"seqnames"].values[indexes]
-        chrom_index = {}
-        for chrom in chroms:
-            chrom_index[chrom] = self.bins.loc[:,"seqnames"].values == chrom
-        
-        # Iterate over segments
-        for i in range(self.segments_df.shape[0]):
-            seg = self.segments_df.iloc[i,:]
-            chrom = seg.loc["chrom"]
-            bin_starts = self.bins.iloc[chrom_index[chrom], 1].values
-            start = int(seg.loc["start"])
-            end = int(seg.loc["end"])
-            n_bins = np.sum(np.logical_and(bin_starts >= start, bin_starts < end))
-            log2_ratio_median = seg.loc["median"]
-            out.write(fmt.format(**locals()))
-                
-        # Close seg file
-        out.close()
+    # Determine whether chroms are
+    indexes = np.sort(np.unique(self.bins.loc[:,"seqnames"].values, return_index=True)[1])
+    chroms = self.bins.loc[:,"seqnames"].values[indexes]
+    chrom_index = {}
+    for chrom in chroms:
+        chrom_index[chrom] = self.bins.loc[:,"seqnames"].values == chrom
+    
+    # Iterate over segments
+    for i in range(self.segments_df.shape[0]):
+        seg = self.segments_df.iloc[i,:]
+        chrom = seg.loc["chrom"]
+        bin_starts = self.bins.iloc[chrom_index[chrom], 1].values
+        start = int(seg.loc["start"])
+        end = int(seg.loc["end"])
+        n_bins = np.sum(np.logical_and(bin_starts >= start, bin_starts < end))
+        log2_ratio_median = seg.loc["median"]
+        out.write(fmt.format(**locals()))
+            
+    # Close seg file
+    out.close()

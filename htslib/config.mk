@@ -37,7 +37,7 @@ libexecdir   = ${exec_prefix}/libexec
 datarootdir  = ${prefix}/share
 mandir       = ${datarootdir}/man
 
-CC     = clang
+CC     = gcc-11
 RANLIB = ranlib
 
 CPPFLAGS = 

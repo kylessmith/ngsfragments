@@ -1,3 +1,5 @@
+#cython: language_level=3
+
 import numpy as np
 cimport numpy as np
 cimport cython
@@ -88,17 +90,14 @@ cpdef LabeledIntervalArray call_wps_peaks(np.ndarray wps, long start_pos, str la
 	
 	# Determine regions above zero
 	cdef bytes label_name = label.encode()
-	printf("calling above\n")
 	cpeaks = above_zero_regions(wps, label_name, start_pos, shift, min_length)
 	peaks.set_list(cpeaks)
 	
 	# Merge nearby regions
-	printf("merging\n")
 	if peaks.size > 1:
 		peaks = peaks.merge(merge_distance)
 	
 	# Filter peaks by length
-	printf("filtering\n")
 	peaks = peaks.filter(min_length, max_length)
 
 	return peaks

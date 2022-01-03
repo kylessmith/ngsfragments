@@ -1,5 +1,6 @@
 #cython: embedsignature=True
 #cython: profile=False
+#cython: language_level=3
 
 import os
 import numpy as np

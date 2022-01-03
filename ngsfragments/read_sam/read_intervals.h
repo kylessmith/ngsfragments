@@ -18,8 +18,8 @@
 #include "src/labeled_augmented_array.h"
 
 
-void read_add(labeled_aiarray_t *intervals, bam1_t *aln, char *chrom_id,
-              int min_size, int max_size, int paired, int qcfail, int mapq_cutoff, float proportion);
+int check_read(bam1_t *aln, int min_size, int max_size, int paired, int qcfail,
+		   		int mapq_cutoff, float proportion);
 
 void sam_iter_add(char *samfile_name, labeled_aiarray_t *intervals,
                   int min_size, int max_size, int paired, int qcfail, int mapq_cutoff,

@@ -14,7 +14,7 @@ data_dir = os.path.split(os.path.split(os.path.split(os.path.realpath(__file__))
 data_dir = os.path.join(data_dir, "data")
 
 
-def read_bin_bias(bin_bias_h5_fn):
+def read_bin_bias(bin_bias_h5_fn, bin_size=100000, genome="hg19", verbose=False):
     """
     Read genome bin bias from given h5 file
     
@@ -28,6 +28,13 @@ def read_bin_bias(bin_bias_h5_fn):
         bin_bias : IntervalFrame
             Bias bins for given chromosome
     """
+
+    # Find distributed h5 reference bins
+    if bin_bias_h5_fn is None:
+        h5_file = genome + "_ucsc_bin" + str(bin_size) + ".h5"
+        if verbose: print("Reference genome:", genome)
+        bin_bias_h5_fn = os.path.join(data_dir, h5_file)
+        if verbose: print("   Found bin_bias:", h5_file)
     
     # Open h5 file
     bin_bias_h5 = h5py.File(bin_bias_h5_fn, "r")
@@ -65,6 +72,7 @@ def match_bins(bins, bin_bias):
 
     # Match bin_bias
     bin_bias = bin_bias.exact_match(bins)
+    #print(bins.shape, bin_bias.shape)
     
     return bins, bin_bias
 
@@ -88,9 +96,9 @@ def filter_bins(bins, bin_bias, n_cutoff=0.1, map_cutoff=0.66, blacklist_cutoff=
     """
     
     # Find bins passing filters
-    chosen = np.logical_and(bin_bias.loc[:,"n"].values < n_cutoff,
-                            bin_bias.loc[:,"mappability"].values > map_cutoff)
-    chosen = np.logical_and(chosen, bin_bias.loc[:,"blacklist"].values < blacklist_cutoff)
+    chosen = np.logical_and(bin_bias.df.loc[:,"n"].values < n_cutoff,
+                            bin_bias.df.loc[:,"mappability"].values > map_cutoff)
+    chosen = np.logical_and(chosen, bin_bias.df.loc[:,"blacklist"].values < blacklist_cutoff)
     
     # Filter bins
     bin_bias = bin_bias.iloc[chosen,:]
@@ -202,15 +210,8 @@ def correct(bin_coverage, bin_bias_h5_fn=None, genome="hg19", bin_size=100000, v
             pd.DataFrame
     """
 
-    # Find distributed h5 reference bins
-    if bin_bias_h5_fn is None:
-        h5_file = genome + "_ucsc_bin" + str(bin_size) + ".h5"
-        if verbose: print("Reference genome:", genome)
-        bin_bias_h5_fn = os.path.join(data_dir, h5_file)
-        if verbose: print("   Found bin_bias:", h5_file)
-
     if verbose: print("Reading genome biases...")
-    bin_bias = read_bin_bias(bin_bias_h5_fn)
+    bin_bias = read_bin_bias(bin_bias_h5_fn, bin_size, genome, verbose)
 
     if verbose: print("Matching bins...")
     bin_coverage, bin_bias = match_bins(bin_coverage, bin_bias)

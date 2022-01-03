@@ -1,3 +1,5 @@
+# cython: language_level=3
+
 cimport cython
 import numpy as np
 cimport numpy as np
@@ -46,8 +48,8 @@ cdef extern from "htslib/sam.h":
 cdef extern from "read_intervals.h":
 	# C is include here so that it doesn't need to be compiled externally
 
-	void read_add(labeled_aiarray_t *intervals, bam1_t *aln, uint16_t chrom_id,
-              	int min_size, int max_size, int paired, int qcfail, int mapq_cutoff, float proportion) nogil
+	int check_read(bam1_t *aln, int min_size, int max_size, int paired, int qcfail,
+			   		int mapq_cutoff, float proportion) nogil
 
 	void sam_iter_add(char *samfile_name, labeled_aiarray_t *intervals,
 					int min_size, int max_size, int paired, int qcfail, int mapq_cutoff,

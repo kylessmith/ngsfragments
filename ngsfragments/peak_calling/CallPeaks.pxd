@@ -1,3 +1,5 @@
+# cython: language_level=3
+
 import numpy as np
 cimport numpy as np
 from ailist.LabeledIntervalArray_core cimport LabeledIntervalArray, labeled_aiarray_t, labeled_aiarray_add, labeled_aiarray_init
