@@ -14,7 +14,9 @@ from libc.stdio cimport printf
 
 @cython.boundscheck(False)  # Deactivate bounds checking
 @cython.wraparound(False)   # Deactivate negative indexing.
-cdef labeled_aiarray_t *above_zero_regions(double[::1] signal, char *label_name, long start_pos, int shift, int min_length):
+cdef labeled_aiarray_t *above_zero_regions(double[::1] signal,
+										   const char *label_name,
+										   long start_pos):
 	"""
 	Find regions of above zero
 	"""
@@ -22,25 +24,19 @@ cdef labeled_aiarray_t *above_zero_regions(double[::1] signal, char *label_name,
 	cdef labeled_aiarray_t *cregions = labeled_aiarray_init()
 	cdef int start = -1
 	cdef int end
-	cdef int length
 	cdef int i
-	cdef bint above
 
 	# Iterate over signal to find regions above zero
 	for i in range(signal.size):
 		# Check if i is above 0
 		if signal[i] > 0:
-			above = True
 			if start == -1:
-				start = i + shift
+				start = i
 		else:
-			above = False
 			# Check if region ends
 			if start != -1:
-				end = i + shift
-				length = end - start
-				if length >= min_length:
-					labeled_aiarray_add(cregions, start_pos + start, start_pos + end, label_name)
+				end = i
+				labeled_aiarray_add(cregions, start_pos + start, start_pos + end, label_name)
 			# Reset start
 			start = -1
 
@@ -49,8 +45,13 @@ cdef labeled_aiarray_t *above_zero_regions(double[::1] signal, char *label_name,
 
 @cython.boundscheck(False)  # Deactivate bounds checking
 @cython.wraparound(False)   # Deactivate negative indexing.
-cpdef np.ndarray normalize_signal(double[::1] signal, int window=1000, bint smooth=True,
-								 int smooth_window=21, int polyorder=2, int n_threads=1, bint use_mean=True):
+cpdef np.ndarray normalize_signal(double[::1] signal,
+								  int window=1000,
+								  bint smooth=True,
+								  int smooth_window=21,
+								  int polyorder=2,
+								  int n_threads=1,
+								  bint use_mean=True):
 	"""
 	"""
 
@@ -78,11 +79,13 @@ cpdef np.ndarray normalize_signal(double[::1] signal, int window=1000, bint smoo
 	return norm_signal
 
 	
-@cython.boundscheck(False)  # Deactivate bounds checking
-@cython.wraparound(False)   # Deactivate negative indexing.
-cpdef LabeledIntervalArray call_wps_peaks(np.ndarray wps, long start_pos, str label, int shift=0, int merge_distance=5,
-										  int min_length=50, int max_length=150):
+def call_peaks(wps,
+				str label,
+				int merge_distance=5,
+				int min_length=50,
+				int max_length=150):
 	"""
+	Call peaks
 	"""
 	# Initialize variables
 	cdef LabeledIntervalArray peaks = LabeledIntervalArray()
@@ -90,7 +93,8 @@ cpdef LabeledIntervalArray call_wps_peaks(np.ndarray wps, long start_pos, str la
 	
 	# Determine regions above zero
 	cdef bytes label_name = label.encode()
-	cpeaks = above_zero_regions(wps, label_name, start_pos, shift, min_length)
+	cdef long start_pos = wps.index.values[0]
+	cpeaks = above_zero_regions(wps.values, label_name, start_pos)
 	peaks.set_list(cpeaks)
 	
 	# Merge nearby regions
@@ -102,27 +106,3 @@ cpdef LabeledIntervalArray call_wps_peaks(np.ndarray wps, long start_pos, str la
 
 	return peaks
 	
-
-@cython.boundscheck(False)  # Deactivate bounds checking
-@cython.wraparound(False)   # Deactivate negative indexing.
-cpdef LabeledIntervalArray call_auc_peaks(np.ndarray coverage, long start_pos, str label, int shift=0, int merge_distance=5,
-										  int min_length=50, int max_length=150):
-	"""
-	Call peaks similar to SEACR
-	"""
-	# Initialize variables
-	cdef LabeledIntervalArray peaks = LabeledIntervalArray()
-	cdef labeled_aiarray_t *cpeaks
-	
-	# Determine regions above zero
-	cdef bytes label_name = label.decode()
-	cpeaks = above_zero_regions(coverage, label_name, start_pos, shift, 0)
-	peaks.set_list(cpeaks)
-	
-	# Merge nearby regions
-	peaks = peaks.merge(merge_distance)
-	
-	# Filter peaks by length
-	peaks = peaks.filter(min_length, max_length)
-
-	return peaks

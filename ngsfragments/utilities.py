@@ -1,55 +1,21 @@
-from .fragments import fragments
-from .peak_calling.CallPeaks import call_wps_peaks, normalize_signal
 import numpy as np
 import pandas as pd
-import os
-from pathlib import Path
 import gzip
 
+#from numba import jit
+
 # Set data directory
-data_dir = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
-data_dir = os.path.join(data_dir, "data")
+#data_dir = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
+#data_dir = os.path.join(data_dir, "data")
 
 
-def wps_peaks(frags, wps_dict, shift=0, merge_distance=5, min_length=50, max_length=150):
-    """
-    """
-
-    peaks = {}
-    key_ranges = frags.frags.label_ranges
-
-    for key in wps_dict:
-        if len(wps_dict[key]) > 0:
-            peaks[key] = call_wps_peaks(wps_dict[key].values, key_ranges[key][0], str(key), shift=shift, merge_distance=merge_distance,
-                                        min_length=min_length, max_length=max_length)
-
-    return peaks
-
-
-def normalize_wps(wps_dict, window=1000, smooth=True, smooth_window=21, polyorder=2, n_threads=1, method="mean", verbose=False):
-    """
-    """
-
-    for chrom in wps_dict:
-        if verbose: print(chrom)
-        if method == "median":
-            wps_dict[chrom].iloc[:] = normalize_signal(wps_dict[chrom].values, window, smooth, smooth_window, polyorder, n_threads, use_mean=False)
-        elif method == "mean":
-            wps_dict[chrom].iloc[:] = normalize_signal(wps_dict[chrom].values, window, smooth, smooth_window, polyorder, n_threads, use_mean=True)
-
-
-def window_scores(scores, bed_fn="hg19_TSS.bed.gz", upstream=1000, downstream=1000, stranded=False, verbose=False):
+def window_scores(scores, feature="tss", upstream=1000, downstream=1000, stranded=False, verbose=False):
     """
     Calculate scores for each postion within a window
     """
 
     # Determine bed file
-    if Path(bed_fn).is_file() == False:
-        bed_fn = os.path.join(data_dir, bed_fn)
-        if Path(bed_fn).is_file():
-            if verbose: print("Found file:", bed_fn)
-        else:
-            raise FileExistsError("Could not find bed file.")
+    #bed_fn = get_data_file(bed_fn)
 
     # Initialize window values
     window_length = upstream + downstream
@@ -67,65 +33,66 @@ def window_scores(scores, bed_fn="hg19_TSS.bed.gz", upstream=1000, downstream=10
         open_func = gzip.open
     
     # Iterate over BED records
-    for i, line in enumerate(open_func(bed_fn, "r")):
-        if is_gzip:
-            line = line.decode()
-        field = line.strip().split("\t") # find fields
-        chrom = field[0]
-        gene = field[-1]
-        center = int((int(field[1]) + int(field[2])) / 2)
-        
-        # Determine if chrom is in values
-        try:
-            scores[chrom]
-        except KeyError:
-            continue
-
-        # Check if region captured in scores
-        if int(field[2]) < ranges[chrom][0] or int(field[1]) > ranges[chrom][1]:
-            continue
-        
-        # Index window scores
-        start_shift = 0
-        end_shift = window_length
-        window_values = np.zeros(window_length)
-        if stranded and field[3] == "-":
-            #start_index = max((center - downstream) - ranges[chrom[0]], 0)
-            start_index = (center - downstream) - ranges[chrom][0]
-            if start_index < 0:
-                start_shift = 0 - start_index
-                start_index = 0
-
-            #end_index = min((center + upstream) - ranges[chrom][0], len(scores[chrom]))
-            end_index = (center + upstream) - ranges[chrom][0]
-            if end_index > len(scores[chrom]):
-                end_shift = len(scores[chrom]) - end_index
-                end_index = len(scores[chrom])
+    with open_func(bed_fn, "r") as f:
+        for i, line in enumerate(f):
+            if is_gzip:
+                line = line.decode()
+            field = line.strip().split("\t") # find fields
+            chrom = field[0]
+            gene = field[-1]
+            center = int((int(field[1]) + int(field[2])) / 2)
             
-            window_values[start_shift:end_shift] = scores[chrom].values[start_index:end_index]
-            window_values = window_values[::-1]
-        
-        else:
-            #start_index = max((center - upstream) - ranges[chrom][0], 0)
-            start_index = (center - upstream) - ranges[chrom][0]
-            if start_index < 0:
-                start_shift = 0 - start_index
-                start_index = 0
+            # Determine if chrom is in values
+            try:
+                scores[chrom]
+            except KeyError:
+                continue
 
-            #end_index = min((center + downstream) - ranges[chrom][0], len(scores[chrom]))
-            end_index = (center + downstream) - ranges[chrom][0]
-            if end_index > len(scores[chrom]):
-                end_shift = len(scores[chrom]) - end_index
-                end_index = len(scores[chrom])
+            # Check if region captured in scores
+            if int(field[2]) < ranges[chrom][0] or int(field[1]) > ranges[chrom][1]:
+                continue
+            
+            # Index window scores
+            start_shift = 0
+            end_shift = window_length
+            window_values = np.zeros(window_length)
+            if stranded and field[3] == "-":
+                #start_index = max((center - downstream) - ranges[chrom[0]], 0)
+                start_index = (center - downstream) - ranges[chrom][0]
+                if start_index < 0:
+                    start_shift = 0 - start_index
+                    start_index = 0
 
-            #print(chrom, field[1], field[2], start_index, end_index, start_shift, end_shift)
-            window_values[start_shift:end_shift] = scores[chrom].values[start_index:end_index]
-        
-        window_total_values.append(window_values)
-        if stranded and len(field) >= 5:
-            genes.append(gene)
-        elif stranded == False and len(field) >= 4:
-            genes.append(gene)
+                #end_index = min((center + upstream) - ranges[chrom][0], len(scores[chrom]))
+                end_index = (center + upstream) - ranges[chrom][0]
+                if end_index > len(scores[chrom]):
+                    end_shift = len(scores[chrom]) - end_index
+                    end_index = len(scores[chrom])
+                
+                window_values[start_shift:end_shift] = scores[chrom].values[start_index:end_index]
+                window_values = window_values[::-1]
+            
+            else:
+                #start_index = max((center - upstream) - ranges[chrom][0], 0)
+                start_index = (center - upstream) - ranges[chrom][0]
+                if start_index < 0:
+                    start_shift = 0 - start_index
+                    start_index = 0
+
+                #end_index = min((center + downstream) - ranges[chrom][0], len(scores[chrom]))
+                end_index = (center + downstream) - ranges[chrom][0]
+                if end_index > len(scores[chrom]):
+                    end_shift = len(scores[chrom]) - end_index
+                    end_index = len(scores[chrom])
+
+                #print(chrom, field[1], field[2], start_index, end_index, start_shift, end_shift)
+                window_values[start_shift:end_shift] = scores[chrom].values[start_index:end_index]
+            
+            window_total_values.append(window_values)
+            if stranded and len(field) >= 5:
+                genes.append(gene)
+            elif stranded == False and len(field) >= 4:
+                genes.append(gene)
 
     # Convert to numpy array
     window_total_values = pd.DataFrame(np.array(window_total_values))
@@ -188,64 +155,6 @@ def nfr_windows(window_values, center_x=1000, scale=False, order=35):
     return nfr_scores
 
 
-def get_genes(bed_fn):
-    """
-    """
-
-    # Initialize genes
-    genes = []
-
-    # Iterate over BED records
-    for i, line in enumerate(open(bed_fn, "r")):
-        field = line.strip().split("\t") # find fields
-        chrom = field[0]
-
-        genes.append(field[-1])
-
-    return np.array(genes)
-
-
-def bin_coverage(frags, bin_size=100000, min_length=None, max_length=None):
-    """
-    """
-
-    bins = frags.bin_nhits(bin_size=bin_size, min_length=min_length, max_length=max_length)
-
-    return bins
-
-
-def predict_sex(bin_coverage, fracReadsInChrYForMale = 0.002, chrXMedianForMale = -0.5, useChrY = True):
-    """
-    """
-
-    # Record chromosome index
-    chroms = bin_coverage.index.unique_labels
-
-    # Determine sex chromosome names
-    chrXStr = [chrom for chrom in chroms if "X" in chrom][0]
-    chrYStr = [chrom for chrom in chroms if "Y" in chrom][0]
-
-    # Calculate ratios
-    median = np.median([np.median(bin_coverage.loc[chrom,"counts"].values) for chrom in chroms])
-    chrXratios = np.log2(bin_coverage.loc[chrXStr,"counts"].values / median)
-    chrXratios[np.isinf(chrXratios)] = 0
-
-    # Calculate metrics
-    total_counts = np.sum([np.sum(bin_coverage.loc[chrom,"counts"].values) for chrom in chroms])
-    chrXMedian = np.median(chrXratios)
-    chrYCov = np.sum(bin_coverage.loc[chrYStr,"counts"].values) / total_counts
-
-    if chrXMedian < chrXMedianForMale:
-        if useChrY and (chrYCov < fracReadsInChrYForMale):
-            gender = "female"
-        else:
-            gender = "male"
-    else:
-        gender = "female"
-
-    return {"gender":gender, "chrYCovRatio":chrYCov, "chrXMedian":chrXMedian}
-
-
 def bin_array(scores, bin_size=100000, method="mean"):
     """
     """
@@ -290,6 +199,8 @@ def interval_annotate(intervals, scores_dict, method = "mean"):
         func = np.median
     elif method == "sum":
         func = np.sum
+    elif method == "var":
+        func = np.var
     else:
         raise AttributeError("Unspecified method (mean, median, or sum)")
 

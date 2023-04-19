@@ -1,9 +1,13 @@
 """Init for mylibrary."""
 from __future__ import absolute_import
-from .fragments import fragments
+from .fragments import Fragments
 from . import utilities
-from .segment import correction, cnv
+from .correct import correction
+from .segment import cnv
+from .sequence import *
 from .plot import plot_plt
+from .io import read_sam
+from .metrics import gene_activity
 
 # This is extracted automatically by the top-level setup.py.
-__version__ = '1.0.0'
+__version__ = '2.0.0'

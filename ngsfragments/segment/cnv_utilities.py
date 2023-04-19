@@ -3,20 +3,49 @@ import pandas as pd
 from intervalframe import IntervalFrame
 from ailist import LabeledIntervalArray
 import hmmCNV
+from typing import Any, Dict, List
 
 
-def calculate_MAD(vector):
+def calculate_MAD(vector: np.ndarray):
     """
     Calculate Median Absolute Deviation (MAD)
+
+    Parameters
+    ----------
+        vector : np.ndarray
+            Vector of values
+
+    Returns
+    -------
+        mad : float
+            Median Absolute Deviation
     """
 
+    # Calculate MAD
     mad = np.median(np.abs(vector - np.median(vector)))
 
     return mad
 
 
-def iterative_merge(segments, bins, column="ratios"):
+def iterative_merge(segments: IntervalFrame,
+                    bins: IntervalFrame,
+                    column: str = "ratios"):
     """
+    Iteratively merge segments
+
+    Parameters
+    ----------
+        segments : IntervalFrame
+            IntervalFrame of segments
+        bins : IntervalFrame
+            IntervalFrame of bins
+        column : str
+            Column name
+
+    Returns
+    -------
+        merged : IntervalFrame
+            IntervalFrame of merged segments
     """
 
     # Initialize merged values
@@ -76,8 +105,25 @@ def iterative_merge(segments, bins, column="ratios"):
     return merged_iframe
 
 
-def merge_segments(segments, bins):
+def merge_segments(segments: IntervalFrame,
+                   bins: IntervalFrame,
+                   column: str = "ratios"):
     """
+    Merge segments
+
+    Parameters
+    ----------
+        segments : IntervalFrame
+            IntervalFrame of segments
+        bins : IntervalFrame
+            IntervalFrame of bins
+        column : str
+            Column name
+
+    Returns
+    -------
+        merged : IntervalFrame
+            IntervalFrame of merged segments
     """
 
     # Initial values
@@ -92,19 +138,36 @@ def merge_segments(segments, bins):
     merged = segments.copy()
     while previous_length != current_length:
         previous_length = current_length
-        merged = iterative_merge(merged, bins)
+        merged = iterative_merge(merged, bins, column=column)
         current_length = merged.shape[0]
 
     return merged
 
 
-def hmm_classify(segments, hmm_states, includeHOMD=False):
+def hmm_classify(segments: IntervalFrame,
+                 hmm_states: Any,
+                 includeHOMD: bool = False):
     """
+    Classify segments using HMM states
+
+    Parameters
+    ----------
+        segments : IntervalFrame
+            IntervalFrame of segments
+        hmm_states : Any
+            HMM states
+        includeHOMD : bool
+            Include HOMD state
+
+    Returns
+    -------
+        copy_number : IntervalFrame
+            Copy number states
     """
 
     # Calculate probability for each segment value
     names = np.array(["HOMD","HETD","NEUT","GAIN","AMP","HLAMP"] + ["HLAMP"+str(i) for i in range(2,25)])
-    values = segments.loc[:,"median"].values
+    values = segments.df.loc[:,"median"].values
     new_states = np.zeros(len(values), dtype=int)
     probs = np.zeros(len(values))
     # Iterate over states
@@ -115,9 +178,9 @@ def hmm_classify(segments, hmm_states, includeHOMD=False):
 
     # Assign values
     copy_number = hmm_states["states"].values[new_states]
-    segments.loc[:,"copy_number"] = copy_number
-    segments.loc[:,"event"] = names[copy_number]
-    segments.loc[:,"subclone_status"] = hmm_states["subclone"].values[new_states]
+    segments.df.loc[:,"copy_number"] = copy_number
+    segments.df.loc[:,"event"] = names[copy_number]
+    segments.df.loc[:,"subclone_status"] = hmm_states["subclone"].values[new_states]
 
     # Create inputs for correctIntegerCN
     cn = hmm_states["cn"]
@@ -129,23 +192,41 @@ def hmm_classify(segments, hmm_states, includeHOMD=False):
     # Correcte Integer CN
     correctedResults = hmmCNV.hmm_utilities.correctIntegerCN(cn = cn.copy(),
                                                         segs = segments.copy(), 
-                                                        purity = 1 - purity, ploidy = ploidy,
+                                                        purity = 1 - purity,
+                                                        ploidy = ploidy,
                                                         cellPrev = 1 - cellPrev, 
                                                         maxCNtoCorrect_autosomes = maxCN,
-                                                        maxCNtoCorrect_X = maxCN, minPurityToCorrect = 0.03, 
-                                                        gender = None, correctHOMD = includeHOMD)
+                                                        maxCNtoCorrect_X = maxCN,
+                                                        minPurityToCorrect = 0.03, 
+                                                        gender = None,
+                                                        correctHOMD = includeHOMD)
     
     return correctedResults["segs"]
 
 
-def validate_calls(segments, bins):
+def validate_calls(segments: IntervalFrame,
+                   bins: IntervalFrame,
+                   n_mads: int = 1):
     """
     Validate NEUT calls are in distribution
+
+    Parameters
+    ----------
+        segments : IntervalFrame
+            IntervalFrame of segments
+        bins : IntervalFrame
+            IntervalFrame of bins
+        n_mads : int
+            Number of MADs to use
+
+    Returns
+    -------
+        segments : IntervalFrame
+            IntervalFrame of segments
     """
 
     # Determine which bins are neutral
     is_neutral = segments.df.loc[:,"Corrected_Call"].values == "NEUT"
-    #neutral_segs = segments.loc[is_neutral,:]
 
     # Keep correcting until no changes
     past_n_neutral = np.sum(is_neutral)
@@ -153,7 +234,6 @@ def validate_calls(segments, bins):
     while n_neutral != past_n_neutral:
         # Determine which bins are neutral
         is_neutral = segments.df.loc[:,"Corrected_Call"].values == "NEUT"
-        #neutral_segs = segments.loc[is_neutral,:]
         medians = segments.df.loc[is_neutral,"median"].values
 
         # Update past_n_neutral
@@ -168,9 +248,9 @@ def validate_calls(segments, bins):
         new_state = np.ones(is_neutral.sum())
         for i in range(is_neutral.sum()):
             valid = True
-            if medians[i] > (neutral_median + neutral_mad):
+            if medians[i] > (neutral_median + (neutral_mad * n_mads)):
                 valid = False
-            elif medians[i] < (neutral_median - neutral_mad):
+            elif medians[i] < (neutral_median - (neutral_mad * n_mads)):
                 valid = False
             # Determine new state
             if not valid:
@@ -180,8 +260,9 @@ def validate_calls(segments, bins):
                     new_state[i] = 2
 
         # Correct neutral callings
-        states = np.ones(segments.shape[0], dtype=bool)
+        states = np.ones(segments.shape[0], dtype=int)
         states[is_neutral] = new_state
+        
         # Assign new states
         segments.df.loc[states==0,"Corrected_Call"] = "HETD"
         segments.df.loc[states==0,"Corrected_Copy_Number"] = 0
@@ -194,9 +275,25 @@ def validate_calls(segments, bins):
     return
 
 
-def correct_neutral(segments, bins):
+def correct_neutral(segments: IntervalFrame,
+                    bins: IntervalFrame,
+                    n_mads: int = 1):
     """
     Correct neutral calls
+
+    Parameters
+    ----------
+        segments : IntervalFrame
+            IntervalFrame of segments
+        bins : IntervalFrame
+            IntervalFrame of bins
+        n_mads : int
+            Number of MADs to use
+    
+    Returns
+    -------
+        segments : IntervalFrame
+            IntervalFrame of segments
     """
 
     # Determine which bins are neutral
@@ -223,9 +320,9 @@ def correct_neutral(segments, bins):
         # Determine pvalues
         valid = np.ones(len(medians), dtype=bool)
         for i in range(np.sum(~is_neutral)):
-            if medians[i] > (neutral_median + neutral_mad):
+            if medians[i] > (neutral_median + (neutral_mad * n_mads)):
                 valid[i] = False
-            elif medians[i] < (neutral_median - neutral_mad):
+            elif medians[i] < (neutral_median - (neutral_mad * n_mads)):
                 valid[i] = False
 
         # Correct neutral callings
@@ -240,27 +337,83 @@ def correct_neutral(segments, bins):
     return
 
 
-def median_variance(segments, bins, key):
+def median_variance(segments: IntervalFrame,
+                    bins: IntervalFrame,
+                    key: str):
     """
     Calculate median segment variance
+
+    Parameters
+    ----------
+        segments : IntervalFrame
+            IntervalFrame of segments
+        bins : IntervalFrame
+            IntervalFrame of bins
+        key : str
+            Key to use for variance calculation
+    
+    Returns
+    -------
+        median_variance : float
+            Median segment variance
     """
 
+    # Calculate variance
     segments.annotate(bins, key, "var")
     median_variance = np.median(segments.df.loc[:,"var"].values)
 
     return median_variance
 
 
-def train_hmm(bins, normal = [0.1, 0.5, 0.9], ploidy = [2], gender=None, estimatePloidy=False,
-                 minSegmentBins=25, maxCN=7, verbose=False, **kwargs):
+def train_hmm(bins: IntervalFrame,
+              normal: List[float] = [0.1, 0.25, 0.5, 0.75, 0.9],
+              ploidy: List[float] = [2],
+              gender: str | None = None,
+              estimatePloidy: bool = False,
+              minSegmentBins: int = 25,
+              maxCN: int = 7,
+              verbose: int = False,
+              **kwargs: Any):
     """
+    Train HMM
+
+    Parameters
+    ----------
+        bins : IntervalFrame
+            IntervalFrame of bins
+        normal : List[float]
+            List of normal ratios
+        ploidy : List[float]
+            List of ploidies
+        gender : str | None
+            Gender of sample
+        estimatePloidy : bool
+            Whether to estimate ploidy
+        minSegmentBins : int
+            Minimum number of bins in a segment
+        maxCN : int
+            Maximum copy number
+        verbose : int
+            Verbosity level
+        **kwargs : Any
+            Additional arguments to pass to hmmCNV
+
+    Returns
+    -------
+        hmm_loglik : Dict[str, float]
+            DataFrame of log likelihoods
     """
 
     # Run HMMcopy
-    hmm_loglik, hmm_results = hmmCNV.hmmCNV(bins, normal=normal, ploidy=ploidy,
-                                     gender=gender, estimatePloidy=estimatePloidy,
-                                     minSegmentBins=minSegmentBins, maxCN=maxCN,
-                                     verbose=verbose, **kwargs)
+    hmm_loglik, hmm_results = hmmCNV.hmmCNV(bins,
+                                            normal=normal,
+                                            ploidy=ploidy,
+                                            gender=gender,
+                                            estimatePloidy=estimatePloidy,
+                                            minSegmentBins=minSegmentBins,
+                                            maxCN=maxCN,
+                                            verbose=verbose,
+                                            **kwargs)
     
     # Find optimal segments
     optimal_result = np.argmax(hmm_loglik.loc[:,"loglik"].values)
@@ -280,19 +433,51 @@ def train_hmm(bins, normal = [0.1, 0.5, 0.9], ploidy = [2], gender=None, estimat
     return hmm_states
 
 
-def validate_distributions(segments, bins):
+def validate_distributions(segments: IntervalFrame,
+                           bins: IntervalFrame,
+                           n_mads: float = 1.4826):
     """
+    Validate segment distributions
+
+    Parameters
+    ----------
+        segments : IntervalFrame
+            IntervalFrame of segments
+        bins : IntervalFrame
+            IntervalFrame of bins
+        n_mads : int
+            Number of MADs to use
+
+    Returns
+    -------
+        None
     """
 
     # Valicate segment classifications
-    validate_calls(segments, bins)
-    correct_neutral(segments, bins)
+    correct_neutral(segments, bins, n_mads=n_mads)
+    validate_calls(segments, bins, n_mads=n_mads)
 
     return
 
 
-def write_seg_file(segments, out_fn, sample=None):
+def write_seg_file(segments: IntervalFrame,
+                   out_fn: str,
+                   sample: str | None = None):
     """
+    Write segments to SEG file
+
+    Parameters
+    ----------
+        segments : IntervalFrame
+            IntervalFrame of segments
+        out_fn : str
+            Output file name
+        sample : str | None
+            Sample name
+
+    Returns
+    -------
+        None
     """
     
     # Open output file

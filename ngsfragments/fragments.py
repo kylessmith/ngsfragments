@@ -1,36 +1,19 @@
 import os
+from typing import Dict
 import numpy as np
 import pandas as pd
-import pysam
-from .read_sam import read_fragments
-from intervalframe import IntervalFrame
+from ailist import LabeledIntervalArray
 from collections import OrderedDict
 
 
-def get_genome(sam_file_fn):
-	"""
-	Read genome file
-	"""
-
-	# Open SAM file
-	sam_file = pysam.Samfile(sam_file_fn)
-
-	# Read chromosomes in SAM file
-	genome = {}
-	genome.update(list(zip(sam_file.references, sam_file.lengths)))
-
-	# Close SAM file
-	sam_file.close()
-
-	return genome
-
-
-def calculate_chromosome_shift(genome):
+def calculate_chromosome_shift(genome: Dict):
     """
     """
     
+	# Initialize
     chrom_shift = OrderedDict()
     
+	# Record shift across genome
     shift = 0
     for chrom in genome:
         chrom_shift[chrom] = shift
@@ -39,7 +22,7 @@ def calculate_chromosome_shift(genome):
     return chrom_shift
 	
 
-class fragments:
+class Fragments(object):
 	"""
 	Python class to store DNA fragments in Augmented Interval List
 
@@ -49,53 +32,57 @@ class fragments:
 	------
 		None
 	"""
-	def __init__(self, sam_fn=None, chrom=None, sam_file=None, min_size=1, max_size=1000,
-				 paired=True, qcfail=False, mapq_cutoff=25, verbose=False,
-				 n_jobs=1, proportion=1.0):
+
+	def __init__(self,
+				 frags: LabeledIntervalArray | str = "",
+				 sam_file: str = "",
+				 genome: str = "hg19"):
 		"""
 		Initialize fragments class
 
-		Params
-		------
-			sam_fn
-				str
-			chrom
-			sam_file
-			min_size
-			max_size
-			paired
-			qcfail
-			mapq_cutoff
-			verbose
-			n_jobs
-			proportion
+		Parameters
+		----------
+			frags : :class:`~ailist.LabeledIntervalArray`
+				:class:`~ailist.LabeledIntervalArray`
+			sam_file : str
+				SAM file
+			genome : str
+				Genome file
+
+		Returns
+		-------
+			None
 		"""
 
-		# Initialize attributes
-		self.sam_file = ""
-		self.genome = {}
-		self.proportion = proportion
-		self.verbose = verbose
+		# Set file name
+		self.sam_file = sam_file
 
-		# Set data directory
-		self.data_dir = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
-		self.data_dir = os.path.join(self.data_dir, "data")
-
-		# If data is a string open as file
-		if sam_fn is not None:
-			# Assign bam file
-			self.sam_file = sam_fn
-			self.genome = get_genome(self.sam_file)
-			self.chrom_shift = calculate_chromosome_shift(self.genome)
-
-			# Add fragment intervals
-			if verbose: print("Reading")
-			frags = read_fragments(self.sam_file, min_size, max_size, paired, qcfail, mapq_cutoff, proportion)
-			frags.construct()
-			frags.freeze()
-
-			# Assign
+		# Set fragments
+		if isinstance(frags, LabeledIntervalArray):
+			# Enforce construction
 			self.frags = frags
+			self.frags.construct()
+			self.frags.freeze()
+		
+		#self.sam_file = sam_file
+		if genome == "hg19":
+			try:
+				import hg19genome
+				self.genome = hg19genome.Hg19Genome()
+				self.genome_version = "hg19"
+			except ImportError:
+				print("hg19genome not installed. Please install hg19genome: 'pip install hg19genome'")
+		else:
+			raise NotImplementedError("Only hg19 genome is currently supported")
+
+	def __repr__(self):
+		"""
+		Represent fragments
+		"""
+
+		repr_string = "Fragments: {} fragments\ngenome: {}".format(self.size, self.genome_version)
+
+		return repr_string
 
 	
 	@property
@@ -120,14 +107,80 @@ class fragments:
 		return self.size
 
 
-	def downsample(self, n=None, proportion=None):
+	def intersect(self,
+				  chrom: str,
+				  start: int,
+				  end: int):
 		"""
+		Intersect fragments with interval
 		"""
 
+		# Overlap
+		frags = self.frags.intersect(start, end, chrom)
+
+		# Build
+		fragments = Fragments(frags,
+							  self.sam_file,
+							  self.genome)
+		
+		return fragments
+
+	
+	def filter(self,
+				min_length: int | None = None,
+				max_length: int | None = None):
+		"""
+		Filter fragments
+
+		Parameters
+		----------
+			min_length : int
+				Minimum fragment length
+			max_length : int
+				Maximum fragment length
+		
+		Returns
+		-------
+			filtered_frags : :class:`~fragments.Fragments`
+				:class:`~fragments.Fragments`
+		"""
+
+		# Filter
+		filtered_intervals = self.frags.filter(min_length, max_length)
+
+		# Build
+		filtered_frags = Fragments(filtered_intervals,
+							  		self.sam_file,
+							  		self.genome)
+		
+		return filtered_frags
+
+
+	def downsample(self,
+				   n: int = None,
+				   proportion: float = None):
+		"""
+		Downsample fragments
+
+		Parameters
+		----------
+			n : int
+				Number of fragments to use
+			proportion : float
+				Proportion of fragments to use
+
+		Returns
+		-------
+			None
+		"""
+
+		# Calculate proportion
 		if n is not None:
 			proportion = int(self.frags.size * proportion)
 
-		self.frags = self.frags.downsample(proportion)
+		# Downsample
+		if proportion != 1:
+			self.frags = self.frags.downsample(proportion)
 
 
 	def length_dist(self):
@@ -140,92 +193,35 @@ class fragments:
 
 		Returns
 		-------
-			distribution : numpy.ndarray
+			distribution : pd.Series
 				Fragment length distribution
 
 		"""
 		
 		# Calculate fragment length distribution
 		distribution = self.frags.length_dist()
+		distribution = pd.Series(distribution)
+		distribution.name = self.sam_file
 
 		return distribution
 
 
-	def bin_counts(self, bin_size=100000, min_length=None, max_length=None):
+	def simulate(self):
 		"""
-		Calculate coverage of fragments
-
-		Parameters
-		----------
-			bin_size : int
-				Size of each bin
-			min_length : int
-				Minimum length of each fragment to consider
-			max_length : int
-				Maximum length of each fragment to consider
-
-		Returns
-		-------
-			bins : IntervalFrame
-				Bins containing number of hits
+		Simulate fragments
 		"""
 
-		# Determine nhits per bin
-		bins = self.frags.bin_nhits(bin_size, min_length, max_length)
+		sim = Fragments()
 
-		# Create interval frame
-		bins_iframe = IntervalFrame(bins[0])
-		bins_iframe.df.loc[:,"counts"] = bins[1]
+		# Initialize attributes
+		sim.sam_file = "Simulation"
+		sim.genome = self.genome
+		sim.proportion = self.proportion
+		sim.verbose = self.verbose
+		sim.data_dir = self.data_dir
+		sim.chrom_shift = self.chrom_shift
 
-		return bins_iframe
+		# Simulate
+		sim.frags = self.frags.simulate()
 
-	
-	def wps(self, chrom=None, protection=60, min_length=None, max_length=None):
-		"""
-		Calculate Window Protection Score for each position in AIList range
-
-		Parameters
-		----------
-			protection : int
-				Protection window to use
-			min_length : int
-				Minimum length of intervals to include [default = None]
-			max_length : int
-				Maximum length of intervals to include [default = None]
-			label : str
-				Label for hierarchical indexing
-
-		Returns
-		-------
-			scores : dict of pandas.Series or pandas.Series
-				Position on index and WPS as values
-
-		"""
-
-		if chrom is None:
-			# Calculate WPS without label
-			scores = self.frags.wps(protection, min_length, max_length)
-
-			# Chop up into dictionaries
-			scores_dict = {}
-			ranges = self.frags.label_ranges
-			count = 0
-			for chrom in self.frags.unique_labels:
-				length = ranges[chrom][1] - ranges[chrom][0]
-				scores_dict[str(chrom)] = pd.Series(scores[count:count+length],
-													index=range(ranges[chrom][0],
-																ranges[chrom][1]))
-				count += length
-		
-		else:
-			# Calculate WPS without label
-			scores = self.frags.get(chrom).wps(protection, min_length, max_length)
-
-			# Chop up into dictionaries
-			scores_dict = {}
-			ranges = self.frags.label_ranges
-			scores_dict[chrom] = pd.Series(scores,
-										   index=range(ranges[chrom][0],
-													   ranges[chrom][1]))
-		
-		return scores_dict
+		return sim

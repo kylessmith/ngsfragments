@@ -1,6 +1,8 @@
 from __future__ import division, print_function, absolute_import
 import numpy as np
 import ailist
+import pysam
+import hg19genome
 import glob
 import platform
 import re
@@ -220,15 +222,25 @@ HTSLIB_CONFIGURE_OPTIONS = os.environ.get("HTSLIB_CONFIGURE_OPTIONS", None)
 HTSLIB_SOURCE = None
 
 package_list = ['ngsfragments',
-                'ngsfragments.read_sam',
+                'ngsfragments.io',
+                'ngsfragments.io.parse_sam',
                 'ngsfragments.peak_calling',
                 'ngsfragments.segment',
-                'ngsfragments.plot']
+                'ngsfragments.plot',
+                'ngsfragments.coverage',
+                'ngsfragments.sequence',
+                'ngsfragments.metrics',
+                'ngsfragments.correct']
 package_dirs = {'ngsfragments': 'ngsfragments',
-                'ngsfragments.read_sam': 'ngsfragments/read_sam',
+                'ngsfragments.io': 'ngsfragments/io',
+                'ngsfragments.io.parse_sam': 'ngsfragments/io/parse_sam',
                 'ngsfragments.peak_calling': 'ngsfragments/peak_calling',
                 'ngsfragments.segment': 'ngsfragments/segment',
-                'ngsfragments.plot': 'ngsfragments/plot'}
+                'ngsfragments.plot': 'ngsfragments/plot',
+                'ngsfragments.coverage': 'ngsfragments/coverage',
+                'ngsfragments.sequence': 'ngsfragments/sequence',
+                'ngsfragments.metrics': 'ngsfragments/metrics',
+                'ngsfragments.correct': 'ngsfragments/correct'}
 
 # list of config files that will be automatically generated should
 # they not already exist or be created by configure scripts in the
@@ -396,8 +408,8 @@ libraries_for_ngs_module = external_htslib_libraries
 # reasons of simplicity.
 
 modules = [
-    dict(name="ngsfragments.read_sam.ReadSam",
-         sources=["ngsfragments.read_sam.ReadSam".replace(".", os.path.sep)+".pyx"] + shared_htslib_sources + os_c_files,
+    dict(name="ngsfragments.io.parse_sam.ReadSam",
+         sources=["ngsfragments.io.parse_sam.ReadSam".replace(".", os.path.sep)+".pyx"] + shared_htslib_sources + os_c_files,
          libraries=external_htslib_libraries),
     dict(name="ngsfragments.peak_calling.RunningMedian",
          sources=["ngsfragments.peak_calling.RunningMedian".replace(".", os.path.sep)+".pyx"] + htslib_sources + os_c_files,
@@ -411,16 +423,20 @@ modules = [
     dict(name="ngsfragments.segment.smooth_cnv.smooth_cnv",
          sources=["ngsfragments.segment.smooth_cnv.smooth_cnv".replace(".", os.path.sep)+".pyx"] + htslib_sources + os_c_files,
          libraries=external_htslib_libraries),
+    dict(name="ngsfragments.correct.cylowess.cylowess",
+         sources=["ngsfragments.correct.cylowess.cylowess".replace(".", os.path.sep)+".pyx"] + htslib_sources + os_c_files,
+         libraries=external_htslib_libraries),
 ]
 
 common_options = dict(
     language="c",
     extra_compile_args=extra_compile_args,
-    define_macros=define_macros,
+    define_macros=define_macros + pysam.get_defines(),
+    language_level=3,
     # for out-of-tree compilation, use absolute paths
     library_dirs=[os.path.abspath(x) for x in ["ngsfragments"] + htslib_library_dirs],
     include_dirs=[os.path.abspath(x) for x in htslib_include_dirs + \
-                  ["ngsfragments", ".", np.get_include(), ailist.get_include()] + include_os])
+                  ["ngsfragments", ".", np.get_include(), ailist.get_include(), hg19genome.get_include()] + include_os + pysam.get_include()])
 
 # add common options (in python >3.5, could use n = {**a, **b}
 for module in modules:
@@ -461,8 +477,9 @@ metadata = dict(
     cmdclass = {'build_ext': build_ext, 'clean_ext': clean_ext},
     packages = package_list,
     package_dir = package_dirs,
-    package_data={'ngsfragments': ['*.pxd', '*.pyx', '*.c', '*.h'],
+    package_data={'ngsfragments': ['*.pxd', '*.pyx', '*.c', '*.h', '*.h5', '*.txt', '*.bed.gz'],
                   '': ['*.pxd', '*.h']},
+    include_package_data=True,
     # Disable zip_safe
     zip_safe = False,
     # Custom data files not inside a Python package

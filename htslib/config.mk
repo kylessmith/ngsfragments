@@ -37,12 +37,12 @@ libexecdir   = ${exec_prefix}/libexec
 datarootdir  = ${prefix}/share
 mandir       = ${datarootdir}/man
 
-CC     = gcc-11
+CC     = clang
 RANLIB = ranlib
 
 CPPFLAGS = 
-CFLAGS   =  -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall      -fPIC   -O2  -isystem /Users/ksmith10/anaconda3/envs/cfdna_new/include -arch x86_64       -fPIC   -O2  -isystem /Users/ksmith10/anaconda3/envs/cfdna_new/include -arch x86_64  -fvisibility=hidden
-LDFLAGS  = -Wl,-rpath,/Users/ksmith10/anaconda3/envs/cfdna_new/lib -L/Users/ksmith10/anaconda3/envs/cfdna_new/lib -Wl,-rpath,/Users/ksmith10/anaconda3/envs/cfdna_new/lib -L/Users/ksmith10/anaconda3/envs/cfdna_new/lib -fvisibility=hidden
+CFLAGS   =  -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall  -fPIC  -O2  -isystem /opt/anaconda3/envs/ailist/include -fPIC   -O2 -isystem /opt/anaconda3/envs/ailist/include  -fvisibility=hidden
+LDFLAGS  = -Wl,-rpath,/opt/anaconda3/envs/ailist/lib -L/opt/anaconda3/envs/ailist/lib -Wl,-rpath,/opt/anaconda3/envs/ailist/lib -L/opt/anaconda3/envs/ailist/lib -fvisibility=hidden
 LIBS     = -llzma -lbz2 -lz 
 
 PLATFORM   = Darwin
