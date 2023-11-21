@@ -8,6 +8,17 @@ from collections import OrderedDict
 
 def calculate_chromosome_shift(genome: Dict):
     """
+    Calculate shift for each chromosome in genome
+    
+    Parameters
+    ----------
+		genome : dict
+			Dictionary of chromosome lengths
+
+	Returns
+	-------
+		chrom_shift : OrderedDict
+			OrderedDict of chromosome shifts
     """
     
 	# Initialize
@@ -36,7 +47,7 @@ class Fragments(object):
 	def __init__(self,
 				 frags: LabeledIntervalArray | str = "",
 				 sam_file: str = "",
-				 genome: str = "hg19"):
+				 genome_version: str = "hg19"):
 		"""
 		Initialize fragments class
 
@@ -46,7 +57,7 @@ class Fragments(object):
 				:class:`~ailist.LabeledIntervalArray`
 			sam_file : str
 				SAM file
-			genome : str
+			genome_version : str
 				Genome file
 
 		Returns
@@ -65,15 +76,24 @@ class Fragments(object):
 			self.frags.freeze()
 		
 		#self.sam_file = sam_file
-		if genome == "hg19":
+		if genome_version == "hg19":
 			try:
 				import hg19genome
 				self.genome = hg19genome.Hg19Genome()
 				self.genome_version = "hg19"
 			except ImportError:
-				print("hg19genome not installed. Please install hg19genome: 'pip install hg19genome'")
+				raise ImportError("hg19genome not installed. Please install hg19genome to use hg19 genome.")
+
+		elif genome_version == "hg38":
+			try:
+				import hg38genome
+				self.genome = hg38genome.Hg38Genome()
+				self.genome_version = "hg38"
+			except ImportError:
+				raise ImportError("hg38genome not installed. Please install hg38genome to use hg38 genome.")
 		else:
-			raise NotImplementedError("Only hg19 genome is currently supported")
+			raise NotImplementedError("Only hg19/hg38 genome is currently supported")
+
 
 	def __repr__(self):
 		"""
@@ -87,16 +107,35 @@ class Fragments(object):
 	
 	@property
 	def size(self):
+		"""
+		Number of fragments
+		"""
 
 		return len(self.frags)
 
 	@property
 	def n_chroms(self):
+		"""
+		Number of chromosomes observed
+		"""
+
 		return len(self.frags.unique_labels)
 
 	@property
 	def chroms(self):
+		"""
+		Chromosomes
+		"""
+
 		return self.frags.unique_labels
+	
+	@property
+	def chrom_counts(self):
+		"""
+		Chromosome counts
+		"""
+
+		return self.frags.label_counts
 
 	
 	def __len__(self):
@@ -113,6 +152,20 @@ class Fragments(object):
 				  end: int):
 		"""
 		Intersect fragments with interval
+
+		Parameters
+		----------
+			chrom : str
+				Chromosome
+			start : int
+				Start position
+			end : int
+				End position
+		
+		Returns
+		-------
+			intersected_frags : :class:`~fragments.Fragments`
+				:class:`~fragments.Fragments`
 		"""
 
 		# Overlap
@@ -151,7 +204,7 @@ class Fragments(object):
 		# Build
 		filtered_frags = Fragments(filtered_intervals,
 							  		self.sam_file,
-							  		self.genome)
+							  		self.genome_version)
 		
 		return filtered_frags
 
@@ -209,6 +262,10 @@ class Fragments(object):
 	def simulate(self):
 		"""
 		Simulate fragments
+
+		Parameters
+		----------
+			None
 		"""
 
 		sim = Fragments()

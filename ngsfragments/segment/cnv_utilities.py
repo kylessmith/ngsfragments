@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from intervalframe import IntervalFrame
 from ailist import LabeledIntervalArray
+from projectframe import ProjectFrame
 import hmmCNV
 from typing import Any, Dict, List
 
@@ -460,9 +461,9 @@ def validate_distributions(segments: IntervalFrame,
     return
 
 
-def write_seg_file(segments: IntervalFrame,
+def write_seg_file(pf: ProjectFrame,
                    out_fn: str,
-                   sample: str | None = None):
+                   sample: str):
     """
     Write segments to SEG file
 
@@ -472,7 +473,7 @@ def write_seg_file(segments: IntervalFrame,
             IntervalFrame of segments
         out_fn : str
             Output file name
-        sample : str | None
+        sample : str
             Sample name
 
     Returns
@@ -484,32 +485,20 @@ def write_seg_file(segments: IntervalFrame,
     out = open(out_fn, "w")
     fmt = "{sample}\t{chrom}\t{start}\t{end}\t{n_bins}\t{log2_ratio_median}\n"
     out.write(fmt.replace('}','').replace('{',''))
-    
-    # Determine sample name
-    if sample is None:
-        sample = "sample_" + str(int(np.random.random() * 100000000))
 
-    segs_df = segments.df.loc[:,["median"]]
-    segs_df.loc[:,"chrom"] = segments.index.extract_labels()
-    segs_df.loc[:,"start"] = segments.starts
-    segs_df.loc[:,"end"] = segments.ends
+    # Get segments
+    segs = pf.obs_intervals[sample]["cnv_segments"]
+    chroms = segs.index.labels
+    starts = segs.starts
+    ends = segs.ends
 
-    # Determine whether chroms are
-    indexes = np.sort(np.unique(self.bins.loc[:,"seqnames"].values, return_index=True)[1])
-    chroms = self.bins.loc[:,"seqnames"].values[indexes]
-    chrom_index = {}
-    for chrom in chroms:
-        chrom_index[chrom] = self.bins.loc[:,"seqnames"].values == chrom
-    
-    # Iterate over segments
-    for i in range(self.segments_df.shape[0]):
-        seg = self.segments_df.iloc[i,:]
-        chrom = seg.loc["chrom"]
-        bin_starts = self.bins.iloc[chrom_index[chrom], 1].values
-        start = int(seg.loc["start"])
-        end = int(seg.loc["end"])
-        n_bins = np.sum(np.logical_and(bin_starts >= start, bin_starts < end))
-        log2_ratio_median = seg.loc["median"]
+    # Iterate over segment overlaps
+    for i, overlap in enumerate(segs.iter_intersect(pf.intervals["cnv_bins"])):
+        n_bins = overlap.shape[0]
+        log2_ratio_median = segs.df.iloc[i,0]
+        chrom = chroms[i]
+        start = starts[i]
+        end = ends[i]
         out.write(fmt.format(**locals()))
             
     # Close seg file

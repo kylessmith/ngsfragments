@@ -39,6 +39,8 @@ def calculate_interval_bias(intervals: IntervalFrame,
     # Assign genome
     if genome_version == "hg19":
         from hg19genome import calculate_bias
+    elif genome_version == "hg38":
+        from hg38genome import calculate_bias
 
     # Initialize bias records
     bias_record = calculate_bias(intervals.index,

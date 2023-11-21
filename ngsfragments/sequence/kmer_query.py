@@ -34,14 +34,9 @@ def kmer_query(intervals: Fragments | LabeledIntervalArray,
     if isinstance(intervals, Fragments):
         genome = intervals.genome
         intervals = intervals.frags
-    elif genome_version == "hg19":
-        try:
-            import hg19genome
-            genome = hg19genome.Hg19Genome()
-        except ImportError:
-            raise ImportError("Genome hg19 not found")
     else:
-        raise NotImplementedError("Genome version not implemented")
+        import genome_info
+        genome = genome_info.GenomeInfo(genome_version)
 
     # Calculate k-mers
     kmer_dict = genome.kmers(intervals, k=k, last_n=last_n)

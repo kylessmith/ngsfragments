@@ -8,6 +8,16 @@ from .parse_sam import read_fragments
 def get_chromosomes(sam_file_fn: str):
 	"""
 	Read genome file
+    
+    Parameters
+    ----------
+        sam_file_fn : str
+            SAM file
+    
+    Returns
+    -------
+        chroms : list
+            List of chromosomes
 	"""
 
 	# Open SAM file
@@ -23,7 +33,6 @@ def get_chromosomes(sam_file_fn: str):
 
 
 def from_sam(sam_fn: str = None,
-                chrom: str = None,
                 min_size: int = 1,
                 max_size: int = 1000,
                 paired: bool = True,
@@ -32,17 +41,15 @@ def from_sam(sam_fn: str = None,
                 verbose: bool = False,
                 nthreads: int = 1,
                 proportion: float = 1.0,
-                genome: str = "hg19",
+                genome_version: str = "hg19",
                 n_frags: int = None):
     """
     Initialize fragments class
 
-    Params
-    ------
+    Parameters
+    ----------
         sam_fn : str
             SAM file
-        chrom : str
-            Chromosome
         sam_file : str
             SAM file
         min_size : int
@@ -85,10 +92,7 @@ def from_sam(sam_fn: str = None,
 
     # Add fragment intervals
     if verbose: print("Reading")
-    if chrom is None:
-        frags = read_fragments(sam_fn, min_size, max_size, paired, qcfail, mapq_cutoff, proportion, nthreads=nthreads, add_chr=add_chr)
-    else:
-        frags = read_fragments(sam_fn, min_size, max_size, paired, qcfail, mapq_cutoff, proportion, chrom, 1, genome[chrom])
+    frags = read_fragments(sam_fn, min_size, max_size, paired, qcfail, mapq_cutoff, proportion, nthreads=nthreads, add_chr=add_chr)
 
     # Downsample
     if n_frags is not None:
@@ -99,6 +103,54 @@ def from_sam(sam_fn: str = None,
     # Build
     fragments = Fragments(frags,
                             sam_file=sam_file,
-                            genome=genome)
+                            genome_version=genome_version)
 
     return fragments
+
+
+def methyl_length_match(filename: str,
+                        genome_version: str = "hg38",
+                        n_jobs: int = 1):
+    """
+    """
+
+    from multiprocessing import Pool
+    import os
+    from .parse_sam.ReadSam import methyl_length_decompose, merge_bams
+
+    # Get genome file
+    if genome_version == "hg19":
+        from hg19genome import Hg19Genome as Genome
+    elif genome_version == "hg38":
+        from hg38genome import Hg38Genome as Genome
+    else:
+        raise ValueError("Genome version not recognized")
+    genome = Genome()
+    chroms = genome.main_chromosomes
+    chroms = chroms[chroms != "chrM"]
+
+    # Assign parameters
+    prefix = filename.replace(".bam", "")
+    parameters = [(filename, str(c), prefix, genome_version) for c in chroms]
+
+    # Run
+    print("Decomposing...")
+    with Pool(processes=n_jobs) as pool:
+        results = pool.starmap(methyl_length_decompose, parameters)
+    print("Done")
+
+    # Merge
+    print("Merging...")
+    inputs1 = [prefix + "_" + chromosome + ".1.bam" for chromosome in chroms]
+    inputs2 = [prefix + "_" + chromosome + ".2.bam" for chromosome in chroms]
+    output1 = filename.replace(".bam", ".1.bam")
+    output2 = filename.replace(".bam", ".2.bam")
+    merge_bams(inputs1, output1)
+    merge_bams(inputs2, output2)
+    print("Done")
+
+    # Remove intermediate files
+    for f in inputs1 + inputs2:
+        os.remove(f)
+
+    return

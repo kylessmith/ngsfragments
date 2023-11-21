@@ -127,6 +127,29 @@ def normalize_coverage(cov_dict: Dict[str,pd.Series],
 						verbose: bool = False):
     """
 	Normalize coverage
+    
+    Parameters
+    ----------
+        cov_dict : dict of pd.Series
+            Coverage to normalize
+        window : int
+            Window size to use for normalization
+        smooth : bool
+            Smooth coverage before normalization
+        smooth_window : int
+            Window size to use for smoothing
+        polyorder : int
+            Order of polynomial to use for smoothing
+        n_threads : int
+            Number of threads to use for smoothing
+        method : str
+            Method to use for normalization
+        verbose : bool
+            Print progress
+    
+    Returns
+    -------
+        None
     """
 
     for chrom in cov_dict:
@@ -135,6 +158,8 @@ def normalize_coverage(cov_dict: Dict[str,pd.Series],
             cov_dict[chrom].iloc[:] = normalize_signal(cov_dict[chrom].values, window, smooth, smooth_window, polyorder, n_threads, use_mean=False)
         elif method == "mean":
             cov_dict[chrom].iloc[:] = normalize_signal(cov_dict[chrom].values, window, smooth, smooth_window, polyorder, n_threads, use_mean=True)
+
+    return None
 
 
 def bin_counts(intervals: Fragments | LabeledIntervalArray,

@@ -14,7 +14,7 @@ from ..peak_calling.CallPeaks import call_peaks, normalize_signal
 from .metric_utils import score_window
 
 
-def wps_windows(intervals: Fragments | LabeledIntervalArray,
+def cov_windows(intervals: Fragments | LabeledIntervalArray,
                 protection: int = 120,
                 min_length: int = 120,
                 max_length: int = 220,
@@ -68,7 +68,7 @@ def wps_windows(intervals: Fragments | LabeledIntervalArray,
     for chrom in chroms:
         if verbose: print(chrom, flush=True)
         chrom_windows = windows.loc[chrom,:]
-        wps = intervals.wps(protection, chrom, min_length, max_length)
+        wps = intervals.coverage(chrom, min_length, max_length)
         if smooth:
             wps[chrom][:] = gaussian_smooth(normalize_signal(wps[chrom].values), scale=10)
         else:
@@ -85,8 +85,7 @@ def wps_windows(intervals: Fragments | LabeledIntervalArray,
     return wps_df
 
 
-def wps_score_tfs(intervals: Fragments | LabeledIntervalArray,
-                protection: int = 120,
+def cov_score_tfs(intervals: Fragments | LabeledIntervalArray,
                 min_length: int = 120,
                 max_length: int = 220,
                 upstream: int = 1000,
@@ -123,17 +122,16 @@ def wps_score_tfs(intervals: Fragments | LabeledIntervalArray,
     # Iterate over chromosomes
     chroms = intervals.unique_labels
     values = pd.DataFrame(np.zeros((len(tfs), upstream + downstream + 1)),
-                          index = list(tfs.keys()))
+                            index = list(tfs.keys()))
     n = {tf:0 for tf in tfs.keys()}
 
     for chrom in chroms:
         if verbose: print(chrom, flush=True)
-        wps = intervals.wps(protection, chrom, min_length, max_length)
+        wps = intervals.coverage(chrom, min_length, max_length)
         if smooth:
             wps[chrom][:] = gaussian_smooth(normalize_signal(wps[chrom].values), scale=10)
-        else:
-            wps[chrom][:] = normalize_signal(wps[chrom].values)
-        
+        wps[chrom][:] = normalize_signal(wps[chrom].values)
+
         # Iterate over tfs
         for tf in tfs:
             chrom_windows = tfs[tf].loc[chrom,:]
@@ -143,9 +141,9 @@ def wps_score_tfs(intervals: Fragments | LabeledIntervalArray,
                 values.loc[tf,:] += scores.sum(axis=0)
                 n[tf] += scores.shape[0]
 
-        # Calculate average
-        for tf in tfs:
-            if n[tf] > 0:
-                values.loc[tf,:] = values.loc[tf,:].values / n[tf]
+    # Calculate average
+    for tf in tfs:
+        if n[tf] > 0:
+            values.loc[tf,:] = values.loc[tf,:].values / n[tf]
 
     return values

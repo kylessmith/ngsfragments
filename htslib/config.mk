@@ -41,7 +41,7 @@ CC     = clang
 RANLIB = ranlib
 
 CPPFLAGS = 
-CFLAGS   =  -Wno-unused-result -Wsign-compare -Wunreachable-code -DNDEBUG -fwrapv -O2 -Wall  -fPIC  -O2  -isystem /opt/anaconda3/envs/ailist/include -fPIC   -O2 -isystem /opt/anaconda3/envs/ailist/include  -fvisibility=hidden
+CFLAGS   =  -DNDEBUG -fwrapv -O2 -Wall -fPIC  -O2  -isystem /opt/anaconda3/envs/ailist/include -fPIC   -O2 -isystem /opt/anaconda3/envs/ailist/include  -fvisibility=hidden
 LDFLAGS  = -Wl,-rpath,/opt/anaconda3/envs/ailist/lib -L/opt/anaconda3/envs/ailist/lib -Wl,-rpath,/opt/anaconda3/envs/ailist/lib -L/opt/anaconda3/envs/ailist/lib -fvisibility=hidden
 LIBS     = -llzma -lbz2 -lz 
 

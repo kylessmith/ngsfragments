@@ -17,6 +17,19 @@ from ..io import from_sam
 def log_fragments(pf: ProjectFrame,
                   frags: Fragments) -> ProjectFrame:
     """
+    Log Fragments object to ProjectFrame
+
+    Parameters
+    ----------
+        pf : ProjectFrame
+            ProjectFrame
+        frags : Fragments
+            Fragments object
+
+    Returns
+    -------
+        pf : ProjectFrame
+            ProjectFrame
     """
 
     # Determine name
@@ -52,7 +65,7 @@ def call_cnv_pipeline(pf: ProjectFrame,
                       hmm_binsize: int = 1000000,
                       genome_version: str = "hg19",
                       nthreads: int = 1,
-                      method: str = "bcp_online_both",
+                      method: str = "online_both",
                       outlier_smooth: bool =True,
                       gauss_smooth: bool = False,
                       bcp_cutoff: float = 0.3,
@@ -64,9 +77,61 @@ def call_cnv_pipeline(pf: ProjectFrame,
                       estimatePloidy: bool = False,
                       minSegmentBins: int = 25,
                       maxCN: int = 5,
+                      wgbs: bool = False,
                       verbose: bool = False,
                       **kwargs) -> ProjectFrame:
     """
+    Call CNVs from fragments
+
+    Parameters
+    ----------
+        pf : ProjectFrame
+            ProjectFrame
+        data : str | Fragments
+            Fragments object or SAM file
+        cnv_binsize : int
+            Bin size for CNV calling
+        hmm_binsize : int
+            Bin size for HMM
+        genome_version : str
+            Genome version
+        nthreads : int
+            Number of threads
+        method : str
+            Method for CNV calling
+        outlier_smooth : bool
+            Smooth outliers
+        gauss_smooth : bool
+            Smooth Gaussian
+        bcp_cutoff : float
+            BCP cutoff
+        hazard : int
+            Hazard
+        shuffles : int
+            Number of shuffles
+        p : float
+            P-value
+        normal : list
+            Normal values
+        ploidy : list
+            Ploidy values
+        estimatePloidy : bool
+            Estimate ploidy
+        minSegmentBins : int
+            Minimum segment bins
+        maxCN : int
+            Maximum copy number
+        wgbs : bool
+            Whole genome bisulfite sequencing
+        verbose : bool
+            Verbose
+        **kwargs : dict
+            Additional arguments
+    
+    Returns
+    -------
+        pf : ProjectFrame
+            ProjectFrame
     """
 
     # Log genome version
@@ -94,6 +159,7 @@ def call_cnv_pipeline(pf: ProjectFrame,
                             hazard,
                             shuffles,
                             p,
+                            wgbs,
                             verbose)
 
     if isinstance(data, list):
@@ -114,6 +180,7 @@ def call_cnv_pipeline(pf: ProjectFrame,
                             shuffles,
                             p,
                             nthreads,
+                            wgbs,
                             verbose)
 
     return pf
@@ -122,13 +189,14 @@ def call_cnv_pipeline(pf: ProjectFrame,
 def predict_cnvs(pf: ProjectFrame,
                     frags: ngs.Fragments,
                     bin_size: int = 100000,
-                    method: str = "bcp_online_both",
+                    method: str = "online_both",
                     outlier_smooth: bool =True,
                     gauss_smooth: bool = False,
                     bcp_cutoff: float = 0.3,
                     hazard: int = 100,
                     shuffles: int = 5000,
                     p: float = 0.00005,
+                    wgbs: bool = False,
                     verbose: bool = False,
                     **kwargs):
     """
@@ -136,27 +204,37 @@ def predict_cnvs(pf: ProjectFrame,
 
     Parameters
     ----------
-    chrom : str
-        Name of chromosome
-    bin_size : int
-    min_length : int
-    max_length : int
-    genome : str
-    genome_fn : str
-    centro_fn : str
-    detail_fn : str
-    outlier_smooth : bool
-    gauss_smooth : bool
-    normal : list
-    ploidy : list
-    estimatePloidy : bool
-    minSegmentBins : int
-    maxCN : int
-    bcp_cutoff : float
-        
+        pf : ProjectFrame
+            ProjectFrame
+        frags : Fragments
+            Fragment
+        bin_size : int
+            Bin size
+        method : str
+            Method for CNV calling
+        outlier_smooth : bool
+            Smooth outliers
+        gauss_smooth : bool
+            Smooth Gaussian
+        bcp_cutoff : float
+            BCP cutoff
+        hazard : int
+            Hazard
+        shuffles : int
+            Number of shuffles
+        p : float
+            P-value
+        wgbs : bool
+            Whole genome bisulfite sequencing
+        verbose : bool
+            Verbose
+        **kwargs : dict
+            Additional arguments
+
     Returns
     -------
-        cnv : :class:`pandas.DataFrame`
+        pf : ProjectFrame
+            ProjectFrame
 
     """
 
@@ -172,10 +250,9 @@ def predict_cnvs(pf: ProjectFrame,
     pf.params["cnv_binsize"] = bin_size
 
     # Call Copy Number Variations
-    cnv_bins, cnv_segs = call_cnvs(frags,
-                                    None,
+    cnv_bins, cnv_segs = call_cnvs(data = frags,
                                     bin_size = bin_size,
-                                    genome = str(pf.params["ref_genome"]),
+                                    genome_version = str(pf.params["ref_genome"]),
                                     method = method,
                                     outlier_smooth = outlier_smooth,
                                     gauss_smooth = gauss_smooth,
@@ -183,7 +260,8 @@ def predict_cnvs(pf: ProjectFrame,
                                     cutoff = bcp_cutoff,
                                     hazard = hazard,
                                     shuffles = shuffles,
-                                    p = p)
+                                    p = p,
+                                    wgbs = wgbs)
     
     # Append bins
     cnv_bins = cnv_bins.loc[:,["ratios"]]
@@ -198,7 +276,7 @@ def predict_purity(pf: ProjectFrame,
                    frags: ngs.Fragments,
                    file_name: str = None,
                    bin_size: int = 1000000,
-                   method: str = "bcp_online_both",
+                   method: str = "online_both",
                    outlier_smooth: bool = True,
                    gauss_smooth: bool = False,
                    bcp_cutoff: float = 0.3,
@@ -207,10 +285,51 @@ def predict_purity(pf: ProjectFrame,
                    estimatePloidy: bool = False,
                    minSegmentBins: int = 25,
                    maxCN: int = 7,
+                   wgbs: bool = False,
                    verbose: bool = False,
                    **kwargs):
     """
     Predict tumor purity
+
+    Parameters
+    ----------
+        pf : ProjectFrame
+            ProjectFrame
+        frags : Fragments
+            Fragment
+        file_name : str
+            File name
+        bin_size : int
+            Bin size
+        method : str
+            Method for CNV calling
+        outlier_smooth : bool
+            Smooth outliers
+        gauss_smooth : bool
+            Smooth Gaussian
+        bcp_cutoff : float
+            BCP cutoff
+        normal : list
+            Normal values
+        ploidy : list
+            Ploidy values
+        estimatePloidy : bool
+            Estimate ploidy
+        minSegmentBins : int
+            Minimum segment bins
+        maxCN : int
+            Maximum copy number
+        wgbs : bool
+            Whole genome bisulfite sequencing
+        verbose : bool
+            Verbose
+        **kwargs : dict
+            Additional arguments
+    
+    Returns
+    -------
+        pf : ProjectFrame
+            ProjectFrame
     """
 
     # Find file name
@@ -223,15 +342,15 @@ def predict_purity(pf: ProjectFrame,
 
     # Calculate bins
     hmm_binsize = bin_size
-    bins, segments = call_cnvs(frags,
-                                None,
+    bins, segments = call_cnvs(data = frags,
                                 bin_size = bin_size,
-                                genome = str(pf.params["ref_genome"]),
+                                genome_version = str(pf.params["ref_genome"]),
                                 method = method,
                                 outlier_smooth = outlier_smooth,
                                 gauss_smooth = gauss_smooth,
                                 verbose = verbose,
-                                cutoff = bcp_cutoff)
+                                cutoff = bcp_cutoff,
+                                wgbs = wgbs)
 
     # Define gender
     try:
@@ -261,7 +380,7 @@ def predict_purity(pf: ProjectFrame,
 def calculate_hmm_states(pf: ProjectFrame,
                         frags: ngs.Fragments,
                         bin_size: int = 1000000,
-                        method: str = "bcp_online_both",
+                        method: str = "online_both",
                         outlier_smooth: bool = True,
                         gauss_smooth: bool = False,
                         bcp_cutoff: float = 0.3,
@@ -270,10 +389,49 @@ def calculate_hmm_states(pf: ProjectFrame,
                         estimatePloidy: bool = False,
                         minSegmentBins: int = 25,
                         maxCN: int = 7,
+                        wgbs: bool = False,
                         verbose: bool = False,
                         **kwargs):
     """
     Train Hidden Markov Model (HMM)
+
+    Parameters
+    ----------
+        pf : ProjectFrame
+            ProjectFrame
+        frags : Fragments
+            Fragment
+        bin_size : int
+            Bin size
+        method : str
+            Method for CNV calling
+        outlier_smooth : bool
+            Smooth outliers
+        gauss_smooth : bool
+            Smooth Gaussian
+        bcp_cutoff : float
+            BCP cutoff
+        normal : list
+            Normal values
+        ploidy : list
+            Ploidy values
+        estimatePloidy : bool
+            Estimate ploidy
+        minSegmentBins : int
+            Minimum segment bins
+        maxCN : int
+            Maximum copy number
+        wgbs : bool
+            Whole genome bisulfite sequencing
+        verbose : bool
+            Verbose
+        **kwargs : dict
+            Additional arguments
+    
+    Returns
+    -------
+        pf : ProjectFrame
+            ProjectFrame
     """
 
     # Determine file name
@@ -288,15 +446,15 @@ def calculate_hmm_states(pf: ProjectFrame,
     pf.params["hmm_binsize"] = bin_size
 
     # Calculate bins
-    bins, segments = call_cnvs(frags,
-                                None,
+    bins, segments = call_cnvs(data = frags,
                                 bin_size = bin_size,
-                                genome = str(pf.params["ref_genome"]),
+                                genome_version = str(pf.params["ref_genome"]),
                                 method = method,
                                 outlier_smooth = outlier_smooth,
                                 gauss_smooth = gauss_smooth,
                                 verbose = verbose,
-                                cutoff = bcp_cutoff)
+                                cutoff = bcp_cutoff,
+                                wgbs = wgbs)
 
     # Define gender
     try:
@@ -325,6 +483,23 @@ def process_cnvs(pf: ProjectFrame,
                  file_name: str = None,
                  merge: bool = True):
     """
+    Process CNVs
+
+    Parameters
+    ----------
+        pf : ProjectFrame
+            ProjectFrame
+        frags : Fragments
+            Fragment
+        file_name : str
+            File name
+        merge : bool
+            Merge segments
+        
+    Returns
+    -------
+        pf : ProjectFrame
+            ProjectFrame
     """
 
     # Find file_name
@@ -366,7 +541,7 @@ def call_cnvs_single(pf: ProjectFrame,
                      frags: ngs.Fragments,
                      cnv_binsize: int = 100000,
                      hmm_binsize: int = 1000000,
-                     method: str = "bcp_online_both",
+                     method: str = "online_both",
                      outlier_smooth: str = True,
                      gauss_smooth: bool = False,
                      bcp_cutoff: float = 0.3,
@@ -378,8 +553,54 @@ def call_cnvs_single(pf: ProjectFrame,
                      hazard: int = 100,
                      shuffles: int = 5000,
                      p: float = 0.00005,
+                     wgbs: bool = False,
                      verbose: bool = False):
     """
+    Call CNVs in a single sample
+
+    Parameters
+    ----------
+        pf : ProjectFrame
+            ProjectFrame
+        frags : Fragments
+            Fragment
+        cnv_binsize : int
+            CNV bin size
+        hmm_binsize : int
+            HMM bin size
+        method : str
+            Method for CNV calling
+        outlier_smooth : bool
+            Smooth outliers
+        gauss_smooth : bool
+            Smooth Gaussian
+        bcp_cutoff : float
+            BCP cutoff
+        normal : list
+            Normal values
+        ploidy : list
+            Ploidy values
+        estimatePloidy : bool
+            Estimate ploidy
+        minSegmentBins : int
+            Minimum segment bins
+        maxCN : int
+            Maximum copy number
+        hazard : int
+            Hazard
+        shuffles : int
+            Shuffles
+        p : float
+            P value
+        wgbs : bool
+            Whole genome bisulfite sequencing
+        verbose : bool
+            Verbose
+    
+    Returns
+    -------
+        pf : ProjectFrame
+            ProjectFrame
     """
 
     # Determine file name
@@ -409,7 +630,8 @@ def call_cnvs_single(pf: ProjectFrame,
                         estimatePloidy = True,
                         minSegmentBins = minSegmentBins,
                         maxCN = maxCN,
-                        verbose = verbose)
+                        verbose = verbose,
+                        wgbs = wgbs)
 
     # Train HMM
     pf = calculate_hmm_states(pf,
@@ -424,6 +646,7 @@ def call_cnvs_single(pf: ProjectFrame,
                             estimatePloidy = estimatePloidy,
                             minSegmentBins = minSegmentBins,
                             maxCN = maxCN,
+                            wgbs = wgbs,
                             verbose = verbose)
 
     # Call Copy Number Variations
@@ -437,7 +660,8 @@ def call_cnvs_single(pf: ProjectFrame,
               cutoff = bcp_cutoff,
               hazard = hazard,
               shuffles = shuffles,
-              p = p)
+              p = p,
+              wgbs = wgbs)
     pf = process_cnvs(pf,
                     frags)
 
@@ -451,7 +675,7 @@ def call_cnvs_multiple(pf: ProjectFrame,
                      directory: str,
                      cnv_binsize: int = 100000,
                      hmm_binsize: int = 1000000,
-                     method: str = "bcp_online_both",
+                     method: str = "online_both",
                      outlier_smooth: str = True,
                      gauss_smooth: bool = False,
                      bcp_cutoff: float = 0.3,
@@ -464,8 +688,56 @@ def call_cnvs_multiple(pf: ProjectFrame,
                      shuffles: int = 5000,
                      p: float = 0.00005,
                      nthreads: int = 1,
+                     wgbs: bool = False,
                      verbose: bool = False):
     """
+    Call CNVs for all samples in a directory
+
+    Parameters
+    ----------
+        pf : ProjectFrame
+            ProjectFrame
+        directory : str
+            Directory
+        cnv_binsize : int
+            CNV bin size
+        hmm_binsize : int
+            HMM bin size
+        method : str
+            Method for CNV calling
+        outlier_smooth : bool
+            Smooth outliers
+        gauss_smooth : bool
+            Smooth Gaussian
+        bcp_cutoff : float
+            BCP cutoff
+        normal : list
+            Normal values
+        ploidy : list
+            Ploidy values
+        estimatePloidy : bool
+            Estimate ploidy
+        minSegmentBins : int
+            Minimum segment bins
+        maxCN : int
+            Maximum copy number
+        hazard : int
+            Hazard
+        shuffles : int
+            Shuffles
+        p : float
+            P value
+        nthreads : int
+            Number of threads
+        wgbs : bool
+            Whole genome bisulfite sequencing
+        verbose : bool
+            Verbose
+    
+    Returns
+    -------
+        pf : ProjectFrame
+            ProjectFrame
     """
 
     for file in glob.glob(directory + "*.bam"):
@@ -486,6 +758,7 @@ def call_cnvs_multiple(pf: ProjectFrame,
                      hazard,
                      shuffles,
                      p,
+                     wgbs,
                      verbose)
 
     return pf

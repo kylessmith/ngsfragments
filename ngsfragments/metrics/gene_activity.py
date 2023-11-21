@@ -4,6 +4,7 @@ from math import e
 import numpy as np
 import pandas as pd
 import glob
+import os
 
 # Local imports
 from ..fragments import Fragments
@@ -79,7 +80,7 @@ def score_upstream(bins: IntervalFrame,
     nhits = bins.intersect(start, end, chrom)
     
     if nhits.shape[0] > 0:
-        distance = end - nhits.ends()
+        distance = end - nhits.ends
         #weight = ((e**(-abs(distance) / 5000)) * (1/length)) + (e**-1)
         #weight = (e**(-abs(distance) / 5000)) + (e**-1)
         weight = ((e**(-abs(distance) / 5000)) + (e**-1)) * (1/length)
@@ -123,7 +124,7 @@ def score_downstream(bins: IntervalFrame,
     nhits = bins.intersect(start, end, chrom)
     
     if nhits.shape[0] > 0:
-        distance = end - nhits.starts()
+        distance = end - nhits.starts
         #weight = ((e**(-abs(distance) / 5000)) * (1/length)) + (e**-1)
         #weight = (e**(-abs(distance) / 5000)) + (e**-1)
         weight = ((e**(-abs(distance) / 5000)) + (e**-1)) * (1/length)
@@ -135,7 +136,7 @@ def score_downstream(bins: IntervalFrame,
 
 
 def gene_activity(intervals: Fragments | LabeledIntervalArray,
-                  genome: str = "hg19",
+                  genome_version: str = "hg19",
                   feature: str = "gene",
                   min_length: int = 120,
                   max_length: int = 220,
@@ -163,17 +164,21 @@ def gene_activity(intervals: Fragments | LabeledIntervalArray,
         scores : pd.Series
             Series containing the scores of the genes
     """
+
+    # Get sample name
+    path = os.path.normpath(frags.sam_file)
+    file_name = path.split(os.sep)[-1]
+    sample_name = file_name.split(".bam")[0]
+
     # Get windows
-    if genome == "hg19":
-        import hg19genome as Genome
-    else:
-        raise NotImplementedError("Only hg19 is supported currently")
+    import genome_info
+    genome = genome_info.GenomeInfo(genome_version)
 
     # Get genes
     if feature == "gene":
-        genes = Genome.get_gene_body(upstream=5000, gene_type="protein_coding")
+        genes = genome.get_intervals("gene", upstream = 5000, filter_column = "gene_type", filter_selection="protein_coding")
     elif feature == "promoter":
-        genes = Genome.get_tss(upstream=5000, downstream=1000, gene_type="protein_coding")
+        genes = genome.get_intervals("tss", upstream = 5000, downstream=1000, filter_column = "gene_type", filter_selection="protein_coding")
     else:
         raise NotImplementedError("Only gene and promoter are supported currently")
 
@@ -182,12 +187,13 @@ def gene_activity(intervals: Fragments | LabeledIntervalArray,
         intervals = intervals.frags
 
     # Determine chromosomes
-    #chromosomes = frags.chroms
     chromosomes = intervals.unique_labels
 
     # Iterate over chromosomes
     scores = pd.Series(np.zeros(genes.shape[0]),
                        index = genes.loc[:,"gene_name"].values)
+    scores.name = sample_name
+
     j = 0
     for chrom in chromosomes:
         if verbose: print(chrom)
@@ -213,7 +219,7 @@ def gene_activity(intervals: Fragments | LabeledIntervalArray,
 def correct_gene_activity(frags: Fragments,
                           scores: pd.Series,
                           correct_cnv: bool = False,
-                          genome: str = "hg19",
+                          genome_version: str = "hg19",
                           feature: str = "gene",
                           verbose: bool = False):
     """
@@ -235,17 +241,20 @@ def correct_gene_activity(frags: Fragments,
         scores : pd.Series
             Series containing the scores of the genes
     """
+    # Get sample name
+    path = os.path.normpath(frags.sam_file)
+    file_name = path.split(os.sep)[-1]
+    sample_name = file_name.split(".bam")[0]
+
     # Get windows
-    if genome == "hg19":
-        import hg19genome as Genome
-    else:
-        raise NotImplementedError("Only hg19 is supported currently")
+    import genome_info
+    genome = genome_info.GenomeInfo(genome_version)
 
     # Get genes
     if feature == "gene":
-        genes = Genome.get_gene_body(upstream=5000, gene_type="protein_coding")
+        genes = genome.get_intervals("gene", upstream = 5000, filter_column = "gene_type", filter_selection="protein_coding")
     elif feature == "promoter":
-        genes = Genome.get_tss(upstream=5000, downstream=1000, gene_type="protein_coding")
+        genes = genome.get_intervals("tss", upstream = 5000, downstream=1000, filter_column = "gene_type", filter_selection="protein_coding")
     else:
         raise NotImplementedError("Only gene and promoter are supported currently")
 
@@ -264,7 +273,7 @@ def correct_gene_activity(frags: Fragments,
         cnv_bins, cnv_segments = call_cnvs(frags,
                                             None,
                                             bin_size = 100000,
-                                            genome = genome,
+                                            genome = genome_version,
                                             method = "bcp_online_both",
                                             outlier_smooth = True,
                                             gauss_smooth = False,
@@ -277,21 +286,23 @@ def correct_gene_activity(frags: Fragments,
     genes = calculate_interval_bias(genes,
                                     column = "score",
                                     cnv_bins = cnv_bins,
-                                    genome_version = genome)
+                                    genome_version = genome_version)
 
     # Return genes
     corrected_scores = pd.Series(genes.loc[:,"corrected_values"].values,
                                  index = genes.loc[:,"gene_name"].values)
+    corrected_scores.name = sample_name
 
     return corrected_scores
 
 
 def multi_gene_activity(directory: str,
-                        genome: str = "hg19",
+                        genome_version: str = "hg19",
                         feature: str = "gene",
                         min_length: int = 121,
                         max_length: int = 375,
                         nthreads: int = 1,
+                        length_norm: bool = True,
                         verbose: bool = False):
     """
     Determine the activity of genes for multiple samples
@@ -310,6 +321,8 @@ def multi_gene_activity(directory: str,
             Maximum length of fragments to use
         nthreads : int
             Number of threads to use
+        length_norm : bool
+            Whether to normalize by feature length
         verbose : bool
             Print progress
     
@@ -325,12 +338,25 @@ def multi_gene_activity(directory: str,
     # Iterate over files
     if verbose: print(files[0])
     frags = from_sam(files[0], nthreads=nthreads)
-    scores = gene_activity(frags, feature=feature, genome=genome, min_length=min_length, max_length=max_length)
+    scores = gene_activity(frags, feature=feature, genome_version=genome_version, min_length=min_length, max_length=max_length)
+    scores = correct_gene_activity(frags,
+                                   scores = scores,
+                                   correct_cnv = False,
+                                   genome_version = genome_version,
+                                   feature = feature,
+                                   verbose = verbose)
     scores = scores.to_frame().T
     scores.index = [files[0]]
     for bam in files[1:]:
         if verbose: print(bam)
         frags = from_sam(bam, nthreads=nthreads)
-        scores.loc[bam,:] = gene_activity(frags, feature=feature, genome=genome, min_length=min_length, max_length=max_length)
+        bam_scores = gene_activity(frags, feature=feature, genome_version=genome_version, min_length=min_length, max_length=max_length)
+        bam_scores = correct_gene_activity(frags,
+                                    scores = bam_scores,
+                                    correct_cnv = False,
+                                    genome_version = genome_version,
+                                    feature = feature,
+                                    verbose = verbose)
+        scores.loc[bam,:] = bam_scores
 
     return scores

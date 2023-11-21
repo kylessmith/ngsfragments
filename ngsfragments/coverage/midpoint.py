@@ -11,6 +11,20 @@ def midpoint(intervals: Fragments | LabeledIntervalArray,
             max_length: int | None = None):
     """
     Calculate midpoint
+
+    Parameters
+    ----------
+        intervals : Fragments
+            Fragments object to calculate midpoint for
+        min_length : int
+            Minimum length of intervals to include [default = None]
+        max_length : int
+            Maximum length of intervals to include [default = None]
+        
+    Returns
+    -------
+        mp : pandas.Series
+            Midpoint coverage
     """
 
     # Get intervals

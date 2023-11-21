@@ -48,7 +48,8 @@ def match_bins(bins : IntervalFrame,
 
 def filter_bins(bins: IntervalFrame,
                 bin_bias: IntervalFrame,
-                blacklist_cutoff: float = 0.1):
+                blacklist_cutoff: float = 0.1,
+                mapping_cutoff: float = 0.5):
     """
     Filter bins by genomic bin bias
 
@@ -69,6 +70,10 @@ def filter_bins(bins: IntervalFrame,
     
     # Find bins passing filters
     chosen = bin_bias.df.loc[:,"blacklist"].values < blacklist_cutoff
+
+    # Find if mappability is present
+    if "mappability" in bin_bias.columns:
+        chosen = np.logical_and(chosen, bin_bias.df.loc[:,"mappability"].values > mapping_cutoff)
     
     # Filter bins
     bin_bias = bin_bias.iloc[chosen,:]
@@ -77,8 +82,58 @@ def filter_bins(bins: IntervalFrame,
     return bins, bin_bias
 
 
+def binned_bias_correct_counts(values: np.ndarray,
+                                bin_bias: IntervalFrame,
+                                n_bins: int = 50) -> np.ndarray:
+    """
+    Bin bias values and correct for bias
+
+    Parameters
+    ----------
+        values : np.ndarray
+            Values to correct
+        bias_values : IntervalFrame
+            Bias values
+        n_bins : int
+            Number of bins
+
+    Returns
+    -------
+        corrected_values : np.ndarray
+            Corrected values
+    """
+
+    # Iterate over columns
+    new_values = values.copy().astype(float)
+    for column in bin_bias.columns:
+        if column in ["n", "blacklist", "mappability"]:
+            continue
+
+        # Get bias values
+        bias_values = bin_bias.df.loc[:,column].values
+
+        # Bin values
+        bins = np.histogram(bias_values, bins=n_bins)[1]
+        assignments = np.digitize(bias_values, bins)
+
+        # Calculate median bias values
+        medians = np.zeros(n_bins)
+        for i in range(n_bins):
+            if np.sum(assignments == (i+1)) > 0:
+                medians[i] = np.median(new_values[assignments == (i+1)])
+
+        # Calculate LOWESS regression
+        res = sm.nonparametric.lowess(medians, bins[:-1], frac=1.0, it=10, return_sorted=False)
+
+        # Calculate corrected values
+        for i in range(n_bins):
+            new_values[assignments == (i+1)] = new_values[assignments == (i+1)] / res[i]
+
+    return new_values
+
+
 def correct_counts(values: np.ndarray,
-                   bin_bias: IntervalFrame):
+                   bin_bias: IntervalFrame) -> np.ndarray:
     """
     Correct for biases in genome metrics file
 
@@ -107,14 +162,15 @@ def correct_counts(values: np.ndarray,
             continue
         
         # Calculate LOWESS regression
-        #prediction = sm.nonparametric.lowess(values,
-        #                                     bin_bias.loc[:,column].values,
-        #                                     frac=0.6666,
-        #                                     return_sorted=False)
-        prediction = lowess(values,
-                            bin_bias.loc[:,column].values.astype(float),
-                            frac=0.6666,
-                            delta=delta)
+        prediction = sm.nonparametric.lowess(values,
+                                             bin_bias.loc[:,column].values,
+                                             frac=0.6666,
+                                             return_sorted=False,
+                                             delta=delta)
+        #prediction = lowess(values,
+        #                    bin_bias.loc[:,column].values.astype(float),
+        #                    frac=0.6666,
+        #                    delta=delta)
 
         # Determine corrected values
         residuals = (values - prediction)
@@ -170,8 +226,10 @@ def gaussian_smooth(values: np.ndarray,
 
 
 def correct(bin_coverage: IntervalFrame,
-            genome: str = "hg19",
+            genome_version: str = "hg19",
             bin_size: int = 100000,
+            wgbs: bool = False,
+            bin_correct: bool = True,
             verbose: bool = False):
     """
     Correct bias in bin counts
@@ -182,6 +240,12 @@ def correct(bin_coverage: IntervalFrame,
             pd.DataFrame
         bin_bias_h5_fn
             str
+        genome_version
+            str
+        bin_size
+            int
+        wgbs
+            bool
         verbose
             bool
 
@@ -192,15 +256,9 @@ def correct(bin_coverage: IntervalFrame,
     """
 
     if verbose: print("Reading genome biases...")
-    if genome == "hg19":
-        try:
-            import hg19genome
-            g = hg19genome.Hg19Genome()
-            bin_bias = g.bin_bias(bin_size)
-        except ImportError:
-            raise ImportError("hg19genome not installed. Please install hg19genome to use hg19 genome.")
-    else:
-        raise NotImplementedError("Only hg19 genome is currently supported.")
+    import genome_info
+    g = genome_info.GenomeInfo(genome_version)
+    bin_bias = g.calculate_bin_bias(bin_size=bin_size)
 
     if verbose: print("Matching bins...")
     bin_coverage, bin_bias = match_bins(bin_coverage, bin_bias)
@@ -210,6 +268,9 @@ def correct(bin_coverage: IntervalFrame,
                                          blacklist_cutoff=0.1)
     
     if verbose: print("Correcting bins...")
-    bin_coverage.loc[:,"corrected_counts"] = correct_counts(bin_coverage.loc[:,"counts"].values.astype(float), bin_bias)
+    if bin_correct:
+        bin_coverage.loc[:,"corrected_counts"] = binned_bias_correct_counts(bin_coverage.loc[:,"counts"].values, bin_bias)
+    else:
+        bin_coverage.loc[:,"corrected_counts"] = correct_counts(bin_coverage.loc[:,"counts"].values.astype(float), bin_bias)
     
     return bin_coverage

@@ -45,9 +45,9 @@ def wps(intervals: Fragments | LabeledIntervalArray,
 def wps_peaks(intervals: Fragments | LabeledIntervalArray | None = None,
               wps_dict: Dict[str,pd.Series] | None = None,
               merge_distance: int = 5,
-              min_length: int = 50,
-              max_length: int = 150,
-              protection: int = 60,
+              min_length: int = 120,
+              max_length: int = 220,
+              protection: int = 120,
               min_interval_filter: int = None,
               max_interval_filter: int = None,
               normalize_scores: bool = True,
@@ -129,6 +129,29 @@ def normalize_wps(wps_dict: Dict[str,pd.Series],
 				  verbose: bool = False):
     """
 	Normalize WPS
+
+    Parameters
+    ----------
+        wps_dict : dict of pd.Series
+            WPS scores for each chromosome
+        window : int
+            Window size to use for normalization
+        smooth : bool
+            Smooth signal before normalization
+        smooth_window : int
+            Window size to use for smoothing
+        polyorder : int
+            Polynomial order to use for smoothing
+        n_threads : int
+            Number of threads to use for smoothing
+        method : str
+            Method to use for normalization
+        verbose : bool
+            Print progress
+
+    Returns
+    -------
+        None
     """
 
     for chrom in wps_dict:
@@ -137,3 +160,5 @@ def normalize_wps(wps_dict: Dict[str,pd.Series],
             wps_dict[chrom].iloc[:] = normalize_signal(wps_dict[chrom].values, window, smooth, smooth_window, polyorder, n_threads, use_mean=False)
         elif method == "mean":
             wps_dict[chrom].iloc[:] = normalize_signal(wps_dict[chrom].values, window, smooth, smooth_window, polyorder, n_threads, use_mean=True)
+    
+    return None

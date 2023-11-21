@@ -34,6 +34,11 @@ def gc_bias(intervals: Fragments | LabeledIntervalArray,
             import hg19genome as genome
         except ImportError:
             print("hg19genome not installed. Please install hg19genome: 'pip install hg19genome'")
+    elif genome_version == "hg38":
+        try:
+            import hg38genome as genome
+        except ImportError:
+            print("hg38genome not installed. Please install hg38genome: 'pip install hg38genome'")
     else:
         raise NotImplementedError("Only hg19 genome is currently supported")
 
@@ -47,6 +52,19 @@ def gc_bias(intervals: Fragments | LabeledIntervalArray,
 def fragment_gc_bias(gc_content: np.ndarray,
                      lengths: np.ndarray):
     """
+    Calculate GC bias per fragment
+
+    Parameters
+    ----------
+        gc_content : np.ndarray
+            GC content of each interval
+        lengths : np.ndarray
+            Length of each interval
+
+    Returns
+    -------
+        record : pd.DataFrame
+            GC bias per fragment
     """
 
     bins = np.arange(0,1,0.1)
@@ -67,6 +85,19 @@ def fragment_gc_bias(gc_content: np.ndarray,
 def simulate_gc_bias(intervals,
                      n_simulations: int = 10):
     """
+    Simulate GC bias
+
+    Parameters
+    ----------
+        intervals : Fragments | LabeledIntervalArray
+            Intervals to calculate GC bias for
+        n_simulations : int
+            Number of simulations to run
+        
+    Returns
+    -------
+        gc_content : np.ndarray
+            GC content of each interval
     """
 
     # Get intervals
@@ -86,7 +117,7 @@ def simulate_gc_bias(intervals,
         print(n_sim)
         sim = intervals.simulate()
         # Calculate GC bias
-        gc_content, lengths = ngs.metrics.gc_bias(sim)
+        gc_content, lengths = gc_bias(sim)
 
         for i, n in enumerate(range(0, np.max(lengths), 100)):
             bin_nums = np.digitize(gc_content[np.logical_and(lengths > n, lengths < n + 100)], bins) - 1
@@ -99,22 +130,3 @@ def simulate_gc_bias(intervals,
     
     return record
 
-
-def assign_gc_weight(gc_content: np.ndarray,
-                     lengths: np.ndarray):
-    """
-    """
-
-    bins = np.arange(0,1,0.1)
-    record = pd.DataFrame(np.zeros((len(np.arange(0, np.max(lengths), 100)),
-                                    len(bins))),
-                          index = np.arange(0, np.max(lengths), 100),
-                          columns = bins)
-    for i, n in enumerate(range(0, np.max(lengths), 100)):
-        bin_nums = np.digitize(gc_content[np.logical_and(lengths > n, lengths < n + 100)], bins) - 1
-        hist_vals = np.bincount(bin_nums)
-        hist_vals = hist_vals / np.max(hist_vals)
-
-        record.iloc[i,:len(hist_vals)] = hist_vals
-    
-    return record
