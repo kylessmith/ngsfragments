@@ -50,7 +50,7 @@ def log_fragments(pf: ProjectFrame,
         pf.add_anno("n_fragments", sample_name, len(frags.frags))
     
     if "chrom_lengths" not in pf.uns.keys:
-        pf.uns["chrom_lengths"] = frags.genome.chrom_sizes
+        pf.uns["chrom_lengths"] = frags.genome["chrom_sizes"]
         pf.uns["chroms"] = frags.chroms
 
     if "chroms" not in pf.uns.keys:

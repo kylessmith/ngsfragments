@@ -41,8 +41,8 @@ CC     = clang
 RANLIB = ranlib
 
 CPPFLAGS = 
-CFLAGS   =  -DNDEBUG -fwrapv -O2 -Wall -fPIC  -O2  -isystem /opt/anaconda3/envs/ailist/include -fPIC   -O2 -isystem /opt/anaconda3/envs/ailist/include  -fvisibility=hidden
-LDFLAGS  = -Wl,-rpath,/opt/anaconda3/envs/ailist/lib -L/opt/anaconda3/envs/ailist/lib -Wl,-rpath,/opt/anaconda3/envs/ailist/lib -L/opt/anaconda3/envs/ailist/lib -fvisibility=hidden
+CFLAGS   =  -DNDEBUG -fwrapv -O2 -Wall -fPIC  -O2  -isystem /opt/anaconda3/envs/poetry/include -fPIC   -O2 -isystem /opt/anaconda3/envs/poetry/include  -fvisibility=hidden
+LDFLAGS  = -Wl,-rpath,/opt/anaconda3/envs/poetry/lib -L/opt/anaconda3/envs/poetry/lib -Wl,-rpath,/opt/anaconda3/envs/poetry/lib -L/opt/anaconda3/envs/poetry/lib -fvisibility=hidden
 LIBS     = -llzma -lbz2 -lz 
 
 PLATFORM   = Darwin

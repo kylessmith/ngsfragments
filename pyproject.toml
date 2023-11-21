@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ngsfragments"
-version = "2.0.8"
+version = "2.1.1"
 description = "Python package for Next Generation Sequencing fragment manipulation"
 authors = ["Kyle S. Smith <kyle.smith@stjude.org>"]
 maintainers = ["Kyle S. Smith <kyle.smith@stjude.org>"]
@@ -62,7 +62,7 @@ requires = ["poetry-core>=1.0.0",
             "setuptools>=65.5.0",
             "ailist>=2.1.0",
             "pysam>=0.20.0",
-            "hg19genome>=1.0.0"]
+            "genome_info>=1.0.2"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.build]

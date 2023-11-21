@@ -3,6 +3,7 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 from ailist import LabeledIntervalArray
+import genome_info
 from collections import OrderedDict
 
 
@@ -76,23 +77,8 @@ class Fragments(object):
 			self.frags.freeze()
 		
 		#self.sam_file = sam_file
-		if genome_version == "hg19":
-			try:
-				import hg19genome
-				self.genome = hg19genome.Hg19Genome()
-				self.genome_version = "hg19"
-			except ImportError:
-				raise ImportError("hg19genome not installed. Please install hg19genome to use hg19 genome.")
-
-		elif genome_version == "hg38":
-			try:
-				import hg38genome
-				self.genome = hg38genome.Hg38Genome()
-				self.genome_version = "hg38"
-			except ImportError:
-				raise ImportError("hg38genome not installed. Please install hg38genome to use hg38 genome.")
-		else:
-			raise NotImplementedError("Only hg19/hg38 genome is currently supported")
+		self.genome_version = genome_version
+		self.genome = genome_info.GenomeInfo(genome_version)
 
 
 	def __repr__(self):
