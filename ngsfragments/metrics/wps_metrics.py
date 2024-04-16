@@ -11,7 +11,7 @@ from ..segment.cnv import call_cnvs
 from ..correct.correct_intervals import calculate_interval_bias
 from ..correct.correction import gaussian_smooth
 from ..peak_calling.CallPeaks import call_peaks, normalize_signal
-from .metric_utils import score_window
+from .metric_utils import score_window, nfr
 
 
 def wps_windows(intervals: Fragments | LabeledIntervalArray,
@@ -115,7 +115,6 @@ def wps_score_tfs(intervals: Fragments | LabeledIntervalArray,
 
         tfs[tf] = iframe
 
-
     # Convert intervals
     if isinstance(intervals, Fragments):
         intervals = intervals.frags
@@ -134,6 +133,9 @@ def wps_score_tfs(intervals: Fragments | LabeledIntervalArray,
         else:
             wps[chrom][:] = normalize_signal(wps[chrom].values)
         
+        # Scale
+        #wps[chrom][:] = (wps[chrom].values - np.min(wps[chrom].values)) / (np.max(wps[chrom].values) - np.min(wps[chrom].values))
+        
         # Iterate over tfs
         for tf in tfs:
             chrom_windows = tfs[tf].loc[chrom,:]
@@ -143,9 +145,43 @@ def wps_score_tfs(intervals: Fragments | LabeledIntervalArray,
                 values.loc[tf,:] += scores.sum(axis=0)
                 n[tf] += scores.shape[0]
 
-        # Calculate average
-        for tf in tfs:
-            if n[tf] > 0:
-                values.loc[tf,:] = values.loc[tf,:].values / n[tf]
+    # Calculate average
+    for tf in tfs:
+        if n[tf] > 0:
+            values.loc[tf,:] = values.loc[tf,:].values / n[tf]
 
     return values
+
+
+def wps_nfr_tfs(intervals: Fragments | LabeledIntervalArray,
+                protection: int = 120,
+                min_length: int = 120,
+                max_length: int = 220,
+                upstream: int = 1000,
+                downstream: int = 1000,
+                genome_version: str = "hg38",
+                smooth: bool = True,
+                verbose: bool = False) -> pd.DataFrame:
+    """
+    """
+
+    # Get windows
+    scores = wps_score_tfs(intervals,
+                protection,
+                min_length,
+                max_length,
+                upstream,
+                downstream,
+                genome_version,
+                smooth,
+                verbose)
+
+    # Calculate NFR
+    nfr_scores = np.zeros(scores.shape[0])
+    for i in range(scores.shape[0]):
+        nfr_scores[i] = nfr(scores.iloc[i,:].values, center_x=1000, scale=True)[0]
+
+    # Convert to DataFrame
+    nfr_df = pd.DataFrame(nfr_scores, index=scores.index.values, columns=["NFR"])
+
+    return nfr_df

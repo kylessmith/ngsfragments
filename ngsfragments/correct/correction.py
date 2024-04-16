@@ -49,7 +49,8 @@ def match_bins(bins : IntervalFrame,
 def filter_bins(bins: IntervalFrame,
                 bin_bias: IntervalFrame,
                 blacklist_cutoff: float = 0.1,
-                mapping_cutoff: float = 0.5):
+                mapping_cutoff: float = 0.90,
+                keep_sex_chroms: bool = False):
     """
     Filter bins by genomic bin bias
 
@@ -61,6 +62,10 @@ def filter_bins(bins: IntervalFrame,
             IntervalFrame of bin bias
         blacklist_cutoff : float
             Maximum blacklist fraction
+        mapping_cutoff : float
+            Minimum mappability fraction
+        keep_sex_chroms : bool
+            Keep sex chromosomes
 
     Returns
     -------
@@ -70,6 +75,11 @@ def filter_bins(bins: IntervalFrame,
     
     # Find bins passing filters
     chosen = bin_bias.df.loc[:,"blacklist"].values < blacklist_cutoff
+
+    # Keep
+    if keep_sex_chroms:
+        chosen = np.logical_or(chosen, bin_bias.index.labels == "chrX")
+        chosen = np.logical_or(chosen, bin_bias.index.labels == "chrY")
 
     # Find if mappability is present
     if "mappability" in bin_bias.columns:
@@ -84,7 +94,7 @@ def filter_bins(bins: IntervalFrame,
 
 def binned_bias_correct_counts(values: np.ndarray,
                                 bin_bias: IntervalFrame,
-                                n_bins: int = 50) -> np.ndarray:
+                                n_bins: int = 25) -> np.ndarray:
     """
     Bin bias values and correct for bias
 
@@ -228,8 +238,9 @@ def gaussian_smooth(values: np.ndarray,
 def correct(bin_coverage: IntervalFrame,
             genome_version: str = "hg19",
             bin_size: int = 100000,
-            wgbs: bool = False,
+            use_normal: bool = True,
             bin_correct: bool = True,
+            keep_sex_chroms: bool = False,
             verbose: bool = False):
     """
     Correct bias in bin counts
@@ -265,12 +276,30 @@ def correct(bin_coverage: IntervalFrame,
 
     if verbose: print("Filtering bins...")
     bin_coverage, bin_bias = filter_bins(bin_coverage, bin_bias,
-                                         blacklist_cutoff=0.1)
+                                         blacklist_cutoff=0.1,
+                                         mapping_cutoff=0.90,
+                                         keep_sex_chroms = keep_sex_chroms)
     
     if verbose: print("Correcting bins...")
     if bin_correct:
-        bin_coverage.loc[:,"corrected_counts"] = binned_bias_correct_counts(bin_coverage.loc[:,"counts"].values, bin_bias)
+        if use_normal:
+            normal = g["normal_bin"+str(bin_size)]
+            normal = normal.exact_match(bin_coverage)
+            bin_coverage = bin_coverage.exact_match(normal)
+            bin_bias = bin_bias.exact_match(normal)
+            normal_corrected_counts = binned_bias_correct_counts(bin_coverage.loc[:,"counts"].values, bin_bias)
+            bin_coverage.loc[:,"corrected_counts"] = binned_bias_correct_counts(normal_corrected_counts, bin_bias)
+        else:
+            bin_coverage.loc[:,"corrected_counts"] = binned_bias_correct_counts(bin_coverage.loc[:,"counts"].values, bin_bias)
     else:
-        bin_coverage.loc[:,"corrected_counts"] = correct_counts(bin_coverage.loc[:,"counts"].values.astype(float), bin_bias)
+        if use_normal:
+            normal = g["normal_bin"+str(bin_size)]
+            normal = normal.exact_match(bin_coverage)
+            bin_coverage = bin_coverage.exact_match(normal)
+            bin_bias = bin_bias.exact_match(normal)
+            normal_corrected_counts = correct_counts(bin_coverage.loc[:,"counts"].values.astype(float), bin_bias)
+            bin_coverage.loc[:,"corrected_counts"] = correct_counts(normal_corrected_counts, bin_bias)
+        else:
+            bin_coverage.loc[:,"corrected_counts"] = correct_counts(bin_coverage.loc[:,"counts"].values.astype(float), bin_bias)
     
     return bin_coverage

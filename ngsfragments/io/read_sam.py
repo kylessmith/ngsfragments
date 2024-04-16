@@ -1,5 +1,6 @@
 import os
 import pysam
+import numpy as np
 
 from ..fragments import Fragments
 from .parse_sam import read_fragments
@@ -42,7 +43,9 @@ def from_sam(sam_fn: str = None,
                 nthreads: int = 1,
                 proportion: float = 1.0,
                 genome_version: str = "hg19",
-                n_frags: int = None):
+                n_frags: int = None,
+                nucleosome_adjust: bool = False,
+                fixed_size: int = 74):
     """
     Initialize fragments class
 
@@ -87,12 +90,15 @@ def from_sam(sam_fn: str = None,
     # Read genome
     chromosomes = get_chromosomes(sam_fn)
     add_chr = True
-    if chromosomes[0].startswith("chr"):
+    starts_with_chr = sum(chrom.startswith("chr") for chrom in chromosomes)
+    if starts_with_chr > 0:
         add_chr = False
 
     # Add fragment intervals
     if verbose: print("Reading")
-    frags = read_fragments(sam_fn, min_size, max_size, paired, qcfail, mapq_cutoff, proportion, nthreads=nthreads, add_chr=add_chr)
+    frags = read_fragments(sam_fn, min_size, max_size, paired, qcfail, mapq_cutoff,
+                           proportion, nthreads=nthreads, add_chr=add_chr,
+                           nucleosome_adjust=nucleosome_adjust, fixed_size = fixed_size)
 
     # Downsample
     if n_frags is not None:
@@ -119,14 +125,9 @@ def methyl_length_match(filename: str,
     from .parse_sam.ReadSam import methyl_length_decompose, merge_bams
 
     # Get genome file
-    if genome_version == "hg19":
-        from hg19genome import Hg19Genome as Genome
-    elif genome_version == "hg38":
-        from hg38genome import Hg38Genome as Genome
-    else:
-        raise ValueError("Genome version not recognized")
-    genome = Genome()
-    chroms = genome.main_chromosomes
+    import genome_info
+    genome = genome_info.GenomeInfo(genome_version)
+    chroms = np.array(genome["main_chromosomes"])
     chroms = chroms[chroms != "chrM"]
 
     # Assign parameters
@@ -145,6 +146,49 @@ def methyl_length_match(filename: str,
     inputs2 = [prefix + "_" + chromosome + ".2.bam" for chromosome in chroms]
     output1 = filename.replace(".bam", ".1.bam")
     output2 = filename.replace(".bam", ".2.bam")
+    merge_bams(inputs1, output1)
+    merge_bams(inputs2, output2)
+    print("Done")
+
+    # Remove intermediate files
+    for f in inputs1 + inputs2:
+        os.remove(f)
+
+    return
+
+
+def bounds_motif_match(filename: str,
+                        genome_version: str = "hg38",
+                        n_jobs: int = 1):
+    """
+    """
+
+    from multiprocessing import Pool
+    import os
+    from .parse_sam.ReadSam import bounds_motif_enrichment, merge_bams
+
+    # Get genome file
+    import genome_info
+    genome = genome_info.GenomeInfo(genome_version)
+    chroms = np.array(genome["main_chromosomes"])
+    chroms = chroms[chroms != "chrM"]
+
+    # Assign parameters
+    prefix = filename.replace(".bam", "")
+    parameters = [(filename, str(c), prefix, genome_version) for c in chroms]
+
+    # Run
+    print("Decomposing...")
+    with Pool(processes=n_jobs) as pool:
+        results = pool.starmap(bounds_motif_enrichment, parameters)
+    print("Done")
+
+    # Merge
+    print("Merging...")
+    inputs1 = [prefix + "_" + chromosome + ".motif1.bam" for chromosome in chroms]
+    inputs2 = [prefix + "_" + chromosome + ".motif2.bam" for chromosome in chroms]
+    output1 = filename.replace(".bam", ".motif1.bam")
+    output2 = filename.replace(".bam", ".motif2.bam")
     merge_bams(inputs1, output1)
     merge_bams(inputs2, output2)
     print("Done")

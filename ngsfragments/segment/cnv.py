@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+from typing import List
 from intervalframe import IntervalFrame
 from projectframe import ProjectFrame
 from sklearn import linear_model
@@ -13,18 +14,42 @@ from ..coverage.coverage import predict_sex, bin_counts
 from .cnv_utilities import hmm_classify, merge_segments, validate_distributions, train_hmm
 
 
+def sex_prediction(data: Fragments | IntervalFrame, 
+                    bin_size: int = 100000):
+    """
+    Call copy number variations
+    """
+
+    # Determine bin coverage
+    if isinstance(data, IntervalFrame):
+        bin_coverage = data
+    else:
+        bin_coverage = bin_counts(data, bin_size=bin_size)
+
+    # Predict sex
+    predicted_sex = predict_sex(bin_coverage)
+
+    return predicted_sex
+
+
 def call_cnvs(data: Fragments | IntervalFrame, 
               bin_size: int = 100000,
               genome_version: str = "hg19",
               method: str = "online_both",
               outlier_smooth: bool = True,
               gauss_smooth: bool = False,
-              wgbs: bool = False,
+              use_normal: bool = False,
+              keep_sex_chroms: bool = False,
               verbose: bool = False,
               **kwargs):
     """
     Call copy number variations
     """
+
+    # Get main chromosomes
+    import genome_info
+    g = genome_info.GenomeInfo(genome_version)
+    autosomes = g["autosomes"]
 
     # Determine bin coverage
     if verbose: print("Binning...")
@@ -32,6 +57,10 @@ def call_cnvs(data: Fragments | IntervalFrame,
         bin_coverage = data
     else:
         bin_coverage = bin_counts(data, bin_size=bin_size)
+
+    # Remove chromosomes
+    #if len(remove_chroms) > 0:
+    #    bin_coverage = bin_coverage.iloc[~bin_coverage.index.labels.isin(remove_chroms),:]
 
     # Predict sex
     if verbose: print("Predicting sex...")
@@ -42,10 +71,15 @@ def call_cnvs(data: Fragments | IntervalFrame,
 
     # Correct values
     if verbose: print("Correcting genome biases...")
-    bin_coverage = correct(bin_coverage, genome_version=genome_version, bin_size=bin_size, wgbs=wgbs, verbose=verbose)
+    bin_coverage = correct(bin_coverage,
+                           genome_version=genome_version,
+                           bin_size=bin_size,
+                           use_normal=use_normal,
+                           keep_sex_chroms=keep_sex_chroms,
+                           verbose=verbose)
 
     # Determine  median
-    median = np.median(bin_coverage.df.loc[:,"corrected_counts"].values)
+    median = np.median(bin_coverage.loc[autosomes,:].df.loc[:,"corrected_counts"].values)
 
     # Determine ratios
     if verbose: print("Normalizing...")
@@ -85,6 +119,7 @@ def process_cnvs(segments,
                  minSegmentBins=25,
                  maxCN=7,
                  n_mads = 1.4826,
+                 scStates = [1, 3],
                  verbose=False,
                  **kwargs):
     """
@@ -103,6 +138,7 @@ def process_cnvs(segments,
                            estimatePloidy=estimatePloidy,
                            minSegmentBins=minSegmentBins,
                            maxCN=maxCN,
+                           scStates=scStates,
                            verbose=verbose,
                            **kwargs)
     

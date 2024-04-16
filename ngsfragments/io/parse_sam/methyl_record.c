@@ -250,7 +250,7 @@ int assign_methyl_read(methyl_record_pair_t *pair, methyl_read_t *read)
         if (values1[0] != 0 || values1[1] != 0)
         {
             beta1 = (double)values1[0] / ((double)values1[0] + (double)values1[1]);
-            beta1 = (beta1 >= 0.5) ? 1 : 0;
+            //beta1 = (beta1 >= 0.5) ? 1 : 0;
             sum1 += fabs(beta1 - (double)methyl);
             n1++;
         }
@@ -259,7 +259,7 @@ int assign_methyl_read(methyl_record_pair_t *pair, methyl_read_t *read)
         if (values2[0] != 0 || values2[1] != 0)
         {
             beta2 = (double)values2[0] / ((double)values2[0] + (double)values2[1]);
-            beta2 = (beta2 >= 0.5) ? 1 : 0;
+            //beta2 = (beta2 >= 0.5) ? 1 : 0;
             sum2 += fabs(beta2 - (double)methyl);
             n2++;
         }

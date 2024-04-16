@@ -10,4 +10,4 @@ from .io import read_sam
 from .metrics import gene_activity
 
 # This is extracted automatically by the top-level setup.py.
-__version__ = '2.1.1'
+__version__ = '2.1.5'

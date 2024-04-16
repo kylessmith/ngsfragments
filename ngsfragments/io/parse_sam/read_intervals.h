@@ -142,6 +142,19 @@ void sam_iter_add(char *samfile_name, labeled_aiarray_t *intervals,
                   int min_size, int max_size, int paired, int qcfail, int mapq_cutoff,
 				  float proportion, int nthreads, int add_chr);
 
+// Add reads from sam file to inteval list and adjust for nucleosome occupancy
+void sam_nucleosome_add(char *samfile_name,
+                        labeled_aiarray_t *intervals,
+                        int min_size,
+                        int max_size,
+                        int paired,
+                        int fixed_size,
+                        int qcfail,
+                        int mapq_cutoff,
+                        float proportion,
+                        int nthreads,
+                        int add_chr);
+
 
 //==================================================================================================
 // read_iterator.c
@@ -357,6 +370,26 @@ void test_memory_leak(const char *bam_file_path,
                         int mapq_cutoff,
                         float proportion,
                         int nthreads);
+
+
+//==================================================================================================
+// bounds_motif.c
+//--------------------------------------------------------------------------------------------------
+
+void bounds_motif_split(char *samfile_name,
+                                            char *fname,
+                                            char *chromosome,
+                                            const char *output_bam_file_path1,
+                                            const char *output_bam_file_path2,
+                                            int n_bases,
+                                            int min_size,
+                                            int max_size,
+                                            int paired,
+                                            int qcfail,
+                                            int mapq_cutoff,
+                                            float proportion,
+                                            int nthreads,
+                                            int add_chr);
 
 //==================================================================================================
 // merge_bams.c

@@ -33,7 +33,15 @@ static int record_base_calls(const bam_pileup1_t *pl, int n, void *data)
             int qual = bam_get_qual(p->b)[p->qpos];
             if (qual >= 30) // Quality threshold
             {
-                base_calls->base_calls[base_calls->base_calls_count++] = seq_nt16_str[base];
+                if (bam_is_rev(p->b)) // Check if the read is reverse complemented
+                {
+                    char *base_str = seq_nt16_str[base];
+                    base_calls->base_calls[base_calls->base_calls_count++] = tolower(base_str[0]);
+                }
+                else
+                {
+                    base_calls->base_calls[base_calls->base_calls_count++] = seq_nt16_str[base];
+                }
             }
         }
     }

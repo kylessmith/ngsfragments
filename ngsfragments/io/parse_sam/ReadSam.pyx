@@ -73,6 +73,20 @@ cdef labeled_aiarray_t *sam_read(char *samfile_name, int min_size, int max_size,
 	return cintervals
 
 
+cdef labeled_aiarray_t *sam_nucleosome_read(char *samfile_name, int min_size, int max_size, int paired, int qcfail, int mapq_cutoff,
+								 			float proportion, int nthreads, int add_chr, int fixed_size):
+
+	cdef labeled_aiarray_t *cintervals = labeled_aiarray_init()
+	# Set random generator seed
+	srand(time.time())
+
+	# Initialize
+	sam_nucleosome_add(samfile_name, cintervals, min_size, max_size, paired, fixed_size, qcfail, mapq_cutoff,
+					  proportion, nthreads, add_chr)
+
+	return cintervals
+
+
 def read_fragments(str samfile_name,
 					int min_size,
 					int max_size,
@@ -81,7 +95,9 @@ def read_fragments(str samfile_name,
 					int mapq_cutoff,
 					float proportion,
 					nthreads = 1,
-					add_chr = False):
+					add_chr = False,
+					nucleosome_adjust = False,
+					fixed_size = 74):
 	"""
 	"""
 	cdef bytes bname = samfile_name.encode()
@@ -91,8 +107,12 @@ def read_fragments(str samfile_name,
 	cdef const char* chrom_pos
 
 	cdef labeled_aiarray_t *cintervals
-	cintervals = sam_read(name, min_size, max_size, paired, qcfail, mapq_cutoff,
-						proportion, nthreads, int(add_chr))
+	if nucleosome_adjust:
+		cintervals = sam_nucleosome_read(name, min_size, max_size, paired, qcfail, mapq_cutoff,
+							proportion, nthreads, int(add_chr), fixed_size)
+	else:
+		cintervals = sam_read(name, min_size, max_size, paired, qcfail, mapq_cutoff,
+							proportion, nthreads, int(add_chr))
 
 	print("Done reading", flush=True)
 	cdef LabeledIntervalArray fragments = LabeledIntervalArray()
@@ -160,14 +180,9 @@ def read_methyl(str filename,
 	srand(time.time())
 
 	# Get genome file
-	if genome_version == "hg19":
-		from hg19genome import Hg19Genome as Genome
-	elif genome_version == "hg38":
-		from hg38genome import Hg38Genome as Genome
-	else:
-		raise ValueError("Genome version not recognized")
-	genome = Genome()
-	ref_filename = genome.reference_file
+	import genome_info
+	genome = genome_info.GenomeInfo(genome_version)
+	ref_filename = genome.seq_file
 
 	cdef bytes bfname = filename.encode()
 	cdef char *fname = bfname
@@ -212,14 +227,9 @@ def fetch_cpgs(str chrom,
 	srand(time.time())
 
 	# Get genome file
-	if genome_version == "hg19":
-		from hg19genome import Hg19Genome as Genome
-	elif genome_version == "hg38":
-		from hg38genome import Hg38Genome as Genome
-	else:
-		raise ValueError("Genome version not recognized")
-	genome = Genome()
-	ref_filename = genome.reference_file
+	import genome_info
+	genome = genome_info.GenomeInfo(genome_version)
+	ref_filename = genome.seq_file
 
 	cdef bytes bname = ref_filename.encode()
 	cdef char *name = bname
@@ -257,14 +267,9 @@ def methyl_length_decompose(str bam_file_path,
 	srand(time.time())
 
 	# Get genome file
-	if genome_version == "hg19":
-		from hg19genome import Hg19Genome as Genome
-	elif genome_version == "hg38":
-		from hg38genome import Hg38Genome as Genome
-	else:
-		raise ValueError("Genome version not recognized")
-	genome = Genome()
-	ref_filename = genome.reference_file
+	import genome_info
+	genome = genome_info.GenomeInfo(genome_version)
+	ref_filename = genome.seq_file
 
 	if prefix == "":
 		prefix = bam_file_path.replace(".bam", "")
@@ -296,6 +301,57 @@ def methyl_length_decompose(str bam_file_path,
                      mapq_cutoff,
                      proportion,
 					 nthreads)
+
+	return
+
+def bounds_motif_enrichment(str bam_file_path,
+							str chromosome,
+							str prefix = "",
+							str genome_version = "hg38",
+							int n_bases = 21,
+							int min_size = 1,
+							int max_size = 1000,
+							int qcfail = 0,
+							int mapq_cutoff = 13,
+							float proportion = 1.0,
+							int nthreads = 1):
+	"""
+	"""
+
+	# Set random generator seed
+	srand(time.time())
+
+	# Get genome file
+	import genome_info
+	genome = genome_info.GenomeInfo(genome_version)
+	ref_filename = genome.seq_file
+
+	if prefix == "":
+		prefix = bam_file_path.replace(".bam", "")
+	
+	output_bam_file_path1 = prefix + "_" + chromosome + ".motif1.bam"
+	output_bam_file_path2 = prefix + "_" + chromosome + ".motif2.bam"
+
+	cdef bytes ref_2bit_bytes = ref_filename.encode()
+	cdef bytes chromosome_bytes = chromosome.encode()
+	cdef bytes bam_file_path_bytes = bam_file_path.encode()
+	cdef bytes output_bam_file_path1_bytes = output_bam_file_path1.encode()
+	cdef bytes output_bam_file_path2_bytes = output_bam_file_path2.encode()
+
+	bounds_motif_split(bam_file_path_bytes,
+						ref_2bit_bytes,
+						chromosome_bytes,
+						output_bam_file_path1_bytes,
+						output_bam_file_path2_bytes,
+						n_bases,
+						min_size,
+						max_size,
+						1,
+						qcfail,
+						mapq_cutoff,
+						proportion,
+						nthreads,
+						0)
 
 	return
 
@@ -348,14 +404,9 @@ def test_memory(str bam_file_path,
 	srand(time.time())
 
 	# Get genome file
-	if genome_version == "hg19":
-		from hg19genome import Hg19Genome as Genome
-	elif genome_version == "hg38":
-		from hg38genome import Hg38Genome as Genome
-	else:
-		raise ValueError("Genome version not recognized")
-	genome = Genome()
-	ref_filename = genome.reference_file
+	import genome_info
+	genome = genome_info.GenomeInfo(genome_version)
+	ref_filename = genome.seq_file
 
 	cdef bytes ref_2bit_bytes = ref_filename.encode()
 	#cdef char *name = bname

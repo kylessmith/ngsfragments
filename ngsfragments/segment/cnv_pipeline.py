@@ -9,7 +9,7 @@ np.seterr(all="ignore")
 
 # Local imports
 from ..fragments import Fragments
-from .cnv import call_cnvs
+from .cnv import call_cnvs, sex_prediction
 from .cnv_utilities import train_hmm, merge_segments, hmm_classify, validate_distributions
 from ..io import from_sam
 
@@ -77,7 +77,9 @@ def call_cnv_pipeline(pf: ProjectFrame,
                       estimatePloidy: bool = False,
                       minSegmentBins: int = 25,
                       maxCN: int = 5,
-                      wgbs: bool = False,
+                      use_normal: bool = False,
+                      keep_sex_chroms: bool = False,
+                      scStates: List[int] = [1, 3],
                       verbose: bool = False,
                       **kwargs) -> ProjectFrame:
     """
@@ -159,7 +161,9 @@ def call_cnv_pipeline(pf: ProjectFrame,
                             hazard,
                             shuffles,
                             p,
-                            wgbs,
+                            use_normal,
+                            keep_sex_chroms,
+                            scStates,
                             verbose)
 
     if isinstance(data, list):
@@ -180,7 +184,7 @@ def call_cnv_pipeline(pf: ProjectFrame,
                             shuffles,
                             p,
                             nthreads,
-                            wgbs,
+                            use_normal,
                             verbose)
 
     return pf
@@ -196,7 +200,8 @@ def predict_cnvs(pf: ProjectFrame,
                     hazard: int = 100,
                     shuffles: int = 5000,
                     p: float = 0.00005,
-                    wgbs: bool = False,
+                    use_normal: bool = False,
+                    keep_sex_chroms: bool = False,
                     verbose: bool = False,
                     **kwargs):
     """
@@ -261,7 +266,8 @@ def predict_cnvs(pf: ProjectFrame,
                                     hazard = hazard,
                                     shuffles = shuffles,
                                     p = p,
-                                    wgbs = wgbs)
+                                    use_normal = use_normal,
+                                    keep_sex_chroms = keep_sex_chroms)
     
     # Append bins
     cnv_bins = cnv_bins.loc[:,["ratios"]]
@@ -280,12 +286,13 @@ def predict_purity(pf: ProjectFrame,
                    outlier_smooth: bool = True,
                    gauss_smooth: bool = False,
                    bcp_cutoff: float = 0.3,
-                   normal: List[float] = [0.1, 0.5, 0.9],
+                   normal: List[float] = [0.1, 0.25, 0.5, 0.75, 0.9],
                    ploidy: List[int] = [1, 2, 3],
                    estimatePloidy: bool = False,
                    minSegmentBins: int = 25,
-                   maxCN: int = 7,
-                   wgbs: bool = False,
+                   maxCN: int = 5,
+                   use_normal: bool = False,
+                   scStates: List[int] = [1, 3],
                    verbose: bool = False,
                    **kwargs):
     """
@@ -340,6 +347,10 @@ def predict_purity(pf: ProjectFrame,
     # Check if file was previously annotated
     pf = log_fragments(pf, frags)
 
+    # Determine if remove chr19
+    #if pf.params["ref_genome"] == "hg19" or pf.params["ref_genome"] == "hg38":
+    #    remove_chroms.append("chr19")
+
     # Calculate bins
     hmm_binsize = bin_size
     bins, segments = call_cnvs(data = frags,
@@ -350,7 +361,7 @@ def predict_purity(pf: ProjectFrame,
                                 gauss_smooth = gauss_smooth,
                                 verbose = verbose,
                                 cutoff = bcp_cutoff,
-                                wgbs = wgbs)
+                                use_normal = use_normal)
 
     # Define gender
     try:
@@ -362,10 +373,11 @@ def predict_purity(pf: ProjectFrame,
     hmm_states = train_hmm(bins,
                             normal = normal,
                             ploidy = ploidy,
-                            gender = gender,
+                            gender = None,
                             estimatePloidy = estimatePloidy,
                             minSegmentBins = minSegmentBins,
                             maxCN = maxCN,
+                            scStates = scStates,
                             verbose = verbose,
                             **kwargs)
 
@@ -389,7 +401,8 @@ def calculate_hmm_states(pf: ProjectFrame,
                         estimatePloidy: bool = False,
                         minSegmentBins: int = 25,
                         maxCN: int = 7,
-                        wgbs: bool = False,
+                        use_normal: bool = False,
+                        scStates: List[int] = [1, 3],
                         verbose: bool = False,
                         **kwargs):
     """
@@ -454,7 +467,7 @@ def calculate_hmm_states(pf: ProjectFrame,
                                 gauss_smooth = gauss_smooth,
                                 verbose = verbose,
                                 cutoff = bcp_cutoff,
-                                wgbs = wgbs)
+                                use_normal = use_normal)
 
     # Define gender
     try:
@@ -471,6 +484,7 @@ def calculate_hmm_states(pf: ProjectFrame,
                             minSegmentBins = minSegmentBins,
                             maxCN = maxCN,
                             verbose = verbose,
+                            scStates = scStates,
                             **kwargs)
 
     pf.uns[sample_name] = {"hmm_states": hmm_states}
@@ -553,7 +567,9 @@ def call_cnvs_single(pf: ProjectFrame,
                      hazard: int = 100,
                      shuffles: int = 5000,
                      p: float = 0.00005,
-                     wgbs: bool = False,
+                     use_normal: bool = False,
+                     keep_sex_chroms: bool = False,
+                     scStates: List[int] = [1, 3],
                      verbose: bool = False):
     """
     Call CNVs in a single sample
@@ -616,6 +632,10 @@ def call_cnvs_single(pf: ProjectFrame,
     if sum([label_counts[c] > 10 for c in label_counts]) < 10:
         print("Not enough chromosomes in", sample_name)
         return pf
+    
+    # Predict sex
+    gender = sex_prediction(frags, bin_size=cnv_binsize)
+    pf.add_anno("predicted_gender", sample_name, gender["gender"])
 
     # Predict purity and ploidy
     pf = predict_purity(pf,
@@ -631,7 +651,8 @@ def call_cnvs_single(pf: ProjectFrame,
                         minSegmentBins = minSegmentBins,
                         maxCN = maxCN,
                         verbose = verbose,
-                        wgbs = wgbs)
+                        use_normal = use_normal,
+                        scStates = scStates)
 
     # Train HMM
     pf = calculate_hmm_states(pf,
@@ -646,7 +667,8 @@ def call_cnvs_single(pf: ProjectFrame,
                             estimatePloidy = estimatePloidy,
                             minSegmentBins = minSegmentBins,
                             maxCN = maxCN,
-                            wgbs = wgbs,
+                            use_normal = use_normal,
+                            scStates = scStates,
                             verbose = verbose)
 
     # Call Copy Number Variations
@@ -661,7 +683,8 @@ def call_cnvs_single(pf: ProjectFrame,
               hazard = hazard,
               shuffles = shuffles,
               p = p,
-              wgbs = wgbs)
+              use_normal = use_normal,
+              keep_sex_chroms = keep_sex_chroms)
     pf = process_cnvs(pf,
                     frags)
 
@@ -688,7 +711,7 @@ def call_cnvs_multiple(pf: ProjectFrame,
                      shuffles: int = 5000,
                      p: float = 0.00005,
                      nthreads: int = 1,
-                     wgbs: bool = False,
+                     use_normal: bool = False,
                      verbose: bool = False):
     """
     Call CNVs for all samples in a directory
@@ -758,7 +781,7 @@ def call_cnvs_multiple(pf: ProjectFrame,
                      hazard,
                      shuffles,
                      p,
-                     wgbs,
+                     use_normal,
                      verbose)
 
     return pf

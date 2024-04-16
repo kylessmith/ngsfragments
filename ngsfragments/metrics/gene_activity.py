@@ -166,9 +166,12 @@ def gene_activity(intervals: Fragments | LabeledIntervalArray,
     """
 
     # Get sample name
-    path = os.path.normpath(frags.sam_file)
-    file_name = path.split(os.sep)[-1]
-    sample_name = file_name.split(".bam")[0]
+    if isinstance(intervals, Fragments):
+        path = os.path.normpath(intervals.sam_file)
+        file_name = path.split(os.sep)[-1]
+        sample_name = file_name.split(".bam")[0]
+    else:
+        sample_name = "sample"
 
     # Get windows
     import genome_info

@@ -432,7 +432,7 @@ void split_methyl_bam(const char *bam_file_path,
     {
         //printf("   splitting\n");
         previous_distance = current_distance;
-        pair = methyl_profile_split(pair,
+        pair = methyl_profile_split_new(pair,
                                     bam_file_path,
                                     ref_2bit,
                                     chromosome,

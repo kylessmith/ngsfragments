@@ -103,9 +103,12 @@ def plot_table(pf: ProjectFrame,
     return ax
 
 
-def mean_window(window_scores, center_x=None, title=None, xlabel=None, ylabel=None, show=True, save=None, ax=None):
+def plot_mean_window(pf, obs, center_x=None, title=None, xlabel=None, ylabel=None, show=True, save=None, ax=None):
     """
     """
+
+    # Get scores
+    window_scores = pf.obs_values[obs]["tss_wps"].engine.df.mean(axis=0).values
     
     # Creat Axes object if not given
     if ax == None:
@@ -396,6 +399,7 @@ def fragment_distribution(pf: ProjectFrame,
 
 def cnv_summary(pf: ProjectFrame,
                 key: str,
+                add_wps: bool = False,
                 show: bool = True,
                 save: str = None):
     """
@@ -417,7 +421,7 @@ def cnv_summary(pf: ProjectFrame,
     """
 
     # Initialize matplotlib grid
-    fig = plt.figure(figsize=(10, 7), constrained_layout=True)
+    fig = plt.figure(figsize=(10, 7), constrained_layout=True)        
     gs = fig.add_gridspec(3, 3)
 
     # Plot table
@@ -430,8 +434,16 @@ def cnv_summary(pf: ProjectFrame,
 
     # Plot fragment length distribution
     with sns.axes_style("ticks"):
-        len_ax = fig.add_subplot(gs[0, 1:])
+        if add_wps:
+            len_ax = fig.add_subplot(gs[0, 1])
+        else:
+            len_ax = fig.add_subplot(gs[0, 1:])
     len_ax = fragment_distribution(pf, key, title=None, show=False, ax=len_ax)
+
+    # Plot WPS
+    if add_wps:
+        wps_ax = fig.add_subplot(gs[0, 2])
+        wps_ax = plot_mean_window(pf, key, center_x = 1000, title=None, show=False, xlabel="Distance to TSS", ylabel="WPS", ax=wps_ax)
 
     # Plot CNV plot
     with sns.axes_style("ticks"):
@@ -440,7 +452,7 @@ def cnv_summary(pf: ProjectFrame,
 
     # Save of display plot
     if save != None:
-        plt.savefig(save, transparent=True, dpi=80)
+        plt.savefig(save, transparent=True, dpi=300)
     if show:
         plt.show()
 

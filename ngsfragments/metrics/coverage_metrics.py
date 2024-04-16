@@ -130,7 +130,8 @@ def cov_score_tfs(intervals: Fragments | LabeledIntervalArray,
         wps = intervals.coverage(chrom, min_length, max_length)
         if smooth:
             wps[chrom][:] = gaussian_smooth(normalize_signal(wps[chrom].values), scale=10)
-        wps[chrom][:] = normalize_signal(wps[chrom].values)
+        else:
+            wps[chrom][:] = normalize_signal(wps[chrom].values)
 
         # Iterate over tfs
         for tf in tfs:

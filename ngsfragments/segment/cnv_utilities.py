@@ -373,6 +373,7 @@ def train_hmm(bins: IntervalFrame,
               estimatePloidy: bool = False,
               minSegmentBins: int = 25,
               maxCN: int = 7,
+              scStates: List[int] = [1, 3],
               verbose: int = False,
               **kwargs: Any):
     """
@@ -413,6 +414,7 @@ def train_hmm(bins: IntervalFrame,
                                             estimatePloidy=estimatePloidy,
                                             minSegmentBins=minSegmentBins,
                                             maxCN=maxCN,
+                                            scStates=scStates,
                                             verbose=verbose,
                                             **kwargs)
     

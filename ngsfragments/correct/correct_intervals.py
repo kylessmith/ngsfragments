@@ -3,7 +3,7 @@ import numpy as np
 from intervalframe import IntervalFrame
 
 # Local imports
-from .correction import correct_counts
+from .correction import binned_bias_correct_counts
 
 
 def calculate_interval_bias(intervals: IntervalFrame,
@@ -12,7 +12,8 @@ def calculate_interval_bias(intervals: IntervalFrame,
                             genome_version: str = "hg19",
                             include_blacklist: bool = True,
                             include_repeat: bool = True,
-                            include_gc: bool = True) -> None:
+                            include_gc: bool = True,
+                            include_mappability: bool = True) -> None:
     """
     Calculate bias per interval
     
@@ -30,6 +31,8 @@ def calculate_interval_bias(intervals: IntervalFrame,
             Flag to include repeat
         include_gc : bool
             Flag to include gc
+        include_mappability : bool
+            Flag to include mappability
 
     Returns
     ----------
@@ -37,16 +40,15 @@ def calculate_interval_bias(intervals: IntervalFrame,
     """
 
     # Assign genome
-    if genome_version == "hg19":
-        from hg19genome import calculate_bias
-    elif genome_version == "hg38":
-        from hg38genome import calculate_bias
+    import genome_info
+    genome = genome_info.GenomeInfo(genome_version)
 
     # Initialize bias records
-    bias_record = calculate_bias(intervals.index,
+    bias_record = genome.calculate_bias(intervals.index,
                                  include_blacklist,
                                  include_repeat,
-                                 include_gc)
+                                 include_gc,
+                                 include_mappability)
     
     # Remove blacklist
     chosen = bias_record.df.loc[:,"blacklist"].values < 0.1
@@ -66,8 +68,9 @@ def calculate_interval_bias(intervals: IntervalFrame,
         intervals = intervals.iloc[chosen,:]
 
     # Correct
-    intervals.df.loc[:,"corrected_values"] = correct_counts(intervals.df.loc[:,column].values,
-                                                            bias_record.df)
+    intervals.df.loc[:,"corrected_values"] = binned_bias_correct_counts(intervals.df.loc[:,column].values,
+                                                                        bias_record,
+                                                                        n_bins = 10)
 
 
     return intervals

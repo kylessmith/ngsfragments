@@ -45,6 +45,10 @@ cdef extern from "merge_bams.c":
 	# C is include here so that it doesn't need to be compiled externally
 	pass
 
+cdef extern from "bounds_motif.c":
+	# C is include here so that it doesn't need to be compiled externally
+	pass
+
 cdef extern from "kmers/interval_kmer.c":
 	# C is include here so that it doesn't need to be compiled externally
 	pass
@@ -142,6 +146,19 @@ cdef extern from "read_intervals.h":
 					int min_size, int max_size, int paired, int qcfail, int mapq_cutoff,
 					float proportion, int nthreads, int add_chr) nogil
 
+	# Add reads from sam file to inteval list and adjust for nucleosome occupancy
+	void sam_nucleosome_add(char *samfile_name,
+							labeled_aiarray_t *intervals,
+							int min_size,
+							int max_size,
+							int paired,
+							int fixed_size,
+							int qcfail,
+							int mapq_cutoff,
+							float proportion,
+							int nthreads,
+							int add_chr) nogil
+
 	#==================================================================================================
 	# methyl_fragment_iter.c
 	#--------------------------------------------------------------------------------------------------
@@ -221,6 +238,25 @@ cdef extern from "read_intervals.h":
                         int nthreads) nogil
 
 	#==================================================================================================
+	# bounds_motif.c
+	#--------------------------------------------------------------------------------------------------
+
+	void bounds_motif_split(char *samfile_name,
+                                            char *fname,
+											char *chromosome,
+                                            const char *output_bam_file_path1,
+                                            const char *output_bam_file_path2,
+                                            int n_bases,
+                                            int min_size,
+                                            int max_size,
+                                            int paired,
+                                            int qcfail,
+                                            int mapq_cutoff,
+                                            float proportion,
+                                            int nthreads,
+                                            int add_chr) nogil
+
+	#==================================================================================================
 	# merge_bams.c
 	#--------------------------------------------------------------------------------------------------
 
@@ -232,6 +268,9 @@ cdef extern from "read_intervals.h":
 
 cdef labeled_aiarray_t *sam_read(char *samfile_name, int min_size, int max_size, int paired, int qcfail, int mapq_cutoff,
 								 float proportion, int nthreads, int add_chr)
+
+cdef labeled_aiarray_t *sam_nucleosome_read(char *samfile_name, int min_size, int max_size, int paired, int qcfail, int mapq_cutoff,
+								 			float proportion, int nthreads, int add_chr, int fixed_size)
 
 cdef np.ndarray pointer_to_numpy_array_int(void *ptr, np.npy_intp size)
 

@@ -2,7 +2,7 @@ from __future__ import division, print_function, absolute_import
 import numpy as np
 import ailist
 import pysam
-import hg19genome
+import genome_info
 import glob
 import platform
 import re
@@ -436,7 +436,7 @@ common_options = dict(
     # for out-of-tree compilation, use absolute paths
     library_dirs=[os.path.abspath(x) for x in ["ngsfragments"] + htslib_library_dirs],
     include_dirs=[os.path.abspath(x) for x in htslib_include_dirs + \
-                  ["ngsfragments", ".", np.get_include(), ailist.get_include(), hg19genome.get_include()] + include_os + pysam.get_include()])
+                  ["ngsfragments", ".", np.get_include(), ailist.get_include(), genome_info.get_include()] + include_os + pysam.get_include()])
 
 # add common options (in python >3.5, could use n = {**a, **b}
 for module in modules:
