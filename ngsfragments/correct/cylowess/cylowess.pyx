@@ -12,8 +12,9 @@ Cleveland, W.S. (1979) "Robust Locally Weighted Regression and Smoothing
 Scatterplots". Journal of the American Statistical Association 74 (368): 829-836.
 '''
 
-cimport numpy as np
 import numpy as np
+cimport numpy as np
+np.import_array()
 from cpython cimport bool
 cimport cython
 from libc.math cimport fabs, fmax 

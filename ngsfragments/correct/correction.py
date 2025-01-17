@@ -6,6 +6,8 @@ from scipy.stats import norm
 from scipy.signal import fftconvolve
 from scipy.ndimage import convolve
 import statsmodels.api as sm
+from loess import loess_2d, loess_1d
+from sklearn.cluster import KMeans
 
 # Local imports
 from .cylowess.cylowess import lowess
@@ -94,7 +96,7 @@ def filter_bins(bins: IntervalFrame,
 
 def binned_bias_correct_counts(values: np.ndarray,
                                 bin_bias: IntervalFrame,
-                                n_bins: int = 25) -> np.ndarray:
+                                n_bins: int = 15) -> np.ndarray:
     """
     Bin bias values and correct for bias
 
@@ -113,33 +115,127 @@ def binned_bias_correct_counts(values: np.ndarray,
             Corrected values
     """
 
+    # Remove nans
+    not_nan = ~pd.isnull(values)
+    values = values[not_nan]
+    bin_bias = bin_bias.iloc[not_nan,:]
+
     # Iterate over columns
     new_values = values.copy().astype(float)
     for column in bin_bias.columns:
-        if column in ["n", "blacklist", "mappability"]:
+        if column in ["n", "blacklist"]:
             continue
 
         # Get bias values
         bias_values = bin_bias.df.loc[:,column].values
 
         # Bin values
-        bins = np.histogram(bias_values, bins=n_bins)[1]
-        assignments = np.digitize(bias_values, bins)
+        b = np.histogram(bias_values, bins=n_bins)[1]
+        labels = np.digitize(bias_values, b)
 
         # Calculate median bias values
-        medians = np.zeros(n_bins)
-        for i in range(n_bins):
-            if np.sum(assignments == (i+1)) > 0:
-                medians[i] = np.median(new_values[assignments == (i+1)])
+        label_x = pd.Series(new_values).groupby(labels).median()
 
         # Calculate LOWESS regression
-        res = sm.nonparametric.lowess(medians, bins[:-1], frac=1.0, it=10, return_sorted=False)
+        res = loess_1d.loess_1d(b, label_x.values, frac=1.0)
+        #res = sm.nonparametric.lowess(medians, bins[:-1], frac=1.0, it=10, return_sorted=False)
 
         # Calculate corrected values
-        for i in range(n_bins):
-            new_values[assignments == (i+1)] = new_values[assignments == (i+1)] / res[i]
+        for i, l in enumerate(label_x.index.values):
+            new_values[labels==l] = new_values[labels==l] / res[1][i]
 
     return new_values
+
+
+def gc_mappability_correct(values: np.ndarray,
+                           bin_bias: IntervalFrame) -> np.ndarray:
+    """
+    Correct for gc and mappability together
+
+    Parameters
+    ----------
+        values : np.ndarray
+            Values to correct
+        bin_bias : pd.DataFrame
+            Bin bias
+
+    Returns
+    -------
+        values : np.ndarray
+            Corrected values
+    """
+
+    # Run 2D loess
+    res = loess_2d.loess_2d(x=bin_bias.df.loc[:,"gc"].values, y=bin_bias.df.loc[:,"mappability"].values, z=values)
+
+    # Calculate corrected values
+    new_values = values / res[0]
+
+    return new_values
+
+
+def gc_mappability_bin_correct(values: np.ndarray,
+                                bin_bias: IntervalFrame,
+                                n_bins: int = 25) -> np.ndarray:
+    """
+    Correct for gc and mappability together
+
+    Parameters
+    ----------
+        values : np.ndarray
+            Values to correct
+        bin_bias : pd.DataFrame
+            Bin bias
+        n_bins : int
+            Number of bins to use
+
+    Returns
+    -------
+        values : np.ndarray
+            Corrected values
+    """
+
+    # Remove nans
+    n = len(values)
+    not_nan = ~pd.isnull(values)
+    values = values[not_nan]
+    bin_bias = bin_bias.iloc[not_nan,:]
+
+    # Initialize new values
+    new_values = values.copy().astype(float)
+
+    # Determine bins
+    m_labels = np.round(bin_bias.df.loc[:,"mappability"].values*100).astype(int).astype(str)
+    gc_labels = np.round(bin_bias.df.loc[:,"gc"].values*100).astype(int).astype(str)
+    labels = np.array([str(gc_labels[i])+"-"+str(m_labels[i]) for i in range(len(m_labels))])
+
+    # Calculate medians for clusters
+    label_gc = pd.Series(bin_bias.df.loc[:,"gc"].values * 100).groupby(labels).median()
+    label_m = pd.Series(bin_bias.df.loc[:,"mappability"].values * 100).groupby(labels).median()
+    label_x = pd.Series(values).groupby(labels).median()
+
+    # Run 2D loess
+    res = loess_2d.loess_2d(x=label_gc.values, y=label_m.values, z=label_x.values, frac=0.33, degree=2)
+    res = pd.Series(res[0], index=label_x.index.values)
+        
+    # Calculate corrected values
+    for i, l in enumerate(label_x.index.values):
+        new_values[labels==l] = new_values[labels==l] / res[l]
+    new_values = new_values * np.nanmedian(values)
+
+    # Correct others
+    #bin_bias = bin_bias.copy()
+    #bin_bias.df = bin_bias.df.drop(columns=["mappability","blacklist"])
+    #if bin_bias.shape[1] > 0:
+    #    new_values = chr_bias_correct_counts(new_values, bin_bias)
+
+    # Add nans
+    final_values = np.zeros(n)
+    final_values[:] = np.nan
+    final_values[not_nan] = new_values
+
+    return final_values
+
 
 
 def correct_counts(values: np.ndarray,

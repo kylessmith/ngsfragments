@@ -100,6 +100,12 @@ def call_cnvs(data: Fragments | IntervalFrame,
     # Remove nans
     if verbose: print("Filtering...", flush=True)
     bin_coverage = bin_coverage.iloc[~pd.isnull(bin_coverage.loc[:,"ratios"].values),:]
+
+    # Correct chr19 if necessary
+    if genome_version == "hg38" or genome_version == "hg19":
+        if "chr19" in bin_coverage.index.unique_labels:
+            if np.median(bin_coverage.df.loc[bin_coverage.index.labels=="chr19","ratios"].values) < -0.05:
+                bin_coverage.df.loc[bin_coverage.index.labels=="chr19","ratios"] = bin_coverage.df.loc[bin_coverage.index.labels=="chr19","ratios"].values + 0.07
         
     # Calculate segments
     if verbose: print("Segmenting...")

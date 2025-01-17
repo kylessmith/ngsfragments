@@ -426,6 +426,9 @@ modules = [
     dict(name="ngsfragments.correct.cylowess.cylowess",
          sources=["ngsfragments.correct.cylowess.cylowess".replace(".", os.path.sep)+".pyx"] + shared_htslib_sources + os_c_files,
          libraries=external_htslib_libraries),
+    dict(name="ngsfragments.segment.merge_regions.merge_regions",
+         sources=["ngsfragments.segment.merge_regions.merge_regions".replace(".", os.path.sep)+".pyx"] + shared_htslib_sources + os_c_files,
+         libraries=external_htslib_libraries),
 ]
 
 common_options = dict(

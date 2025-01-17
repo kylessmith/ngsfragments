@@ -14,6 +14,83 @@ from ..peak_calling.CallPeaks import call_peaks, normalize_signal
 from .metric_utils import score_window, nfr
 
 
+def wps_nfr_scores(wps_windows: IntervalFrame,
+                   center_x: int) -> np.ndarray:
+    """
+    """
+
+    # Normalize values
+    values = wps_windows.df.values
+    values = ((values.T - np.min(values,axis=1)) / (np.max(values, axis=1) - np.min(values, axis=1))).T
+
+    # Calculate NFR
+    nf = np.sum(values[:,center_x - 50:center_x + 50], axis=1)
+    n1 = np.sum(values[:,center_x - 200:center_x - 50], axis=1)
+    n2 = np.sum(values[:,center_x + 50:center_x + 200], axis=1)
+
+    nfr_score = np.log2(nf) - np.log2((n1 + n2) / 2)
+
+    return nfr_score
+
+
+def wps_window_scores(intervals: Fragments | LabeledIntervalArray,
+                      windows: LabeledIntervalArray,
+                      window_size: int,
+                    protection: int = 120,
+                    min_length: int = 120,
+                    max_length: int = 220,
+                    smooth: bool = True,
+                    verbose: bool = False) -> IntervalFrame:
+    """
+    """
+
+    # Convert intervals
+    if isinstance(intervals, Fragments):
+        intervals = intervals.frags
+
+    # Sort windows
+    windows = windows[windows.sorted_index()]
+
+    # Iterate over chromosomes
+    chroms = intervals.unique_labels
+    values = np.zeros((len(windows), window_size))
+    i = 0
+    for chrom in chroms:
+        if verbose: print(chrom, flush=True)
+
+        # Get wps scores
+        chrom_windows = windows.get(chrom)
+        if len(chrom_windows) > 0:
+            wps = intervals.wps(protection, chrom, min_length, max_length)
+            if smooth:
+                wps[chrom][:] = gaussian_smooth(normalize_signal(wps[chrom].values), scale=10)
+            else:
+                wps[chrom][:] = normalize_signal(wps[chrom].values)
+            wps = wps[chrom]
+
+            # Iterate over windows
+            for interval in chrom_windows:
+                if (interval.end - interval.start) == (window_size):
+                    value = wps.loc[interval.start:interval.end-1].values
+                    if len(value) == (window_size):
+                        values[i,:] = value
+                    else:
+                        #values[i,:] = np.nan
+                        values[i,:] = 0
+                else:
+                    #values[i,:] = np.nan
+                    values[i,:] = 0
+
+                i += 1
+
+    # Convert to DataFrame
+    wps_df = pd.DataFrame(values, index=range(len(windows)), columns=range(window_size))
+    iframe = IntervalFrame(intervals = windows, df=wps_df)
+
+    return iframe
+
+    
+
 def wps_windows(intervals: Fragments | LabeledIntervalArray,
                 protection: int = 120,
                 min_length: int = 120,

@@ -2,6 +2,7 @@
 
 import numpy as np
 cimport numpy as np
+np.import_array()
 cimport cython
 from ailist.LabeledIntervalArray_core cimport LabeledIntervalArray, labeled_aiarray_t, labeled_aiarray_add, labeled_aiarray_init
 from .RunningMedian cimport running_median

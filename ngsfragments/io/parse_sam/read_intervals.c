@@ -32,22 +32,22 @@ int check_read(bam1_t *aln, int min_size, int max_size, int paired, int qcfail, 
     flag = aln->core.flag;
 
     // Check qcfail
-    is_qcfail = (int)(flag & BAM_FQCFAIL);
-    if (is_qcfail != qcfail)
+    //is_qcfail = (int)(flag & BAM_FQCFAIL);
+    if (aln->core.flag & BAM_FQCFAIL)
     {
         return 0;
     }
 
     // Check mapping status
-    is_unmapped = (int)(flag & BAM_FUNMAP);
-    if (is_unmapped == 1)
+    //is_unmapped = (int)(flag & BAM_FUNMAP);
+    if (aln->core.flag & BAM_FUNMAP)
     {
         return 0;
     }
 
     // Check duplicate status
-    is_duplicate = (int)(flag & BAM_FDUP);
-    if (is_duplicate == 1)
+    //is_duplicate = (int)(flag & BAM_FDUP);
+    if (aln->core.flag & BAM_FDUP)
     {
         return 0;
     }
@@ -55,13 +55,13 @@ int check_read(bam1_t *aln, int min_size, int max_size, int paired, int qcfail, 
     // Check paired status
     if (paired == 1)
     {
-        is_proper_pair = (int)(flag & BAM_FPROPER_PAIR);
-        if (is_proper_pair == 0)
-        {
-            return 0;
-        }
-        mate_is_unmapped = (int)(flag & BAM_FMUNMAP);
-        if (mate_is_unmapped == 1)
+        //is_proper_pair = (int)(flag & BAM_FPROPER_PAIR);
+        //if (aln->core.flag & BAM_FPROPER_PAIR)
+        //{
+        //    return 0;
+        //}
+        //mate_is_unmapped = (int)(flag & BAM_FMUNMAP);
+        if (aln->core.flag & BAM_FMUNMAP)
         {
             return 0;
         }
@@ -78,20 +78,23 @@ int check_read(bam1_t *aln, int min_size, int max_size, int paired, int qcfail, 
     }
     
     // Insert read into interval list
-    if (tlen >= min_size && tlen <= max_size)
+    if (aln->core.flag & BAM_FPROPER_PAIR)
     {
-        // Randomly downsample
-        if (proportion < 1.0)
+        if (tlen >= min_size && tlen <= max_size)
         {
-            //r = rand() / RAND_MAX;
-            float random = (float)rand();
-            r = (random / max);
-            if (r < proportion)
+            // Randomly downsample
+            if (proportion < 1.0)
             {
+                //r = rand() / RAND_MAX;
+                float random = (float)rand();
+                r = (random / max);
+                if (r < proportion)
+                {
+                    return 1;
+                }
+            } else {
                 return 1;
             }
-        } else {
-            return 1;
         }
     }
 

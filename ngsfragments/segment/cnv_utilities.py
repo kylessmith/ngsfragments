@@ -207,7 +207,8 @@ def hmm_classify(segments: IntervalFrame,
 
 def validate_calls(segments: IntervalFrame,
                    bins: IntervalFrame,
-                   n_mads: int = 1):
+                   n_mads: int = 1,
+                   column: str = "ratios"):
     """
     Validate NEUT calls are in distribution
 
@@ -241,7 +242,7 @@ def validate_calls(segments: IntervalFrame,
         past_n_neutral = np.sum(segments.loc[:,"Corrected_Call"].values == "NEUT")
 
         # Define a neutral distribution
-        neutral_distribution = bins.overlap(segments.iloc[is_neutral,:]).df.loc[:,"ratios"].values
+        neutral_distribution = bins.overlap(segments.iloc[is_neutral,:]).df.loc[:,column].values
         neutral_median = np.median(neutral_distribution)
         neutral_mad = calculate_MAD(neutral_distribution)
         
@@ -273,12 +274,13 @@ def validate_calls(segments: IntervalFrame,
         # Correct number of neutrals
         n_neutral = np.sum(segments.df.loc[:,"Corrected_Call"].values == "NEUT")
 
-    return
+    return segments
 
 
 def correct_neutral(segments: IntervalFrame,
                     bins: IntervalFrame,
-                    n_mads: int = 1):
+                    n_mads: int = 1,
+                    column: str = "ratios"):
     """
     Correct neutral calls
 
@@ -311,7 +313,7 @@ def correct_neutral(segments: IntervalFrame,
         past_n_neutral = is_neutral.sum()
 
         # Define a neutral distribution
-        neutral_distribution = bins.overlap(segments.iloc[is_neutral,:]).df.loc[:,"ratios"].values
+        neutral_distribution = bins.overlap(segments.iloc[is_neutral,:]).df.loc[:,column].values
         neutral_median = np.median(neutral_distribution)
         neutral_mad = calculate_MAD(neutral_distribution)
 
@@ -335,7 +337,26 @@ def correct_neutral(segments: IntervalFrame,
         # Correct number of neutrals
         n_neutral = np.sum(segments.df.loc[:,"Corrected_Call"].values == "NEUT")
 
-    return
+    return segments
+
+
+def correct_direction(segments: IntervalFrame) -> IntervalFrame:
+    """
+    """
+
+    # Determine direction
+    for i in np.arange(segments.shape[0]):
+        index = segments.df.index.values[i]
+        if segments.df.loc[index,"Corrected_Call"] == "NEUT":
+            continue
+        elif segments.df.loc[index,"Corrected_Call"] == "HETD" and segments.df.loc[index,"median"] > 0:
+            segments.df.loc[index,"Corrected_Call"] = "GAIN"
+            segments.df.loc[index,"Corrected_Copy_Number"] == 3
+        elif segments.df.loc[index,"Corrected_Call"] == "GAIN" and segments.df.loc[index,"median"] < 0:
+            segments.df.loc[index,"Corrected_Call"] = "HETD"
+            segments.df.loc[index,"Corrected_Copy_Number"] == 1
+
+    return segments
 
 
 def median_variance(segments: IntervalFrame,
@@ -438,7 +459,8 @@ def train_hmm(bins: IntervalFrame,
 
 def validate_distributions(segments: IntervalFrame,
                            bins: IntervalFrame,
-                           n_mads: float = 1.4826):
+                           n_mads: float = 1.4826,
+                           column: str = "ratios"):
     """
     Validate segment distributions
 
@@ -457,10 +479,11 @@ def validate_distributions(segments: IntervalFrame,
     """
 
     # Valicate segment classifications
-    correct_neutral(segments, bins, n_mads=n_mads)
-    validate_calls(segments, bins, n_mads=n_mads)
+    segments = correct_neutral(segments, bins, n_mads=n_mads, column = column)
+    segments = validate_calls(segments, bins, n_mads=n_mads, column = column)
+    segments = correct_direction(segments)
 
-    return
+    return segments
 
 
 def write_seg_file(pf: ProjectFrame,

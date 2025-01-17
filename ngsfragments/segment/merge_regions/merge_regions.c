@@ -4,8 +4,53 @@
 {
     "distutils": {
         "depends": [
-            "/Users/ksmith10/Library/CloudStorage/Dropbox/GitHub/ngsfragments/ngsfragments/peak_calling/running_mean.c",
-            "/Users/ksmith10/Library/CloudStorage/Dropbox/GitHub/ngsfragments/ngsfragments/peak_calling/running_mean.h",
+            "/Users/ksmith10/Library/CloudStorage/Dropbox/GitHub/ngsfragments/ngsfragments/segment/merge_regions/process_merge.c",
+            "/Users/ksmith10/Library/CloudStorage/Dropbox/GitHub/ngsfragments/ngsfragments/segment/merge_regions/process_merge.h",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_add.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_closest.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_construct.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_coverage.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_extract.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_filter.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_get_id.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_iter.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_merge.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_nhits.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_ops.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_query.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_simulate.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/ailist_wps.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/augmented_interval_list.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/augmented_interval_list.h",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/interval.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/interval.h",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/ailist/overlap_index.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/array_query/array_query_utilities.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/array_query/array_query_utilities.h",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/khash.h",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_add.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_construct.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_coverage.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_extract.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_filter.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_get.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_index.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_iter.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_match.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_merge.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_nhits.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_ops.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_percent.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_query_array.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_query_index.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_query_single.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_simulate.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_sort.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_aiarray_wps.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_augmented_array.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/labeled_augmented_array.h",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/labeled_aiarray/overlap_label_index.c",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist/src/utilities/utilities.h",
             "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/numpy/core/include/numpy/arrayobject.h",
             "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/numpy/core/include/numpy/arrayscalars.h",
             "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/numpy/core/include/numpy/ndarrayobject.h",
@@ -23,11 +68,12 @@
             "-rpath",
             "@loader_path",
             "-Wl,-headerpad_max_install_names",
-            "-Wl,-install_name,@rpath/RunningMean.cpython-312-darwin.so",
+            "-Wl,-install_name,@rpath/merge_regions.cpython-312-darwin.so",
             "-Wl,-x"
         ],
         "include_dirs": [
-            "ngsfragments/peak_calling",
+            "ngsfragments/segment/merge_regions",
+            "/var/folders/9f/jr2rvwvs1594d50cdhzmknp00000gp/T/tmp393u7kcp/.venv/lib/python3.12/site-packages/ailist",
             "/Users/ksmith10/Library/CloudStorage/Dropbox/GitHub/ngsfragments/htslib",
             "/Users/ksmith10/Library/CloudStorage/Dropbox/GitHub/ngsfragments/ngsfragments",
             "/Users/ksmith10/Library/CloudStorage/Dropbox/GitHub/ngsfragments",
@@ -53,14 +99,18 @@
             "/Users/ksmith10/Library/CloudStorage/Dropbox/GitHub/ngsfragments/build/lib.macosx-10.15-x86_64-3.12/ngsfragments",
             "build/lib.macosx-10.15-x86_64-cpython-312/ngsfragments",
             "build/lib.macosx-10.15-x86_64-cpython-312/ngsfragments",
+            "build/lib.macosx-10.15-x86_64-cpython-312/ngsfragments",
+            "build/lib.macosx-10.15-x86_64-cpython-312/ngsfragments",
+            "build/lib.macosx-10.15-x86_64-cpython-312/ngsfragments",
+            "build/lib.macosx-10.15-x86_64-cpython-312/ngsfragments",
             "build/lib.macosx-10.15-x86_64-cpython-312/ngsfragments"
         ],
-        "name": "ngsfragments.peak_calling.RunningMean",
+        "name": "ngsfragments.segment.merge_regions.merge_regions",
         "sources": [
-            "ngsfragments/peak_calling/RunningMean.pyx"
+            "ngsfragments/segment/merge_regions/merge_regions.pyx"
         ]
     },
-    "module_name": "ngsfragments.peak_calling.RunningMean"
+    "module_name": "ngsfragments.segment.merge_regions.merge_regions"
 }
 END: Cython Metadata */
 
@@ -1280,8 +1330,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__ngsfragments__peak_calling__RunningMean
-#define __PYX_HAVE_API__ngsfragments__peak_calling__RunningMean
+#define __PYX_HAVE__ngsfragments__segment__merge_regions__merge_regions
+#define __PYX_HAVE_API__ngsfragments__segment__merge_regions__merge_regions
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
@@ -1293,10 +1343,56 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include "numpy/ndarraytypes.h"
 #include "numpy/arrayscalars.h"
 #include "numpy/ufuncobject.h"
-#include "running_mean.c"
-#include "running_mean.h"
-#include "pythread.h"
+#include <stdint.h>
 #include <stdlib.h>
+#include "src/array_query/array_query_utilities.c"
+#include "src/array_query/array_query_utilities.h"
+#include "src/ailist/interval.c"
+#include "src/ailist/interval.h"
+#include "src/ailist/augmented_interval_list.c"
+#include "src/ailist/ailist_add.c"
+#include "src/ailist/ailist_construct.c"
+#include "src/ailist/ailist_query.c"
+#include "src/ailist/ailist_iter.c"
+#include "src/ailist/ailist_get_id.c"
+#include "src/ailist/ailist_coverage.c"
+#include "src/ailist/ailist_nhits.c"
+#include "src/ailist/ailist_wps.c"
+#include "src/ailist/ailist_merge.c"
+#include "src/ailist/ailist_extract.c"
+#include "src/ailist/ailist_ops.c"
+#include "src/ailist/ailist_filter.c"
+#include "src/ailist/ailist_simulate.c"
+#include "src/ailist/ailist_closest.c"
+#include "src/ailist/overlap_index.c"
+#include "src/utilities/utilities.h"
+#include "src/ailist/augmented_interval_list.h"
+#include "src/labeled_aiarray/labeled_augmented_array.c"
+#include "src/labeled_aiarray/overlap_label_index.c"
+#include "src/labeled_aiarray/labeled_aiarray_add.c"
+#include "src/labeled_aiarray/labeled_aiarray_get.c"
+#include "src/labeled_aiarray/labeled_aiarray_construct.c"
+#include "src/labeled_aiarray/labeled_aiarray_index.c"
+#include "src/labeled_aiarray/labeled_aiarray_query_single.c"
+#include "src/labeled_aiarray/labeled_aiarray_query_index.c"
+#include "src/labeled_aiarray/labeled_aiarray_query_array.c"
+#include "src/labeled_aiarray/labeled_aiarray_nhits.c"
+#include "src/labeled_aiarray/labeled_aiarray_wps.c"
+#include "src/labeled_aiarray/labeled_aiarray_coverage.c"
+#include "src/labeled_aiarray/labeled_aiarray_merge.c"
+#include "src/labeled_aiarray/labeled_aiarray_filter.c"
+#include "src/labeled_aiarray/labeled_aiarray_extract.c"
+#include "src/labeled_aiarray/labeled_aiarray_iter.c"
+#include "src/labeled_aiarray/labeled_aiarray_match.c"
+#include "src/labeled_aiarray/labeled_aiarray_sort.c"
+#include "src/labeled_aiarray/labeled_aiarray_simulate.c"
+#include "src/labeled_aiarray/labeled_aiarray_ops.c"
+#include "src/labeled_aiarray/labeled_aiarray_percent.c"
+#include "src/labeled_aiarray/khash.h"
+#include "src/labeled_aiarray/labeled_augmented_array.h"
+#include "process_merge.c"
+#include "process_merge.h"
+#include "pythread.h"
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -1568,9 +1664,12 @@ static const char *__pyx_filename;
 
 static const char *__pyx_f[] = {
   "<stringsource>",
-  "ngsfragments/peak_calling/RunningMean.pyx",
+  "ngsfragments/segment/merge_regions/merge_regions.pyx",
   "__init__.cython-30.pxd",
   "type.pxd",
+  "Interval_core.pxd",
+  "AIList_core.pxd",
+  "LabeledIntervalArray_core.pxd",
 };
 /* #### Code section: utility_code_proto_before_types ### */
 /* ForceInitThreads.proto */
@@ -1886,6 +1985,15 @@ typedef npy_double __pyx_t_5numpy_double_t;
  * ctypedef npy_cfloat      cfloat_t
  */
 typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
+
+/* "ailist/LabeledIntervalArray_core.pxd":7
+ * from .Interval_core cimport interval_init
+ * from .array_query_core cimport *
+ * ctypedef np.uint8_t uint8             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+typedef __pyx_t_5numpy_uint8_t __pyx_t_6ailist_25LabeledIntervalArray_core_uint8;
 /* #### Code section: complex_type_declarations ### */
 /* Declarations.proto */
 #if CYTHON_CCOMPLEX && (1) && (!0 || __cplusplus)
@@ -1914,6 +2022,10 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 /* #### Code section: type_declarations ### */
 
 /*--- Type declarations ---*/
+struct __pyx_obj_6ailist_13Interval_core_Interval;
+struct __pyx_obj_6ailist_11AIList_core_AIList;
+struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledInterval;
+struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray;
 struct __pyx_array_obj;
 struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
@@ -1954,6 +2066,68 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
  * cdef inline object PyArray_MultiIterNew1(a):
  */
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
+
+/* "ailist/Interval_core.pxd":21
+ * 
+ * 
+ * cdef class Interval(object):             # <<<<<<<<<<<<<<
+ * 	"""
+ * 	Wrapper for C interval
+ */
+struct __pyx_obj_6ailist_13Interval_core_Interval {
+  PyObject_HEAD
+  int start;
+  int end;
+};
+
+
+/* "AIList_core.pxd":373
+ * 
+ * 
+ * cdef class AIList(object):             # <<<<<<<<<<<<<<
+ * 	"""
+ * 	Wrapper for C ailist_t
+ */
+struct __pyx_obj_6ailist_11AIList_core_AIList {
+  PyObject_HEAD
+  struct __pyx_vtabstruct_6ailist_11AIList_core_AIList *__pyx_vtab;
+  ailist_t *c_ailist;
+  int is_constructed;
+  int is_closed;
+  int is_frozen;
+};
+
+
+/* "ailist/LabeledIntervalArray_core.pxd":514
+ * #cpdef object rebuild_LabeledIntervalArray(bytes data, bytes b_length, bytes b_label_list)
+ * 
+ * cdef class LabeledInterval(object):             # <<<<<<<<<<<<<<
+ * 	"""
+ * 	Wrapper for C labeled interval
+ */
+struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledInterval {
+  PyObject_HEAD
+  struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledInterval *__pyx_vtab;
+  PyObject *_label;
+  interval_t *i;
+};
+
+
+/* "ailist/LabeledIntervalArray_core.pxd":529
+ * 
+ * 
+ * cdef class LabeledIntervalArray(object):             # <<<<<<<<<<<<<<
+ * 	"""
+ * 	Wrapper for C aiarray_t
+ */
+struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray {
+  PyObject_HEAD
+  struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_vtab;
+  labeled_aiarray_t *laia;
+  int is_closed;
+  int is_frozen;
+};
+
 
 /* "View.MemoryView":114
  * @cython.collection_type("sequence")
@@ -2030,6 +2204,112 @@ struct __pyx_memoryviewslice_obj {
   int (*to_dtype_func)(char *, PyObject *);
 };
 
+
+
+/* "AIList_core.pxd":373
+ * 
+ * 
+ * cdef class AIList(object):             # <<<<<<<<<<<<<<
+ * 	"""
+ * 	Wrapper for C ailist_t
+ */
+
+struct __pyx_vtabstruct_6ailist_11AIList_core_AIList {
+  PyObject *(*_get_data)(struct __pyx_obj_6ailist_11AIList_core_AIList *);
+  ailist_t *(*_set_data)(struct __pyx_obj_6ailist_11AIList_core_AIList *, PyObject *, PyObject *);
+  void (*set_list)(struct __pyx_obj_6ailist_11AIList_core_AIList *, ailist_t *);
+  void (*_insert)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int, int, int);
+  void (*_construct)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int);
+  ailist_t *(*_array_id)(struct __pyx_obj_6ailist_11AIList_core_AIList *, __Pyx_memviewslice);
+  ailist_t *(*_interval_id)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int);
+  ailist_t *(*_intersect)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int, int);
+  ailist_t *(*_intersect_from_array)(struct __pyx_obj_6ailist_11AIList_core_AIList *, __Pyx_memviewslice, __Pyx_memviewslice);
+  PyArrayObject *(*_intersect_ids)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int, int);
+  PyObject *(*_intersect_ids_from_array)(struct __pyx_obj_6ailist_11AIList_core_AIList *, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, int __pyx_skip_dispatch);
+  ailist_t *(*_intersect_from_ailist)(struct __pyx_obj_6ailist_11AIList_core_AIList *, struct __pyx_obj_6ailist_11AIList_core_AIList *);
+  PyArrayObject *(*_coverage)(struct __pyx_obj_6ailist_11AIList_core_AIList *);
+  PyArrayObject *(*_bin_coverage)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int);
+  PyArrayObject *(*_bin_coverage_length)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int, int, int);
+  PyArrayObject *(*_bin_nhits)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int);
+  PyArrayObject *(*_bin_nhits_length)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int, int, int);
+  void (*_nhits)(struct __pyx_obj_6ailist_11AIList_core_AIList *, long *, int, int);
+  void (*_nhits_length)(struct __pyx_obj_6ailist_11AIList_core_AIList *, long *, int, int, int, int);
+  PyArrayObject *(*_wps)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int);
+  PyArrayObject *(*_wps_length)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int, int, int);
+  PyArrayObject *(*_length_dist)(struct __pyx_obj_6ailist_11AIList_core_AIList *);
+  PyArrayObject *(*_nhits_from_array)(struct __pyx_obj_6ailist_11AIList_core_AIList *, __Pyx_memviewslice, __Pyx_memviewslice);
+  PyArrayObject *(*_nhits_from_array_length)(struct __pyx_obj_6ailist_11AIList_core_AIList *, __Pyx_memviewslice, __Pyx_memviewslice, int, int);
+  PyArrayObject *(*_interval_coverage)(struct __pyx_obj_6ailist_11AIList_core_AIList *, int, int);
+};
+static struct __pyx_vtabstruct_6ailist_11AIList_core_AIList *__pyx_vtabptr_6ailist_11AIList_core_AIList;
+
+
+/* "ailist/LabeledIntervalArray_core.pxd":514
+ * #cpdef object rebuild_LabeledIntervalArray(bytes data, bytes b_length, bytes b_label_list)
+ * 
+ * cdef class LabeledInterval(object):             # <<<<<<<<<<<<<<
+ * 	"""
+ * 	Wrapper for C labeled interval
+ */
+
+struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledInterval {
+  void (*set_i)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledInterval *, interval_t *, PyObject *);
+};
+static struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledInterval *__pyx_vtabptr_6ailist_25LabeledIntervalArray_core_LabeledInterval;
+
+
+/* "ailist/LabeledIntervalArray_core.pxd":529
+ * 
+ * 
+ * cdef class LabeledIntervalArray(object):             # <<<<<<<<<<<<<<
+ * 	"""
+ * 	Wrapper for C aiarray_t
+ */
+
+struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray {
+  void (*set_list)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, labeled_aiarray_t *);
+  ailist_t *(*_get_ail)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, char *);
+  labeled_aiarray_t *(*_array_index)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice);
+  PyArrayObject *(*_get_index)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, PyObject *);
+  PyArrayObject *(*_get_index_multi)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, PyArrayObject *);
+  void (*_insert)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int, int, char const *);
+  void (*_construct)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int);
+  void (*_from_array)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, __Pyx_memviewslice, char const *, int, int);
+  void (*_append)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *);
+  labeled_aiarray_t *(*get_labels)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, char const *, int, int);
+  overlap_label_index_t *(*get_labels_with_index)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, char const *, int, int);
+  labeled_aiarray_t *(*_intersect)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int, int, char const *);
+  labeled_aiarray_t *(*_intersect_from_array)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, __Pyx_memviewslice, char const *, int);
+  PyObject *(*_intersect_from_array_only_index)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, __Pyx_memviewslice, char const *, int, int __pyx_skip_dispatch);
+  void (*_has_hit_from_array)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, char const *, int);
+  labeled_aiarray_t *(*_intersect_from_labeled_aiarray)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *);
+  PyObject *(*_intersect_index_from_labeled_aiarray)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int __pyx_skip_dispatch);
+  PyObject *(*_intersect_with_index)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int, int, char const *, int __pyx_skip_dispatch);
+  PyObject *(*_intersect_with_index_from_labeled_aiarray)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int __pyx_skip_dispatch);
+  PyObject *(*_intersect_from_array_with_index)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, __Pyx_memviewslice, char const *, int, int __pyx_skip_dispatch);
+  void (*_nhits_from_array)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, char const *, int);
+  void (*_nhits_from_array_length)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, char const *, int, int, int);
+  labeled_aiarray_t *(*_determine_bins)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int);
+  void (*_bin_nhits)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, int);
+  void (*_bin_nhits_length)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, int, int, int);
+  PyArrayObject *(*_wps)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, char const *, int);
+  PyArrayObject *(*_wps_length)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, char const *, int, int, int);
+  PyArrayObject *(*_coverage)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, char const *);
+  PyArrayObject *(*_coverage_length)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, char const *, int, int);
+  PyObject *(*_downsample_with_index)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, double, int __pyx_skip_dispatch);
+  PyArrayObject *(*_length_dist)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *);
+  PyObject *(*_filter_exact_match)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int __pyx_skip_dispatch);
+  void (*_has_exact_match)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice);
+  void (*_is_exact_match)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, __Pyx_memviewslice);
+  PyObject *(*_which_exact_match)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int __pyx_skip_dispatch);
+  int (*_where_interval)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int, int, char const *);
+  int (*_index_with_aiarray)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *);
+  void (*_get_locs)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, __Pyx_memviewslice, char *, int, int);
+  void (*_create_bin)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, int, int, char const *);
+  PyArrayObject *(*_midpoint_coverage)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, char const *);
+  PyArrayObject *(*_percent_coverage)(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *);
+};
+static struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_vtabptr_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray;
 
 
 /* "View.MemoryView":114
@@ -2665,6 +2945,9 @@ static PyObject* __Pyx_ImportFrom(PyObject* module, PyObject* name);
 /* HasAttr.proto */
 static CYTHON_INLINE int __Pyx_HasAttr(PyObject *, PyObject *);
 
+/* PyObjectCallNoArg.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
+
 /* BufferIndexError.proto */
 static void __Pyx_RaiseBufferIndexError(int axis);
 
@@ -2689,9 +2972,6 @@ static PyObject* __Pyx_PyObject_GenericGetAttr(PyObject* obj, PyObject* attr_nam
 #if CYTHON_USE_TYPE_SPECS
 static int __Pyx_fix_up_extension_type_from_spec(PyType_Spec *spec, PyTypeObject *type);
 #endif
-
-/* PyObjectCallNoArg.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
 
 /* PyObjectGetMethod.proto */
 static int __Pyx_PyObject_GetMethod(PyObject *obj, PyObject *name, PyObject **method);
@@ -2965,12 +3245,6 @@ static int __Pyx_ValidateAndInit_memviewslice(
                 PyObject *original_obj);
 
 /* ObjectToMemviewSlice.proto */
-static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dc_double__const__(PyObject *, int writable_flag);
-
-/* MemviewDtypeToObject.proto */
-static CYTHON_INLINE PyObject *__pyx_memview_get_double__const__(const char *itemp);
-
-/* ObjectToMemviewSlice.proto */
 static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dc_double(PyObject *, int writable_flag);
 
 /* RealImag.proto */
@@ -3106,11 +3380,11 @@ static CYTHON_INLINE void __Pyx_XCLEAR_MEMVIEW(__Pyx_memviewslice *, int, int);
 /* CIntFromPy.proto */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
-/* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
-
 /* CIntFromPy.proto */
 static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
+
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
@@ -3138,6 +3412,9 @@ static int __Pyx_check_binary_version(unsigned long ct_version, unsigned long rt
 /* FunctionExport.proto */
 static int __Pyx_ExportFunction(const char *name, void (*f)(void), const char *sig);
 
+/* FunctionImport.proto */
+static int __Pyx_ImportFunction_3_0_11(PyObject *module, const char *funcname, void (**f)(void), const char *sig);
+
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
@@ -3162,6 +3439,12 @@ static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_7strides_strides(PyArrayO
 static CYTHON_INLINE npy_intp __pyx_f_5numpy_7ndarray_4size_size(PyArrayObject *__pyx_v_self); /* proto*/
 static CYTHON_INLINE char *__pyx_f_5numpy_7ndarray_4data_data(PyArrayObject *__pyx_v_self); /* proto*/
 
+/* Module declarations from "cython.view" */
+
+/* Module declarations from "cython.dataclasses" */
+
+/* Module declarations from "cython" */
+
 /* Module declarations from "libc.string" */
 
 /* Module declarations from "libc.stdio" */
@@ -3181,13 +3464,20 @@ static CYTHON_INLINE char *__pyx_f_5numpy_7ndarray_4data_data(PyArrayObject *__p
 /* Module declarations from "numpy" */
 static CYTHON_INLINE int __pyx_f_5numpy_import_array(void); /*proto*/
 
-/* Module declarations from "cython.view" */
+/* Module declarations from "libc.stdint" */
 
-/* Module declarations from "cython.dataclasses" */
+/* Module declarations from "libc.stdlib" */
 
-/* Module declarations from "cython" */
+/* Module declarations from "ailist.array_query_core" */
+static PyArrayObject *(*__pyx_f_6ailist_16array_query_core_pointer_to_numpy_array)(void *, npy_intp); /*proto*/
 
-/* Module declarations from "ngsfragments.peak_calling.RunningMean" */
+/* Module declarations from "ailist.Interval_core" */
+
+/* Module declarations from "ailist.AIList_core" */
+
+/* Module declarations from "ailist.LabeledIntervalArray_core" */
+
+/* Module declarations from "ngsfragments.segment.merge_regions.merge_regions" */
 static PyObject *__pyx_collections_abc_Sequence = 0;
 static PyObject *generic = 0;
 static PyObject *strided = 0;
@@ -3196,8 +3486,9 @@ static PyObject *contiguous = 0;
 static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
-static void __pyx_f_12ngsfragments_12peak_calling_11RunningMean_c_running_mean(__Pyx_memviewslice, __Pyx_memviewslice, int, int); /*proto*/
-static PyArrayObject *__pyx_f_12ngsfragments_12peak_calling_11RunningMean_running_mean(__Pyx_memviewslice, int, int __pyx_skip_dispatch); /*proto*/
+static labeled_aiarray_t *__pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_adjacent(labeled_aiarray_t *, uint32_t); /*proto*/
+static labeled_aiarray_t *__pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_less_than(labeled_aiarray_t *, double *, double); /*proto*/
+static labeled_aiarray_t *__pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_greater_than(labeled_aiarray_t *, double *, double); /*proto*/
 static int __pyx_array_allocate_buffer(struct __pyx_array_obj *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -3233,14 +3524,13 @@ static void __pyx_memoryview_slice_assign_scalar(__Pyx_memviewslice *, int, size
 static void __pyx_memoryview__slice_assign_scalar(char *, Py_ssize_t *, Py_ssize_t *, int, size_t, void *); /*proto*/
 static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *, PyObject *); /*proto*/
 /* #### Code section: typeinfo ### */
-static __Pyx_TypeInfo __Pyx_TypeInfo_double__const__ = { "const double", NULL, sizeof(double const ), { 0 }, 0, 'R', 0, 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_double = { "double", NULL, sizeof(double), { 0 }, 0, 'R', 0, 0 };
 /* #### Code section: before_global_var ### */
-#define __Pyx_MODULE_NAME "ngsfragments.peak_calling.RunningMean"
-extern int __pyx_module_is_main_ngsfragments__peak_calling__RunningMean;
-int __pyx_module_is_main_ngsfragments__peak_calling__RunningMean = 0;
+#define __Pyx_MODULE_NAME "ngsfragments.segment.merge_regions.merge_regions"
+extern int __pyx_module_is_main_ngsfragments__segment__merge_regions__merge_regions;
+int __pyx_module_is_main_ngsfragments__segment__merge_regions__merge_regions = 0;
 
-/* Implementation of "ngsfragments.peak_calling.RunningMean" */
+/* Implementation of "ngsfragments.segment.merge_regions.merge_regions" */
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin___import__;
 static PyObject *__pyx_builtin_ValueError;
@@ -3257,6 +3547,7 @@ static PyObject *__pyx_builtin_ImportError;
 static const char __pyx_k_[] = ": ";
 static const char __pyx_k_O[] = "O";
 static const char __pyx_k_c[] = "c";
+static const char __pyx_k_n[] = "n";
 static const char __pyx_k__2[] = ".";
 static const char __pyx_k__3[] = "*";
 static const char __pyx_k__6[] = "'";
@@ -3264,7 +3555,9 @@ static const char __pyx_k__7[] = ")";
 static const char __pyx_k_gc[] = "gc";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_np[] = "np";
-static const char __pyx_k__24[] = "?";
+static const char __pyx_k_os[] = "os";
+static const char __pyx_k_pd[] = "pd";
+static const char __pyx_k__27[] = "?";
 static const char __pyx_k_abc[] = "abc";
 static const char __pyx_k_and[] = " and ";
 static const char __pyx_k_got[] = " (got ";
@@ -3273,12 +3566,14 @@ static const char __pyx_k_obj[] = "obj";
 static const char __pyx_k_sys[] = "sys";
 static const char __pyx_k_base[] = "base";
 static const char __pyx_k_dict[] = "__dict__";
+static const char __pyx_k_laia[] = "laia";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_mode[] = "mode";
 static const char __pyx_k_name[] = "name";
 static const char __pyx_k_ndim[] = "ndim";
 static const char __pyx_k_pack[] = "pack";
 static const char __pyx_k_size[] = "size";
+static const char __pyx_k_sort[] = "sort";
 static const char __pyx_k_spec[] = "__spec__";
 static const char __pyx_k_step[] = "step";
 static const char __pyx_k_stop[] = "stop";
@@ -3286,7 +3581,6 @@ static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_ASCII[] = "ASCII";
 static const char __pyx_k_class[] = "__class__";
 static const char __pyx_k_count[] = "count";
-static const char __pyx_k_dtype[] = "dtype";
 static const char __pyx_k_error[] = "error";
 static const char __pyx_k_flags[] = "flags";
 static const char __pyx_k_index[] = "index";
@@ -3294,32 +3588,35 @@ static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_shape[] = "shape";
 static const char __pyx_k_start[] = "start";
-static const char __pyx_k_zeros[] = "zeros";
-static const char __pyx_k_double[] = "double";
+static const char __pyx_k_cutoff[] = "cutoff";
 static const char __pyx_k_enable[] = "enable";
 static const char __pyx_k_encode[] = "encode";
 static const char __pyx_k_format[] = "format";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_name_2[] = "__name__";
+static const char __pyx_k_pandas[] = "pandas";
 static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_struct[] = "struct";
 static const char __pyx_k_unpack[] = "unpack";
 static const char __pyx_k_update[] = "update";
 static const char __pyx_k_values[] = "values";
-static const char __pyx_k_window[] = "window";
 static const char __pyx_k_disable[] = "disable";
 static const char __pyx_k_fortran[] = "fortran";
 static const char __pyx_k_memview[] = "memview";
+static const char __pyx_k_ncounts[] = "ncounts";
 static const char __pyx_k_Ellipsis[] = "Ellipsis";
 static const char __pyx_k_Sequence[] = "Sequence";
+static const char __pyx_k_c_values[] = "c_values";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_itemsize[] = "itemsize";
 static const char __pyx_k_pyx_type[] = "__pyx_type";
 static const char __pyx_k_register[] = "register";
 static const char __pyx_k_setstate[] = "__setstate__";
 static const char __pyx_k_TypeError[] = "TypeError";
+static const char __pyx_k_construct[] = "construct";
 static const char __pyx_k_enumerate[] = "enumerate";
+static const char __pyx_k_intervals[] = "intervals";
 static const char __pyx_k_isenabled[] = "isenabled";
 static const char __pyx_k_pyx_state[] = "__pyx_state";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
@@ -3331,24 +3628,29 @@ static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_MemoryError[] = "MemoryError";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_collections[] = "collections";
+static const char __pyx_k_merged_laia[] = "merged_laia";
 static const char __pyx_k_initializing[] = "_initializing";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
-static const char __pyx_k_running_mean[] = "running_mean";
 static const char __pyx_k_stringsource[] = "<stringsource>";
 static const char __pyx_k_version_info[] = "version_info";
+static const char __pyx_k_IntervalFrame[] = "IntervalFrame";
 static const char __pyx_k_class_getitem[] = "__class_getitem__";
+static const char __pyx_k_intervalframe[] = "intervalframe";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_AssertionError[] = "AssertionError";
+static const char __pyx_k_merge_adjacent[] = "merge_adjacent";
 static const char __pyx_k_View_MemoryView[] = "View.MemoryView";
 static const char __pyx_k_allocate_buffer[] = "allocate_buffer";
 static const char __pyx_k_collections_abc[] = "collections.abc";
 static const char __pyx_k_dtype_is_object[] = "dtype_is_object";
+static const char __pyx_k_merge_less_than[] = "merge_less_than";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_pyx_unpickle_Enum[] = "__pyx_unpickle_Enum";
 static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
+static const char __pyx_k_merge_greater_than[] = "merge_greater_than";
 static const char __pyx_k_strided_and_direct[] = "<strided and direct>";
 static const char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static const char __pyx_k_Invalid_shape_in_axis[] = "Invalid shape in axis ";
@@ -3377,11 +3679,11 @@ static const char __pyx_k_Invalid_mode_expected_c_or_fortr[] = "Invalid mode, ex
 static const char __pyx_k_Out_of_bounds_on_buffer_access_a[] = "Out of bounds on buffer access (axis ";
 static const char __pyx_k_Unable_to_convert_item_to_object[] = "Unable to convert item to object";
 static const char __pyx_k_got_differing_extents_in_dimensi[] = "got differing extents in dimension ";
-static const char __pyx_k_ngsfragments_peak_calling_Runnin[] = "ngsfragments/peak_calling/RunningMean.pyx";
+static const char __pyx_k_ngsfragments_segment_merge_regio[] = "ngsfragments/segment/merge_regions/merge_regions.pyx";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
 static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath failed to import";
 static const char __pyx_k_unable_to_allocate_shape_and_str[] = "unable to allocate shape and strides.";
-static const char __pyx_k_ngsfragments_peak_calling_Runnin_2[] = "ngsfragments.peak_calling.RunningMean";
+static const char __pyx_k_ngsfragments_segment_merge_regio_2[] = "ngsfragments.segment.merge_regions.merge_regions";
 /* #### Code section: decls ### */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(struct __pyx_array_obj *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
@@ -3424,7 +3726,9 @@ static void __pyx_memoryviewslice___pyx_pf_15View_dot_MemoryView_16_memoryviewsl
 static PyObject *__pyx_pf___pyx_memoryviewslice___reduce_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf___pyx_memoryviewslice_2__setstate_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_15View_dot_MemoryView___pyx_unpickle_Enum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_12ngsfragments_12peak_calling_11RunningMean_running_mean(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_values, int __pyx_v_window); /* proto */
+static PyObject *__pyx_pf_12ngsfragments_7segment_13merge_regions_13merge_regions_merge_adjacent(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_laia, int __pyx_v_n); /* proto */
+static PyObject *__pyx_pf_12ngsfragments_7segment_13merge_regions_13merge_regions_2merge_less_than(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_laia, PyArrayObject *__pyx_v_values, float __pyx_v_cutoff); /* proto */
+static PyObject *__pyx_pf_12ngsfragments_7segment_13merge_regions_13merge_regions_4merge_greater_than(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_laia, PyArrayObject *__pyx_v_values, float __pyx_v_cutoff); /* proto */
 static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_Enum(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -3455,6 +3759,12 @@ typedef struct {
   #endif
   #ifdef __Pyx_Coroutine_USED
   PyTypeObject *__pyx_CoroutineType;
+  #endif
+  #if CYTHON_USE_MODULE_STATE
+  #endif
+  #if CYTHON_USE_MODULE_STATE
+  #endif
+  #if CYTHON_USE_MODULE_STATE
   #endif
   #if CYTHON_USE_MODULE_STATE
   #endif
@@ -3497,6 +3807,16 @@ typedef struct {
   #if CYTHON_USE_MODULE_STATE
   #endif
   #if CYTHON_USE_MODULE_STATE
+  #endif
+  PyTypeObject *__pyx_ptype_6ailist_13Interval_core_Interval;
+  #if CYTHON_USE_MODULE_STATE
+  #endif
+  PyTypeObject *__pyx_ptype_6ailist_11AIList_core_AIList;
+  #if CYTHON_USE_MODULE_STATE
+  #endif
+  PyTypeObject *__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledInterval;
+  PyTypeObject *__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray;
+  #if CYTHON_USE_MODULE_STATE
   PyObject *__pyx_type___pyx_array;
   PyObject *__pyx_type___pyx_MemviewEnum;
   PyObject *__pyx_type___pyx_memoryview;
@@ -3524,6 +3844,7 @@ typedef struct {
   PyObject *__pyx_n_s_IndexError;
   PyObject *__pyx_kp_s_Index_out_of_bounds_axis_d;
   PyObject *__pyx_kp_s_Indirect_dimensions_not_supporte;
+  PyObject *__pyx_n_s_IntervalFrame;
   PyObject *__pyx_kp_u_Invalid_mode_expected_c_or_fortr;
   PyObject *__pyx_kp_u_Invalid_shape_in_axis;
   PyObject *__pyx_n_s_MemoryError;
@@ -3539,7 +3860,7 @@ typedef struct {
   PyObject *__pyx_n_s_ValueError;
   PyObject *__pyx_n_s_View_MemoryView;
   PyObject *__pyx_kp_u__2;
-  PyObject *__pyx_n_s__24;
+  PyObject *__pyx_n_s__27;
   PyObject *__pyx_n_s__3;
   PyObject *__pyx_kp_u__6;
   PyObject *__pyx_kp_u__7;
@@ -3550,18 +3871,19 @@ typedef struct {
   PyObject *__pyx_n_s_base;
   PyObject *__pyx_n_s_c;
   PyObject *__pyx_n_u_c;
+  PyObject *__pyx_n_s_c_values;
   PyObject *__pyx_n_s_class;
   PyObject *__pyx_n_s_class_getitem;
   PyObject *__pyx_n_s_cline_in_traceback;
   PyObject *__pyx_n_s_collections;
   PyObject *__pyx_kp_s_collections_abc;
+  PyObject *__pyx_n_s_construct;
   PyObject *__pyx_kp_s_contiguous_and_direct;
   PyObject *__pyx_kp_s_contiguous_and_indirect;
   PyObject *__pyx_n_s_count;
+  PyObject *__pyx_n_s_cutoff;
   PyObject *__pyx_n_s_dict;
   PyObject *__pyx_kp_u_disable;
-  PyObject *__pyx_n_s_double;
-  PyObject *__pyx_n_s_dtype;
   PyObject *__pyx_n_s_dtype_is_object;
   PyObject *__pyx_kp_u_enable;
   PyObject *__pyx_n_s_encode;
@@ -3579,26 +3901,38 @@ typedef struct {
   PyObject *__pyx_n_s_import;
   PyObject *__pyx_n_s_index;
   PyObject *__pyx_n_s_initializing;
+  PyObject *__pyx_n_s_intervalframe;
+  PyObject *__pyx_n_s_intervals;
   PyObject *__pyx_n_s_is_coroutine;
   PyObject *__pyx_kp_u_isenabled;
   PyObject *__pyx_n_s_itemsize;
   PyObject *__pyx_kp_s_itemsize_0_for_cython_array;
+  PyObject *__pyx_n_s_laia;
   PyObject *__pyx_n_s_main;
   PyObject *__pyx_n_s_memview;
+  PyObject *__pyx_n_s_merge_adjacent;
+  PyObject *__pyx_n_s_merge_greater_than;
+  PyObject *__pyx_n_s_merge_less_than;
+  PyObject *__pyx_n_s_merged_laia;
   PyObject *__pyx_n_s_mode;
+  PyObject *__pyx_n_s_n;
   PyObject *__pyx_n_s_name;
   PyObject *__pyx_n_s_name_2;
+  PyObject *__pyx_n_s_ncounts;
   PyObject *__pyx_n_s_ndim;
   PyObject *__pyx_n_s_new;
-  PyObject *__pyx_kp_s_ngsfragments_peak_calling_Runnin;
-  PyObject *__pyx_n_s_ngsfragments_peak_calling_Runnin_2;
+  PyObject *__pyx_kp_s_ngsfragments_segment_merge_regio;
+  PyObject *__pyx_n_s_ngsfragments_segment_merge_regio_2;
   PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
   PyObject *__pyx_n_s_np;
   PyObject *__pyx_n_s_numpy;
   PyObject *__pyx_kp_u_numpy_core_multiarray_failed_to;
   PyObject *__pyx_kp_u_numpy_core_umath_failed_to_impor;
   PyObject *__pyx_n_s_obj;
+  PyObject *__pyx_n_s_os;
   PyObject *__pyx_n_s_pack;
+  PyObject *__pyx_n_s_pandas;
+  PyObject *__pyx_n_s_pd;
   PyObject *__pyx_n_s_pickle;
   PyObject *__pyx_n_s_pyx_PickleError;
   PyObject *__pyx_n_s_pyx_checksum;
@@ -3612,11 +3946,11 @@ typedef struct {
   PyObject *__pyx_n_s_reduce_cython;
   PyObject *__pyx_n_s_reduce_ex;
   PyObject *__pyx_n_s_register;
-  PyObject *__pyx_n_s_running_mean;
   PyObject *__pyx_n_s_setstate;
   PyObject *__pyx_n_s_setstate_cython;
   PyObject *__pyx_n_s_shape;
   PyObject *__pyx_n_s_size;
+  PyObject *__pyx_n_s_sort;
   PyObject *__pyx_n_s_spec;
   PyObject *__pyx_n_s_start;
   PyObject *__pyx_n_s_step;
@@ -3634,8 +3968,6 @@ typedef struct {
   PyObject *__pyx_n_s_update;
   PyObject *__pyx_n_s_values;
   PyObject *__pyx_n_s_version_info;
-  PyObject *__pyx_n_s_window;
-  PyObject *__pyx_n_s_zeros;
   PyObject *__pyx_int_0;
   PyObject *__pyx_int_1;
   PyObject *__pyx_int_3;
@@ -3659,8 +3991,11 @@ typedef struct {
   PyObject *__pyx_tuple__19;
   PyObject *__pyx_tuple__20;
   PyObject *__pyx_tuple__22;
+  PyObject *__pyx_tuple__24;
   PyObject *__pyx_codeobj__21;
   PyObject *__pyx_codeobj__23;
+  PyObject *__pyx_codeobj__25;
+  PyObject *__pyx_codeobj__26;
 } __pyx_mstate;
 
 #if CYTHON_USE_MODULE_STATE
@@ -3719,6 +4054,10 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_flexible);
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_character);
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_ufunc);
+  Py_CLEAR(clear_module_state->__pyx_ptype_6ailist_13Interval_core_Interval);
+  Py_CLEAR(clear_module_state->__pyx_ptype_6ailist_11AIList_core_AIList);
+  Py_CLEAR(clear_module_state->__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledInterval);
+  Py_CLEAR(clear_module_state->__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray);
   Py_CLEAR(clear_module_state->__pyx_array_type);
   Py_CLEAR(clear_module_state->__pyx_type___pyx_array);
   Py_CLEAR(clear_module_state->__pyx_MemviewEnum_type);
@@ -3745,6 +4084,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_IndexError);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Index_out_of_bounds_axis_d);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Indirect_dimensions_not_supporte);
+  Py_CLEAR(clear_module_state->__pyx_n_s_IntervalFrame);
   Py_CLEAR(clear_module_state->__pyx_kp_u_Invalid_mode_expected_c_or_fortr);
   Py_CLEAR(clear_module_state->__pyx_kp_u_Invalid_shape_in_axis);
   Py_CLEAR(clear_module_state->__pyx_n_s_MemoryError);
@@ -3760,7 +4100,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_ValueError);
   Py_CLEAR(clear_module_state->__pyx_n_s_View_MemoryView);
   Py_CLEAR(clear_module_state->__pyx_kp_u__2);
-  Py_CLEAR(clear_module_state->__pyx_n_s__24);
+  Py_CLEAR(clear_module_state->__pyx_n_s__27);
   Py_CLEAR(clear_module_state->__pyx_n_s__3);
   Py_CLEAR(clear_module_state->__pyx_kp_u__6);
   Py_CLEAR(clear_module_state->__pyx_kp_u__7);
@@ -3771,18 +4111,19 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_base);
   Py_CLEAR(clear_module_state->__pyx_n_s_c);
   Py_CLEAR(clear_module_state->__pyx_n_u_c);
+  Py_CLEAR(clear_module_state->__pyx_n_s_c_values);
   Py_CLEAR(clear_module_state->__pyx_n_s_class);
   Py_CLEAR(clear_module_state->__pyx_n_s_class_getitem);
   Py_CLEAR(clear_module_state->__pyx_n_s_cline_in_traceback);
   Py_CLEAR(clear_module_state->__pyx_n_s_collections);
   Py_CLEAR(clear_module_state->__pyx_kp_s_collections_abc);
+  Py_CLEAR(clear_module_state->__pyx_n_s_construct);
   Py_CLEAR(clear_module_state->__pyx_kp_s_contiguous_and_direct);
   Py_CLEAR(clear_module_state->__pyx_kp_s_contiguous_and_indirect);
   Py_CLEAR(clear_module_state->__pyx_n_s_count);
+  Py_CLEAR(clear_module_state->__pyx_n_s_cutoff);
   Py_CLEAR(clear_module_state->__pyx_n_s_dict);
   Py_CLEAR(clear_module_state->__pyx_kp_u_disable);
-  Py_CLEAR(clear_module_state->__pyx_n_s_double);
-  Py_CLEAR(clear_module_state->__pyx_n_s_dtype);
   Py_CLEAR(clear_module_state->__pyx_n_s_dtype_is_object);
   Py_CLEAR(clear_module_state->__pyx_kp_u_enable);
   Py_CLEAR(clear_module_state->__pyx_n_s_encode);
@@ -3800,26 +4141,38 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_import);
   Py_CLEAR(clear_module_state->__pyx_n_s_index);
   Py_CLEAR(clear_module_state->__pyx_n_s_initializing);
+  Py_CLEAR(clear_module_state->__pyx_n_s_intervalframe);
+  Py_CLEAR(clear_module_state->__pyx_n_s_intervals);
   Py_CLEAR(clear_module_state->__pyx_n_s_is_coroutine);
   Py_CLEAR(clear_module_state->__pyx_kp_u_isenabled);
   Py_CLEAR(clear_module_state->__pyx_n_s_itemsize);
   Py_CLEAR(clear_module_state->__pyx_kp_s_itemsize_0_for_cython_array);
+  Py_CLEAR(clear_module_state->__pyx_n_s_laia);
   Py_CLEAR(clear_module_state->__pyx_n_s_main);
   Py_CLEAR(clear_module_state->__pyx_n_s_memview);
+  Py_CLEAR(clear_module_state->__pyx_n_s_merge_adjacent);
+  Py_CLEAR(clear_module_state->__pyx_n_s_merge_greater_than);
+  Py_CLEAR(clear_module_state->__pyx_n_s_merge_less_than);
+  Py_CLEAR(clear_module_state->__pyx_n_s_merged_laia);
   Py_CLEAR(clear_module_state->__pyx_n_s_mode);
+  Py_CLEAR(clear_module_state->__pyx_n_s_n);
   Py_CLEAR(clear_module_state->__pyx_n_s_name);
   Py_CLEAR(clear_module_state->__pyx_n_s_name_2);
+  Py_CLEAR(clear_module_state->__pyx_n_s_ncounts);
   Py_CLEAR(clear_module_state->__pyx_n_s_ndim);
   Py_CLEAR(clear_module_state->__pyx_n_s_new);
-  Py_CLEAR(clear_module_state->__pyx_kp_s_ngsfragments_peak_calling_Runnin);
-  Py_CLEAR(clear_module_state->__pyx_n_s_ngsfragments_peak_calling_Runnin_2);
+  Py_CLEAR(clear_module_state->__pyx_kp_s_ngsfragments_segment_merge_regio);
+  Py_CLEAR(clear_module_state->__pyx_n_s_ngsfragments_segment_merge_regio_2);
   Py_CLEAR(clear_module_state->__pyx_kp_s_no_default___reduce___due_to_non);
   Py_CLEAR(clear_module_state->__pyx_n_s_np);
   Py_CLEAR(clear_module_state->__pyx_n_s_numpy);
   Py_CLEAR(clear_module_state->__pyx_kp_u_numpy_core_multiarray_failed_to);
   Py_CLEAR(clear_module_state->__pyx_kp_u_numpy_core_umath_failed_to_impor);
   Py_CLEAR(clear_module_state->__pyx_n_s_obj);
+  Py_CLEAR(clear_module_state->__pyx_n_s_os);
   Py_CLEAR(clear_module_state->__pyx_n_s_pack);
+  Py_CLEAR(clear_module_state->__pyx_n_s_pandas);
+  Py_CLEAR(clear_module_state->__pyx_n_s_pd);
   Py_CLEAR(clear_module_state->__pyx_n_s_pickle);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_PickleError);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_checksum);
@@ -3833,11 +4186,11 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_cython);
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_ex);
   Py_CLEAR(clear_module_state->__pyx_n_s_register);
-  Py_CLEAR(clear_module_state->__pyx_n_s_running_mean);
   Py_CLEAR(clear_module_state->__pyx_n_s_setstate);
   Py_CLEAR(clear_module_state->__pyx_n_s_setstate_cython);
   Py_CLEAR(clear_module_state->__pyx_n_s_shape);
   Py_CLEAR(clear_module_state->__pyx_n_s_size);
+  Py_CLEAR(clear_module_state->__pyx_n_s_sort);
   Py_CLEAR(clear_module_state->__pyx_n_s_spec);
   Py_CLEAR(clear_module_state->__pyx_n_s_start);
   Py_CLEAR(clear_module_state->__pyx_n_s_step);
@@ -3855,8 +4208,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_update);
   Py_CLEAR(clear_module_state->__pyx_n_s_values);
   Py_CLEAR(clear_module_state->__pyx_n_s_version_info);
-  Py_CLEAR(clear_module_state->__pyx_n_s_window);
-  Py_CLEAR(clear_module_state->__pyx_n_s_zeros);
   Py_CLEAR(clear_module_state->__pyx_int_0);
   Py_CLEAR(clear_module_state->__pyx_int_1);
   Py_CLEAR(clear_module_state->__pyx_int_3);
@@ -3880,8 +4231,11 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_tuple__19);
   Py_CLEAR(clear_module_state->__pyx_tuple__20);
   Py_CLEAR(clear_module_state->__pyx_tuple__22);
+  Py_CLEAR(clear_module_state->__pyx_tuple__24);
   Py_CLEAR(clear_module_state->__pyx_codeobj__21);
   Py_CLEAR(clear_module_state->__pyx_codeobj__23);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__25);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__26);
   return 0;
 }
 #endif
@@ -3918,6 +4272,10 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_flexible);
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_character);
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_ufunc);
+  Py_VISIT(traverse_module_state->__pyx_ptype_6ailist_13Interval_core_Interval);
+  Py_VISIT(traverse_module_state->__pyx_ptype_6ailist_11AIList_core_AIList);
+  Py_VISIT(traverse_module_state->__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledInterval);
+  Py_VISIT(traverse_module_state->__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray);
   Py_VISIT(traverse_module_state->__pyx_array_type);
   Py_VISIT(traverse_module_state->__pyx_type___pyx_array);
   Py_VISIT(traverse_module_state->__pyx_MemviewEnum_type);
@@ -3944,6 +4302,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_IndexError);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Index_out_of_bounds_axis_d);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Indirect_dimensions_not_supporte);
+  Py_VISIT(traverse_module_state->__pyx_n_s_IntervalFrame);
   Py_VISIT(traverse_module_state->__pyx_kp_u_Invalid_mode_expected_c_or_fortr);
   Py_VISIT(traverse_module_state->__pyx_kp_u_Invalid_shape_in_axis);
   Py_VISIT(traverse_module_state->__pyx_n_s_MemoryError);
@@ -3959,7 +4318,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_ValueError);
   Py_VISIT(traverse_module_state->__pyx_n_s_View_MemoryView);
   Py_VISIT(traverse_module_state->__pyx_kp_u__2);
-  Py_VISIT(traverse_module_state->__pyx_n_s__24);
+  Py_VISIT(traverse_module_state->__pyx_n_s__27);
   Py_VISIT(traverse_module_state->__pyx_n_s__3);
   Py_VISIT(traverse_module_state->__pyx_kp_u__6);
   Py_VISIT(traverse_module_state->__pyx_kp_u__7);
@@ -3970,18 +4329,19 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_base);
   Py_VISIT(traverse_module_state->__pyx_n_s_c);
   Py_VISIT(traverse_module_state->__pyx_n_u_c);
+  Py_VISIT(traverse_module_state->__pyx_n_s_c_values);
   Py_VISIT(traverse_module_state->__pyx_n_s_class);
   Py_VISIT(traverse_module_state->__pyx_n_s_class_getitem);
   Py_VISIT(traverse_module_state->__pyx_n_s_cline_in_traceback);
   Py_VISIT(traverse_module_state->__pyx_n_s_collections);
   Py_VISIT(traverse_module_state->__pyx_kp_s_collections_abc);
+  Py_VISIT(traverse_module_state->__pyx_n_s_construct);
   Py_VISIT(traverse_module_state->__pyx_kp_s_contiguous_and_direct);
   Py_VISIT(traverse_module_state->__pyx_kp_s_contiguous_and_indirect);
   Py_VISIT(traverse_module_state->__pyx_n_s_count);
+  Py_VISIT(traverse_module_state->__pyx_n_s_cutoff);
   Py_VISIT(traverse_module_state->__pyx_n_s_dict);
   Py_VISIT(traverse_module_state->__pyx_kp_u_disable);
-  Py_VISIT(traverse_module_state->__pyx_n_s_double);
-  Py_VISIT(traverse_module_state->__pyx_n_s_dtype);
   Py_VISIT(traverse_module_state->__pyx_n_s_dtype_is_object);
   Py_VISIT(traverse_module_state->__pyx_kp_u_enable);
   Py_VISIT(traverse_module_state->__pyx_n_s_encode);
@@ -3999,26 +4359,38 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_import);
   Py_VISIT(traverse_module_state->__pyx_n_s_index);
   Py_VISIT(traverse_module_state->__pyx_n_s_initializing);
+  Py_VISIT(traverse_module_state->__pyx_n_s_intervalframe);
+  Py_VISIT(traverse_module_state->__pyx_n_s_intervals);
   Py_VISIT(traverse_module_state->__pyx_n_s_is_coroutine);
   Py_VISIT(traverse_module_state->__pyx_kp_u_isenabled);
   Py_VISIT(traverse_module_state->__pyx_n_s_itemsize);
   Py_VISIT(traverse_module_state->__pyx_kp_s_itemsize_0_for_cython_array);
+  Py_VISIT(traverse_module_state->__pyx_n_s_laia);
   Py_VISIT(traverse_module_state->__pyx_n_s_main);
   Py_VISIT(traverse_module_state->__pyx_n_s_memview);
+  Py_VISIT(traverse_module_state->__pyx_n_s_merge_adjacent);
+  Py_VISIT(traverse_module_state->__pyx_n_s_merge_greater_than);
+  Py_VISIT(traverse_module_state->__pyx_n_s_merge_less_than);
+  Py_VISIT(traverse_module_state->__pyx_n_s_merged_laia);
   Py_VISIT(traverse_module_state->__pyx_n_s_mode);
+  Py_VISIT(traverse_module_state->__pyx_n_s_n);
   Py_VISIT(traverse_module_state->__pyx_n_s_name);
   Py_VISIT(traverse_module_state->__pyx_n_s_name_2);
+  Py_VISIT(traverse_module_state->__pyx_n_s_ncounts);
   Py_VISIT(traverse_module_state->__pyx_n_s_ndim);
   Py_VISIT(traverse_module_state->__pyx_n_s_new);
-  Py_VISIT(traverse_module_state->__pyx_kp_s_ngsfragments_peak_calling_Runnin);
-  Py_VISIT(traverse_module_state->__pyx_n_s_ngsfragments_peak_calling_Runnin_2);
+  Py_VISIT(traverse_module_state->__pyx_kp_s_ngsfragments_segment_merge_regio);
+  Py_VISIT(traverse_module_state->__pyx_n_s_ngsfragments_segment_merge_regio_2);
   Py_VISIT(traverse_module_state->__pyx_kp_s_no_default___reduce___due_to_non);
   Py_VISIT(traverse_module_state->__pyx_n_s_np);
   Py_VISIT(traverse_module_state->__pyx_n_s_numpy);
   Py_VISIT(traverse_module_state->__pyx_kp_u_numpy_core_multiarray_failed_to);
   Py_VISIT(traverse_module_state->__pyx_kp_u_numpy_core_umath_failed_to_impor);
   Py_VISIT(traverse_module_state->__pyx_n_s_obj);
+  Py_VISIT(traverse_module_state->__pyx_n_s_os);
   Py_VISIT(traverse_module_state->__pyx_n_s_pack);
+  Py_VISIT(traverse_module_state->__pyx_n_s_pandas);
+  Py_VISIT(traverse_module_state->__pyx_n_s_pd);
   Py_VISIT(traverse_module_state->__pyx_n_s_pickle);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_PickleError);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_checksum);
@@ -4032,11 +4404,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_cython);
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_ex);
   Py_VISIT(traverse_module_state->__pyx_n_s_register);
-  Py_VISIT(traverse_module_state->__pyx_n_s_running_mean);
   Py_VISIT(traverse_module_state->__pyx_n_s_setstate);
   Py_VISIT(traverse_module_state->__pyx_n_s_setstate_cython);
   Py_VISIT(traverse_module_state->__pyx_n_s_shape);
   Py_VISIT(traverse_module_state->__pyx_n_s_size);
+  Py_VISIT(traverse_module_state->__pyx_n_s_sort);
   Py_VISIT(traverse_module_state->__pyx_n_s_spec);
   Py_VISIT(traverse_module_state->__pyx_n_s_start);
   Py_VISIT(traverse_module_state->__pyx_n_s_step);
@@ -4054,8 +4426,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_update);
   Py_VISIT(traverse_module_state->__pyx_n_s_values);
   Py_VISIT(traverse_module_state->__pyx_n_s_version_info);
-  Py_VISIT(traverse_module_state->__pyx_n_s_window);
-  Py_VISIT(traverse_module_state->__pyx_n_s_zeros);
   Py_VISIT(traverse_module_state->__pyx_int_0);
   Py_VISIT(traverse_module_state->__pyx_int_1);
   Py_VISIT(traverse_module_state->__pyx_int_3);
@@ -4079,8 +4449,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_tuple__19);
   Py_VISIT(traverse_module_state->__pyx_tuple__20);
   Py_VISIT(traverse_module_state->__pyx_tuple__22);
+  Py_VISIT(traverse_module_state->__pyx_tuple__24);
   Py_VISIT(traverse_module_state->__pyx_codeobj__21);
   Py_VISIT(traverse_module_state->__pyx_codeobj__23);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__25);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__26);
   return 0;
 }
 #endif
@@ -4108,6 +4481,12 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #endif
 #ifdef __Pyx_Coroutine_USED
 #define __pyx_CoroutineType __pyx_mstate_global->__pyx_CoroutineType
+#endif
+#if CYTHON_USE_MODULE_STATE
+#endif
+#if CYTHON_USE_MODULE_STATE
+#endif
+#if CYTHON_USE_MODULE_STATE
 #endif
 #if CYTHON_USE_MODULE_STATE
 #endif
@@ -4150,6 +4529,16 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #if CYTHON_USE_MODULE_STATE
 #endif
 #if CYTHON_USE_MODULE_STATE
+#endif
+#define __pyx_ptype_6ailist_13Interval_core_Interval __pyx_mstate_global->__pyx_ptype_6ailist_13Interval_core_Interval
+#if CYTHON_USE_MODULE_STATE
+#endif
+#define __pyx_ptype_6ailist_11AIList_core_AIList __pyx_mstate_global->__pyx_ptype_6ailist_11AIList_core_AIList
+#if CYTHON_USE_MODULE_STATE
+#endif
+#define __pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledInterval __pyx_mstate_global->__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledInterval
+#define __pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray __pyx_mstate_global->__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray
+#if CYTHON_USE_MODULE_STATE
 #define __pyx_type___pyx_array __pyx_mstate_global->__pyx_type___pyx_array
 #define __pyx_type___pyx_MemviewEnum __pyx_mstate_global->__pyx_type___pyx_MemviewEnum
 #define __pyx_type___pyx_memoryview __pyx_mstate_global->__pyx_type___pyx_memoryview
@@ -4177,6 +4566,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_IndexError __pyx_mstate_global->__pyx_n_s_IndexError
 #define __pyx_kp_s_Index_out_of_bounds_axis_d __pyx_mstate_global->__pyx_kp_s_Index_out_of_bounds_axis_d
 #define __pyx_kp_s_Indirect_dimensions_not_supporte __pyx_mstate_global->__pyx_kp_s_Indirect_dimensions_not_supporte
+#define __pyx_n_s_IntervalFrame __pyx_mstate_global->__pyx_n_s_IntervalFrame
 #define __pyx_kp_u_Invalid_mode_expected_c_or_fortr __pyx_mstate_global->__pyx_kp_u_Invalid_mode_expected_c_or_fortr
 #define __pyx_kp_u_Invalid_shape_in_axis __pyx_mstate_global->__pyx_kp_u_Invalid_shape_in_axis
 #define __pyx_n_s_MemoryError __pyx_mstate_global->__pyx_n_s_MemoryError
@@ -4192,7 +4582,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_ValueError __pyx_mstate_global->__pyx_n_s_ValueError
 #define __pyx_n_s_View_MemoryView __pyx_mstate_global->__pyx_n_s_View_MemoryView
 #define __pyx_kp_u__2 __pyx_mstate_global->__pyx_kp_u__2
-#define __pyx_n_s__24 __pyx_mstate_global->__pyx_n_s__24
+#define __pyx_n_s__27 __pyx_mstate_global->__pyx_n_s__27
 #define __pyx_n_s__3 __pyx_mstate_global->__pyx_n_s__3
 #define __pyx_kp_u__6 __pyx_mstate_global->__pyx_kp_u__6
 #define __pyx_kp_u__7 __pyx_mstate_global->__pyx_kp_u__7
@@ -4203,18 +4593,19 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_base __pyx_mstate_global->__pyx_n_s_base
 #define __pyx_n_s_c __pyx_mstate_global->__pyx_n_s_c
 #define __pyx_n_u_c __pyx_mstate_global->__pyx_n_u_c
+#define __pyx_n_s_c_values __pyx_mstate_global->__pyx_n_s_c_values
 #define __pyx_n_s_class __pyx_mstate_global->__pyx_n_s_class
 #define __pyx_n_s_class_getitem __pyx_mstate_global->__pyx_n_s_class_getitem
 #define __pyx_n_s_cline_in_traceback __pyx_mstate_global->__pyx_n_s_cline_in_traceback
 #define __pyx_n_s_collections __pyx_mstate_global->__pyx_n_s_collections
 #define __pyx_kp_s_collections_abc __pyx_mstate_global->__pyx_kp_s_collections_abc
+#define __pyx_n_s_construct __pyx_mstate_global->__pyx_n_s_construct
 #define __pyx_kp_s_contiguous_and_direct __pyx_mstate_global->__pyx_kp_s_contiguous_and_direct
 #define __pyx_kp_s_contiguous_and_indirect __pyx_mstate_global->__pyx_kp_s_contiguous_and_indirect
 #define __pyx_n_s_count __pyx_mstate_global->__pyx_n_s_count
+#define __pyx_n_s_cutoff __pyx_mstate_global->__pyx_n_s_cutoff
 #define __pyx_n_s_dict __pyx_mstate_global->__pyx_n_s_dict
 #define __pyx_kp_u_disable __pyx_mstate_global->__pyx_kp_u_disable
-#define __pyx_n_s_double __pyx_mstate_global->__pyx_n_s_double
-#define __pyx_n_s_dtype __pyx_mstate_global->__pyx_n_s_dtype
 #define __pyx_n_s_dtype_is_object __pyx_mstate_global->__pyx_n_s_dtype_is_object
 #define __pyx_kp_u_enable __pyx_mstate_global->__pyx_kp_u_enable
 #define __pyx_n_s_encode __pyx_mstate_global->__pyx_n_s_encode
@@ -4232,26 +4623,38 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_import __pyx_mstate_global->__pyx_n_s_import
 #define __pyx_n_s_index __pyx_mstate_global->__pyx_n_s_index
 #define __pyx_n_s_initializing __pyx_mstate_global->__pyx_n_s_initializing
+#define __pyx_n_s_intervalframe __pyx_mstate_global->__pyx_n_s_intervalframe
+#define __pyx_n_s_intervals __pyx_mstate_global->__pyx_n_s_intervals
 #define __pyx_n_s_is_coroutine __pyx_mstate_global->__pyx_n_s_is_coroutine
 #define __pyx_kp_u_isenabled __pyx_mstate_global->__pyx_kp_u_isenabled
 #define __pyx_n_s_itemsize __pyx_mstate_global->__pyx_n_s_itemsize
 #define __pyx_kp_s_itemsize_0_for_cython_array __pyx_mstate_global->__pyx_kp_s_itemsize_0_for_cython_array
+#define __pyx_n_s_laia __pyx_mstate_global->__pyx_n_s_laia
 #define __pyx_n_s_main __pyx_mstate_global->__pyx_n_s_main
 #define __pyx_n_s_memview __pyx_mstate_global->__pyx_n_s_memview
+#define __pyx_n_s_merge_adjacent __pyx_mstate_global->__pyx_n_s_merge_adjacent
+#define __pyx_n_s_merge_greater_than __pyx_mstate_global->__pyx_n_s_merge_greater_than
+#define __pyx_n_s_merge_less_than __pyx_mstate_global->__pyx_n_s_merge_less_than
+#define __pyx_n_s_merged_laia __pyx_mstate_global->__pyx_n_s_merged_laia
 #define __pyx_n_s_mode __pyx_mstate_global->__pyx_n_s_mode
+#define __pyx_n_s_n __pyx_mstate_global->__pyx_n_s_n
 #define __pyx_n_s_name __pyx_mstate_global->__pyx_n_s_name
 #define __pyx_n_s_name_2 __pyx_mstate_global->__pyx_n_s_name_2
+#define __pyx_n_s_ncounts __pyx_mstate_global->__pyx_n_s_ncounts
 #define __pyx_n_s_ndim __pyx_mstate_global->__pyx_n_s_ndim
 #define __pyx_n_s_new __pyx_mstate_global->__pyx_n_s_new
-#define __pyx_kp_s_ngsfragments_peak_calling_Runnin __pyx_mstate_global->__pyx_kp_s_ngsfragments_peak_calling_Runnin
-#define __pyx_n_s_ngsfragments_peak_calling_Runnin_2 __pyx_mstate_global->__pyx_n_s_ngsfragments_peak_calling_Runnin_2
+#define __pyx_kp_s_ngsfragments_segment_merge_regio __pyx_mstate_global->__pyx_kp_s_ngsfragments_segment_merge_regio
+#define __pyx_n_s_ngsfragments_segment_merge_regio_2 __pyx_mstate_global->__pyx_n_s_ngsfragments_segment_merge_regio_2
 #define __pyx_kp_s_no_default___reduce___due_to_non __pyx_mstate_global->__pyx_kp_s_no_default___reduce___due_to_non
 #define __pyx_n_s_np __pyx_mstate_global->__pyx_n_s_np
 #define __pyx_n_s_numpy __pyx_mstate_global->__pyx_n_s_numpy
 #define __pyx_kp_u_numpy_core_multiarray_failed_to __pyx_mstate_global->__pyx_kp_u_numpy_core_multiarray_failed_to
 #define __pyx_kp_u_numpy_core_umath_failed_to_impor __pyx_mstate_global->__pyx_kp_u_numpy_core_umath_failed_to_impor
 #define __pyx_n_s_obj __pyx_mstate_global->__pyx_n_s_obj
+#define __pyx_n_s_os __pyx_mstate_global->__pyx_n_s_os
 #define __pyx_n_s_pack __pyx_mstate_global->__pyx_n_s_pack
+#define __pyx_n_s_pandas __pyx_mstate_global->__pyx_n_s_pandas
+#define __pyx_n_s_pd __pyx_mstate_global->__pyx_n_s_pd
 #define __pyx_n_s_pickle __pyx_mstate_global->__pyx_n_s_pickle
 #define __pyx_n_s_pyx_PickleError __pyx_mstate_global->__pyx_n_s_pyx_PickleError
 #define __pyx_n_s_pyx_checksum __pyx_mstate_global->__pyx_n_s_pyx_checksum
@@ -4265,11 +4668,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_reduce_cython __pyx_mstate_global->__pyx_n_s_reduce_cython
 #define __pyx_n_s_reduce_ex __pyx_mstate_global->__pyx_n_s_reduce_ex
 #define __pyx_n_s_register __pyx_mstate_global->__pyx_n_s_register
-#define __pyx_n_s_running_mean __pyx_mstate_global->__pyx_n_s_running_mean
 #define __pyx_n_s_setstate __pyx_mstate_global->__pyx_n_s_setstate
 #define __pyx_n_s_setstate_cython __pyx_mstate_global->__pyx_n_s_setstate_cython
 #define __pyx_n_s_shape __pyx_mstate_global->__pyx_n_s_shape
 #define __pyx_n_s_size __pyx_mstate_global->__pyx_n_s_size
+#define __pyx_n_s_sort __pyx_mstate_global->__pyx_n_s_sort
 #define __pyx_n_s_spec __pyx_mstate_global->__pyx_n_s_spec
 #define __pyx_n_s_start __pyx_mstate_global->__pyx_n_s_start
 #define __pyx_n_s_step __pyx_mstate_global->__pyx_n_s_step
@@ -4287,8 +4690,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_update __pyx_mstate_global->__pyx_n_s_update
 #define __pyx_n_s_values __pyx_mstate_global->__pyx_n_s_values
 #define __pyx_n_s_version_info __pyx_mstate_global->__pyx_n_s_version_info
-#define __pyx_n_s_window __pyx_mstate_global->__pyx_n_s_window
-#define __pyx_n_s_zeros __pyx_mstate_global->__pyx_n_s_zeros
 #define __pyx_int_0 __pyx_mstate_global->__pyx_int_0
 #define __pyx_int_1 __pyx_mstate_global->__pyx_int_1
 #define __pyx_int_3 __pyx_mstate_global->__pyx_int_3
@@ -4312,8 +4713,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_tuple__19 __pyx_mstate_global->__pyx_tuple__19
 #define __pyx_tuple__20 __pyx_mstate_global->__pyx_tuple__20
 #define __pyx_tuple__22 __pyx_mstate_global->__pyx_tuple__22
+#define __pyx_tuple__24 __pyx_mstate_global->__pyx_tuple__24
 #define __pyx_codeobj__21 __pyx_mstate_global->__pyx_codeobj__21
 #define __pyx_codeobj__23 __pyx_mstate_global->__pyx_codeobj__23
+#define __pyx_codeobj__25 __pyx_mstate_global->__pyx_codeobj__25
+#define __pyx_codeobj__26 __pyx_mstate_global->__pyx_codeobj__26
 /* #### Code section: module_code ### */
 
 /* "View.MemoryView":131
@@ -19206,222 +19610,165 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
   return __pyx_r;
 }
 
-/* "ngsfragments/peak_calling/RunningMean.pyx":10
+/* "ngsfragments/segment/merge_regions/merge_regions.pyx":17
  * 
  * 
- * cdef void c_running_mean(const double[::1] values, double[::1] means, int n, int window):             # <<<<<<<<<<<<<<
- * 	rolling_mean_array(&values[0], &means[0], n, window)
- * 
+ * cdef labeled_aiarray_t *_merge_adjacent(labeled_aiarray_t *laia, uint32_t n):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
  */
 
-static void __pyx_f_12ngsfragments_12peak_calling_11RunningMean_c_running_mean(__Pyx_memviewslice __pyx_v_values, __Pyx_memviewslice __pyx_v_means, int __pyx_v_n, int __pyx_v_window) {
-  Py_ssize_t __pyx_t_1;
-  int __pyx_t_2;
-  Py_ssize_t __pyx_t_3;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
+static labeled_aiarray_t *__pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_adjacent(labeled_aiarray_t *__pyx_v_laia, uint32_t __pyx_v_n) {
+  labeled_aiarray_t *__pyx_v_merged_laia;
+  labeled_aiarray_t *__pyx_r;
 
-  /* "ngsfragments/peak_calling/RunningMean.pyx":11
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":21
+ *     """
  * 
- * cdef void c_running_mean(const double[::1] values, double[::1] means, int n, int window):
- * 	rolling_mean_array(&values[0], &means[0], n, window)             # <<<<<<<<<<<<<<
+ *     cdef labeled_aiarray_t *merged_laia = adjacent_merge(laia, n)             # <<<<<<<<<<<<<<
+ * 
+ *     return merged_laia
+ */
+  __pyx_v_merged_laia = adjacent_merge(__pyx_v_laia, __pyx_v_n);
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":23
+ *     cdef labeled_aiarray_t *merged_laia = adjacent_merge(laia, n)
+ * 
+ *     return merged_laia             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = 0;
-  __pyx_t_2 = -1;
-  if (__pyx_t_1 < 0) {
-    __pyx_t_1 += __pyx_v_values.shape[0];
-    if (unlikely(__pyx_t_1 < 0)) __pyx_t_2 = 0;
-  } else if (unlikely(__pyx_t_1 >= __pyx_v_values.shape[0])) __pyx_t_2 = 0;
-  if (unlikely(__pyx_t_2 != -1)) {
-    __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(1, 11, __pyx_L1_error)
-  }
-  __pyx_t_3 = 0;
-  __pyx_t_2 = -1;
-  if (__pyx_t_3 < 0) {
-    __pyx_t_3 += __pyx_v_means.shape[0];
-    if (unlikely(__pyx_t_3 < 0)) __pyx_t_2 = 0;
-  } else if (unlikely(__pyx_t_3 >= __pyx_v_means.shape[0])) __pyx_t_2 = 0;
-  if (unlikely(__pyx_t_2 != -1)) {
-    __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(1, 11, __pyx_L1_error)
-  }
-  rolling_mean_array((&(*((double const  *) ( /* dim=0 */ ((char *) (((double const  *) __pyx_v_values.data) + __pyx_t_1)) )))), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_means.data) + __pyx_t_3)) )))), __pyx_v_n, __pyx_v_window);
+  __pyx_r = __pyx_v_merged_laia;
+  goto __pyx_L0;
 
-  /* "ngsfragments/peak_calling/RunningMean.pyx":10
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":17
  * 
  * 
- * cdef void c_running_mean(const double[::1] values, double[::1] means, int n, int window):             # <<<<<<<<<<<<<<
- * 	rolling_mean_array(&values[0], &means[0], n, window)
- * 
+ * cdef labeled_aiarray_t *_merge_adjacent(labeled_aiarray_t *laia, uint32_t n):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
  */
 
   /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_AddTraceback("ngsfragments.peak_calling.RunningMean.c_running_mean", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_L0:;
-}
-
-/* "ngsfragments/peak_calling/RunningMean.pyx":14
- * 
- * 
- * cpdef np.ndarray running_mean(const double[::1] values, int window):             # <<<<<<<<<<<<<<
- * 	"""
- * 	Calculate a running mean across values
- */
-
-static PyObject *__pyx_pw_12ngsfragments_12peak_calling_11RunningMean_1running_mean(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-static PyArrayObject *__pyx_f_12ngsfragments_12peak_calling_11RunningMean_running_mean(__Pyx_memviewslice __pyx_v_values, int __pyx_v_window, CYTHON_UNUSED int __pyx_skip_dispatch) {
-  int __pyx_v_n;
-  PyArrayObject *__pyx_v_means = 0;
-  __Pyx_memviewslice __pyx_v_means_mem = { 0, 0, { 0 }, { 0 }, { 0 } };
-  PyArrayObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  Py_ssize_t __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
-  __Pyx_memviewslice __pyx_t_7 = { 0, 0, { 0 }, { 0 }, { 0 } };
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("running_mean", 1);
-
-  /* "ngsfragments/peak_calling/RunningMean.pyx":26
- * 	"""
- * 	# Initialize variables
- * 	cdef int n = len(values)             # <<<<<<<<<<<<<<
- * 	cdef np.ndarray means = np.zeros(n, dtype=np.double)
- * 	cdef double[::1] means_mem = means
- */
-  __pyx_t_1 = __Pyx_MemoryView_Len(__pyx_v_values); 
-  __pyx_v_n = __pyx_t_1;
-
-  /* "ngsfragments/peak_calling/RunningMean.pyx":27
- * 	# Initialize variables
- * 	cdef int n = len(values)
- * 	cdef np.ndarray means = np.zeros(n, dtype=np.double)             # <<<<<<<<<<<<<<
- * 	cdef double[::1] means_mem = means
- * 
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_2);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2)) __PYX_ERR(1, 27, __pyx_L1_error);
-  __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_double); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(1, 27, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(1, 27, __pyx_L1_error)
-  __pyx_v_means = ((PyArrayObject *)__pyx_t_6);
-  __pyx_t_6 = 0;
-
-  /* "ngsfragments/peak_calling/RunningMean.pyx":28
- * 	cdef int n = len(values)
- * 	cdef np.ndarray means = np.zeros(n, dtype=np.double)
- * 	cdef double[::1] means_mem = means             # <<<<<<<<<<<<<<
- * 
- * 	c_running_mean(values, means_mem, n, window)
- */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(((PyObject *)__pyx_v_means), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(1, 28, __pyx_L1_error)
-  __pyx_v_means_mem = __pyx_t_7;
-  __pyx_t_7.memview = NULL;
-  __pyx_t_7.data = NULL;
-
-  /* "ngsfragments/peak_calling/RunningMean.pyx":30
- * 	cdef double[::1] means_mem = means
- * 
- * 	c_running_mean(values, means_mem, n, window)             # <<<<<<<<<<<<<<
- * 
- * 	return means
- */
-  __pyx_f_12ngsfragments_12peak_calling_11RunningMean_c_running_mean(__pyx_v_values, __pyx_v_means_mem, __pyx_v_n, __pyx_v_window); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 30, __pyx_L1_error)
-
-  /* "ngsfragments/peak_calling/RunningMean.pyx":32
- * 	c_running_mean(values, means_mem, n, window)
- * 
- * 	return means             # <<<<<<<<<<<<<<
- */
-  __Pyx_XDECREF((PyObject *)__pyx_r);
-  __Pyx_INCREF((PyObject *)__pyx_v_means);
-  __pyx_r = __pyx_v_means;
-  goto __pyx_L0;
-
-  /* "ngsfragments/peak_calling/RunningMean.pyx":14
- * 
- * 
- * cpdef np.ndarray running_mean(const double[::1] values, int window):             # <<<<<<<<<<<<<<
- * 	"""
- * 	Calculate a running mean across values
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_6);
-  __PYX_XCLEAR_MEMVIEW(&__pyx_t_7, 1);
-  __Pyx_AddTraceback("ngsfragments.peak_calling.RunningMean.running_mean", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF((PyObject *)__pyx_v_means);
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_means_mem, 1);
-  __Pyx_XGIVEREF((PyObject *)__pyx_r);
-  __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
+/* "ngsfragments/segment/merge_regions/merge_regions.pyx":26
+ * 
+ * 
+ * cdef labeled_aiarray_t *_merge_less_than(labeled_aiarray_t *laia, double *values, double cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+
+static labeled_aiarray_t *__pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_less_than(labeled_aiarray_t *__pyx_v_laia, double *__pyx_v_values, double __pyx_v_cutoff) {
+  labeled_aiarray_t *__pyx_v_merged_laia;
+  labeled_aiarray_t *__pyx_r;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":30
+ *     """
+ * 
+ *     cdef labeled_aiarray_t *merged_laia = adjacent_merge_less_than(laia, values, cutoff)             # <<<<<<<<<<<<<<
+ * 
+ *     return merged_laia
+ */
+  __pyx_v_merged_laia = adjacent_merge_less_than(__pyx_v_laia, __pyx_v_values, __pyx_v_cutoff);
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":32
+ *     cdef labeled_aiarray_t *merged_laia = adjacent_merge_less_than(laia, values, cutoff)
+ * 
+ *     return merged_laia             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_r = __pyx_v_merged_laia;
+  goto __pyx_L0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":26
+ * 
+ * 
+ * cdef labeled_aiarray_t *_merge_less_than(labeled_aiarray_t *laia, double *values, double cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "ngsfragments/segment/merge_regions/merge_regions.pyx":35
+ * 
+ * 
+ * cdef labeled_aiarray_t *_merge_greater_than(labeled_aiarray_t *laia, double *values, double cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+
+static labeled_aiarray_t *__pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_greater_than(labeled_aiarray_t *__pyx_v_laia, double *__pyx_v_values, double __pyx_v_cutoff) {
+  labeled_aiarray_t *__pyx_v_merged_laia;
+  labeled_aiarray_t *__pyx_r;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":39
+ *     """
+ * 
+ *     cdef labeled_aiarray_t *merged_laia = adjacent_merge_greater_than(laia, values, cutoff)             # <<<<<<<<<<<<<<
+ * 
+ *     return merged_laia
+ */
+  __pyx_v_merged_laia = adjacent_merge_greater_than(__pyx_v_laia, __pyx_v_values, __pyx_v_cutoff);
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":41
+ *     cdef labeled_aiarray_t *merged_laia = adjacent_merge_greater_than(laia, values, cutoff)
+ * 
+ *     return merged_laia             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_r = __pyx_v_merged_laia;
+  goto __pyx_L0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":35
+ * 
+ * 
+ * cdef labeled_aiarray_t *_merge_greater_than(labeled_aiarray_t *laia, double *values, double cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "ngsfragments/segment/merge_regions/merge_regions.pyx":44
+ * 
+ * 
+ * def merge_adjacent(LabeledIntervalArray laia, int n):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+
 /* Python wrapper */
-static PyObject *__pyx_pw_12ngsfragments_12peak_calling_11RunningMean_1running_mean(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_12ngsfragments_7segment_13merge_regions_13merge_regions_1merge_adjacent(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_12ngsfragments_12peak_calling_11RunningMean_running_mean, "\n\tCalculate a running mean across values\n\t\n\tArguments\n\t\tvalues: double array/numpy array\n\t\twindow: int\n\t\t\n\tReturns\n\t\tmeans: numpy array\n\t");
-static PyMethodDef __pyx_mdef_12ngsfragments_12peak_calling_11RunningMean_1running_mean = {"running_mean", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12ngsfragments_12peak_calling_11RunningMean_1running_mean, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_12ngsfragments_12peak_calling_11RunningMean_running_mean};
-static PyObject *__pyx_pw_12ngsfragments_12peak_calling_11RunningMean_1running_mean(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_12ngsfragments_7segment_13merge_regions_13merge_regions_merge_adjacent, "merge_adjacent(LabeledIntervalArray laia, int n)\n\n    ");
+static PyMethodDef __pyx_mdef_12ngsfragments_7segment_13merge_regions_13merge_regions_1merge_adjacent = {"merge_adjacent", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12ngsfragments_7segment_13merge_regions_13merge_regions_1merge_adjacent, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_12ngsfragments_7segment_13merge_regions_13merge_regions_merge_adjacent};
+static PyObject *__pyx_pw_12ngsfragments_7segment_13merge_regions_13merge_regions_1merge_adjacent(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ) {
-  __Pyx_memviewslice __pyx_v_values = { 0, 0, { 0 }, { 0 }, { 0 } };
-  int __pyx_v_window;
+  struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_laia = 0;
+  int __pyx_v_n;
   #if !CYTHON_METH_FASTCALL
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
   #endif
@@ -19432,7 +19779,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("running_mean (wrapper)", 0);
+  __Pyx_RefNannySetupContext("merge_adjacent (wrapper)", 0);
   #if !CYTHON_METH_FASTCALL
   #if CYTHON_ASSUME_SAFE_MACROS
   __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
@@ -19442,7 +19789,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   #endif
   __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
   {
-    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_values,&__pyx_n_s_window,0};
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_laia,&__pyx_n_s_n,0};
     if (__pyx_kwds) {
       Py_ssize_t kw_args;
       switch (__pyx_nargs) {
@@ -19456,26 +19803,26 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
       switch (__pyx_nargs) {
         case  0:
-        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_values)) != 0)) {
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_laia)) != 0)) {
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 14, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 44, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
-        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_window)) != 0)) {
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_n)) != 0)) {
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 14, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 44, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("running_mean", 1, 2, 2, 1); __PYX_ERR(1, 14, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("merge_adjacent", 1, 2, 2, 1); __PYX_ERR(1, 44, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "running_mean") < 0)) __PYX_ERR(1, 14, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "merge_adjacent") < 0)) __PYX_ERR(1, 44, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -19483,12 +19830,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
       values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
     }
-    __pyx_v_values = __Pyx_PyObject_to_MemoryviewSlice_dc_double__const__(values[0], 0); if (unlikely(!__pyx_v_values.memview)) __PYX_ERR(1, 14, __pyx_L3_error)
-    __pyx_v_window = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_window == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 14, __pyx_L3_error)
+    __pyx_v_laia = ((struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *)values[0]);
+    __pyx_v_n = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_n == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 44, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("running_mean", 1, 2, 2, __pyx_nargs); __PYX_ERR(1, 14, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("merge_adjacent", 1, 2, 2, __pyx_nargs); __PYX_ERR(1, 44, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -19498,15 +19845,18 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_values, 1);
-  __Pyx_AddTraceback("ngsfragments.peak_calling.RunningMean.running_mean", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("ngsfragments.segment.merge_regions.merge_regions.merge_adjacent", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_12ngsfragments_12peak_calling_11RunningMean_running_mean(__pyx_self, __pyx_v_values, __pyx_v_window);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_laia), __pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray, 1, "laia", 0))) __PYX_ERR(1, 44, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12ngsfragments_7segment_13merge_regions_13merge_regions_merge_adjacent(__pyx_self, __pyx_v_laia, __pyx_v_n);
 
   /* function exit code */
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_values, 1);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
   {
     Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -19517,28 +19867,884 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_12ngsfragments_12peak_calling_11RunningMean_running_mean(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_values, int __pyx_v_window) {
+static PyObject *__pyx_pf_12ngsfragments_7segment_13merge_regions_13merge_regions_merge_adjacent(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_laia, int __pyx_v_n) {
+  uint32_t __pyx_v_ncounts;
+  labeled_aiarray_t *__pyx_v_merged_laia;
+  struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_intervals = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  unsigned int __pyx_t_4;
+  labeled_aiarray_t *__pyx_t_5;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("running_mean", 1);
-  __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_values.memview)) { __Pyx_RaiseUnboundLocalError("values"); __PYX_ERR(1, 14, __pyx_L1_error) }
-  __pyx_t_1 = ((PyObject *)__pyx_f_12ngsfragments_12peak_calling_11RunningMean_running_mean(__pyx_v_values, __pyx_v_window, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 14, __pyx_L1_error)
+  __Pyx_RefNannySetupContext("merge_adjacent", 1);
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":49
+ * 
+ *     # Make sure is constructed
+ *     laia.construct()             # <<<<<<<<<<<<<<
+ * 
+ *     # Merge
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_laia), __pyx_n_s_construct); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 49, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 49, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":52
+ * 
+ *     # Merge
+ *     cdef uint32_t ncounts = n             # <<<<<<<<<<<<<<
+ *     cdef labeled_aiarray_t *merged_laia =_merge_adjacent(laia.laia, ncounts)
+ * 
+ */
+  __pyx_v_ncounts = __pyx_v_n;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":53
+ *     # Merge
+ *     cdef uint32_t ncounts = n
+ *     cdef labeled_aiarray_t *merged_laia =_merge_adjacent(laia.laia, ncounts)             # <<<<<<<<<<<<<<
+ * 
+ *     # Wrap c intervals
+ */
+  __pyx_t_5 = __pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_adjacent(__pyx_v_laia->laia, __pyx_v_ncounts); if (unlikely(__pyx_t_5 == ((labeled_aiarray_t *)NULL) && PyErr_Occurred())) __PYX_ERR(1, 53, __pyx_L1_error)
+  __pyx_v_merged_laia = __pyx_t_5;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":56
+ * 
+ *     # Wrap c intervals
+ *     intervals = LabeledIntervalArray()             # <<<<<<<<<<<<<<
+ *     intervals.set_list(merged_laia)
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
+  __pyx_v_intervals = ((struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *)__pyx_t_1);
   __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":57
+ *     # Wrap c intervals
+ *     intervals = LabeledIntervalArray()
+ *     intervals.set_list(merged_laia)             # <<<<<<<<<<<<<<
+ * 
+ *     # Sort intervals
+ */
+  ((struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *)__pyx_v_intervals->__pyx_vtab)->set_list(__pyx_v_intervals, __pyx_v_merged_laia); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 57, __pyx_L1_error)
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":60
+ * 
+ *     # Sort intervals
+ *     intervals.construct()             # <<<<<<<<<<<<<<
+ *     intervals.sort()
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_intervals), __pyx_n_s_construct); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 60, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 60, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":61
+ *     # Sort intervals
+ *     intervals.construct()
+ *     intervals.sort()             # <<<<<<<<<<<<<<
+ * 
+ *     return intervals
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_intervals), __pyx_n_s_sort); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 61, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 61, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":63
+ *     intervals.sort()
+ * 
+ *     return intervals             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF((PyObject *)__pyx_v_intervals);
+  __pyx_r = ((PyObject *)__pyx_v_intervals);
   goto __pyx_L0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":44
+ * 
+ * 
+ * def merge_adjacent(LabeledIntervalArray laia, int n):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("ngsfragments.peak_calling.RunningMean.running_mean", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("ngsfragments.segment.merge_regions.merge_regions.merge_adjacent", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
+  __Pyx_XDECREF((PyObject *)__pyx_v_intervals);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "ngsfragments/segment/merge_regions/merge_regions.pyx":66
+ * 
+ * 
+ * def merge_less_than(LabeledIntervalArray laia, np.ndarray values, float cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_12ngsfragments_7segment_13merge_regions_13merge_regions_3merge_less_than(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_12ngsfragments_7segment_13merge_regions_13merge_regions_2merge_less_than, "merge_less_than(LabeledIntervalArray laia, ndarray values, float cutoff)\n\n    ");
+static PyMethodDef __pyx_mdef_12ngsfragments_7segment_13merge_regions_13merge_regions_3merge_less_than = {"merge_less_than", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12ngsfragments_7segment_13merge_regions_13merge_regions_3merge_less_than, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_12ngsfragments_7segment_13merge_regions_13merge_regions_2merge_less_than};
+static PyObject *__pyx_pw_12ngsfragments_7segment_13merge_regions_13merge_regions_3merge_less_than(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_laia = 0;
+  PyArrayObject *__pyx_v_values = 0;
+  float __pyx_v_cutoff;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("merge_less_than (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_laia,&__pyx_n_s_values,&__pyx_n_s_cutoff,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_laia)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 66, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_values)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 66, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("merge_less_than", 1, 3, 3, 1); __PYX_ERR(1, 66, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cutoff)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 66, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("merge_less_than", 1, 3, 3, 2); __PYX_ERR(1, 66, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "merge_less_than") < 0)) __PYX_ERR(1, 66, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 3)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+      values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+    }
+    __pyx_v_laia = ((struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *)values[0]);
+    __pyx_v_values = ((PyArrayObject *)values[1]);
+    __pyx_v_cutoff = __pyx_PyFloat_AsFloat(values[2]); if (unlikely((__pyx_v_cutoff == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 66, __pyx_L3_error)
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("merge_less_than", 1, 3, 3, __pyx_nargs); __PYX_ERR(1, 66, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("ngsfragments.segment.merge_regions.merge_regions.merge_less_than", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_laia), __pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray, 1, "laia", 0))) __PYX_ERR(1, 66, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_values), __pyx_ptype_5numpy_ndarray, 1, "values", 0))) __PYX_ERR(1, 66, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12ngsfragments_7segment_13merge_regions_13merge_regions_2merge_less_than(__pyx_self, __pyx_v_laia, __pyx_v_values, __pyx_v_cutoff);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_12ngsfragments_7segment_13merge_regions_13merge_regions_2merge_less_than(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_laia, PyArrayObject *__pyx_v_values, float __pyx_v_cutoff) {
+  __Pyx_memviewslice __pyx_v_c_values = { 0, 0, { 0 }, { 0 }, { 0 } };
+  labeled_aiarray_t *__pyx_v_merged_laia;
+  struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_intervals = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  unsigned int __pyx_t_4;
+  __Pyx_memviewslice __pyx_t_5 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  Py_ssize_t __pyx_t_6;
+  int __pyx_t_7;
+  labeled_aiarray_t *__pyx_t_8;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("merge_less_than", 1);
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":71
+ * 
+ *     # Make sure is constructed
+ *     laia.construct()             # <<<<<<<<<<<<<<
+ * 
+ *     # Merge
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_laia), __pyx_n_s_construct); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 71, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 71, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":74
+ * 
+ *     # Merge
+ *     cdef double[::1] c_values = values             # <<<<<<<<<<<<<<
+ *     cdef labeled_aiarray_t *merged_laia =_merge_less_than(laia.laia, &c_values[0], cutoff)
+ * 
+ */
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(((PyObject *)__pyx_v_values), PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(1, 74, __pyx_L1_error)
+  __pyx_v_c_values = __pyx_t_5;
+  __pyx_t_5.memview = NULL;
+  __pyx_t_5.data = NULL;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":75
+ *     # Merge
+ *     cdef double[::1] c_values = values
+ *     cdef labeled_aiarray_t *merged_laia =_merge_less_than(laia.laia, &c_values[0], cutoff)             # <<<<<<<<<<<<<<
+ * 
+ *     # Wrap c intervals
+ */
+  __pyx_t_6 = 0;
+  __pyx_t_7 = -1;
+  if (__pyx_t_6 < 0) {
+    __pyx_t_6 += __pyx_v_c_values.shape[0];
+    if (unlikely(__pyx_t_6 < 0)) __pyx_t_7 = 0;
+  } else if (unlikely(__pyx_t_6 >= __pyx_v_c_values.shape[0])) __pyx_t_7 = 0;
+  if (unlikely(__pyx_t_7 != -1)) {
+    __Pyx_RaiseBufferIndexError(__pyx_t_7);
+    __PYX_ERR(1, 75, __pyx_L1_error)
+  }
+  __pyx_t_8 = __pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_less_than(__pyx_v_laia->laia, (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_c_values.data) + __pyx_t_6)) )))), __pyx_v_cutoff); if (unlikely(__pyx_t_8 == ((labeled_aiarray_t *)NULL) && PyErr_Occurred())) __PYX_ERR(1, 75, __pyx_L1_error)
+  __pyx_v_merged_laia = __pyx_t_8;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":78
+ * 
+ *     # Wrap c intervals
+ *     intervals = LabeledIntervalArray()             # <<<<<<<<<<<<<<
+ *     intervals.set_list(merged_laia)
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 78, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_intervals = ((struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":79
+ *     # Wrap c intervals
+ *     intervals = LabeledIntervalArray()
+ *     intervals.set_list(merged_laia)             # <<<<<<<<<<<<<<
+ * 
+ *     # Sort intervals
+ */
+  ((struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *)__pyx_v_intervals->__pyx_vtab)->set_list(__pyx_v_intervals, __pyx_v_merged_laia); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 79, __pyx_L1_error)
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":82
+ * 
+ *     # Sort intervals
+ *     intervals.construct()             # <<<<<<<<<<<<<<
+ *     intervals.sort()
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_intervals), __pyx_n_s_construct); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 82, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":83
+ *     # Sort intervals
+ *     intervals.construct()
+ *     intervals.sort()             # <<<<<<<<<<<<<<
+ * 
+ *     return intervals
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_intervals), __pyx_n_s_sort); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 83, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 83, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":85
+ *     intervals.sort()
+ * 
+ *     return intervals             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF((PyObject *)__pyx_v_intervals);
+  __pyx_r = ((PyObject *)__pyx_v_intervals);
+  goto __pyx_L0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":66
+ * 
+ * 
+ * def merge_less_than(LabeledIntervalArray laia, np.ndarray values, float cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_t_5, 1);
+  __Pyx_AddTraceback("ngsfragments.segment.merge_regions.merge_regions.merge_less_than", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_c_values, 1);
+  __Pyx_XDECREF((PyObject *)__pyx_v_intervals);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "ngsfragments/segment/merge_regions/merge_regions.pyx":88
+ * 
+ * 
+ * def merge_greater_than(LabeledIntervalArray laia, np.ndarray values, float cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_12ngsfragments_7segment_13merge_regions_13merge_regions_5merge_greater_than(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_12ngsfragments_7segment_13merge_regions_13merge_regions_4merge_greater_than, "merge_greater_than(LabeledIntervalArray laia, ndarray values, float cutoff)\n\n    ");
+static PyMethodDef __pyx_mdef_12ngsfragments_7segment_13merge_regions_13merge_regions_5merge_greater_than = {"merge_greater_than", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12ngsfragments_7segment_13merge_regions_13merge_regions_5merge_greater_than, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_12ngsfragments_7segment_13merge_regions_13merge_regions_4merge_greater_than};
+static PyObject *__pyx_pw_12ngsfragments_7segment_13merge_regions_13merge_regions_5merge_greater_than(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_laia = 0;
+  PyArrayObject *__pyx_v_values = 0;
+  float __pyx_v_cutoff;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("merge_greater_than (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_laia,&__pyx_n_s_values,&__pyx_n_s_cutoff,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_laia)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 88, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_values)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 88, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("merge_greater_than", 1, 3, 3, 1); __PYX_ERR(1, 88, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cutoff)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 88, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("merge_greater_than", 1, 3, 3, 2); __PYX_ERR(1, 88, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "merge_greater_than") < 0)) __PYX_ERR(1, 88, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 3)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+      values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+    }
+    __pyx_v_laia = ((struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *)values[0]);
+    __pyx_v_values = ((PyArrayObject *)values[1]);
+    __pyx_v_cutoff = __pyx_PyFloat_AsFloat(values[2]); if (unlikely((__pyx_v_cutoff == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 88, __pyx_L3_error)
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("merge_greater_than", 1, 3, 3, __pyx_nargs); __PYX_ERR(1, 88, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("ngsfragments.segment.merge_regions.merge_regions.merge_greater_than", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_laia), __pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray, 1, "laia", 0))) __PYX_ERR(1, 88, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_values), __pyx_ptype_5numpy_ndarray, 1, "values", 0))) __PYX_ERR(1, 88, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12ngsfragments_7segment_13merge_regions_13merge_regions_4merge_greater_than(__pyx_self, __pyx_v_laia, __pyx_v_values, __pyx_v_cutoff);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_12ngsfragments_7segment_13merge_regions_13merge_regions_4merge_greater_than(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_laia, PyArrayObject *__pyx_v_values, float __pyx_v_cutoff) {
+  __Pyx_memviewslice __pyx_v_c_values = { 0, 0, { 0 }, { 0 }, { 0 } };
+  labeled_aiarray_t *__pyx_v_merged_laia;
+  struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *__pyx_v_intervals = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  unsigned int __pyx_t_4;
+  __Pyx_memviewslice __pyx_t_5 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  Py_ssize_t __pyx_t_6;
+  int __pyx_t_7;
+  labeled_aiarray_t *__pyx_t_8;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("merge_greater_than", 1);
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":93
+ * 
+ *     # Make sure is constructed
+ *     laia.construct()             # <<<<<<<<<<<<<<
+ * 
+ *     # Merge
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_laia), __pyx_n_s_construct); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 93, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 93, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":96
+ * 
+ *     # Merge
+ *     cdef double[::1] c_values = values             # <<<<<<<<<<<<<<
+ *     cdef labeled_aiarray_t *merged_laia =_merge_greater_than(laia.laia, &c_values[0], cutoff)
+ * 
+ */
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(((PyObject *)__pyx_v_values), PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(1, 96, __pyx_L1_error)
+  __pyx_v_c_values = __pyx_t_5;
+  __pyx_t_5.memview = NULL;
+  __pyx_t_5.data = NULL;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":97
+ *     # Merge
+ *     cdef double[::1] c_values = values
+ *     cdef labeled_aiarray_t *merged_laia =_merge_greater_than(laia.laia, &c_values[0], cutoff)             # <<<<<<<<<<<<<<
+ * 
+ *     # Wrap c intervals
+ */
+  __pyx_t_6 = 0;
+  __pyx_t_7 = -1;
+  if (__pyx_t_6 < 0) {
+    __pyx_t_6 += __pyx_v_c_values.shape[0];
+    if (unlikely(__pyx_t_6 < 0)) __pyx_t_7 = 0;
+  } else if (unlikely(__pyx_t_6 >= __pyx_v_c_values.shape[0])) __pyx_t_7 = 0;
+  if (unlikely(__pyx_t_7 != -1)) {
+    __Pyx_RaiseBufferIndexError(__pyx_t_7);
+    __PYX_ERR(1, 97, __pyx_L1_error)
+  }
+  __pyx_t_8 = __pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_greater_than(__pyx_v_laia->laia, (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_c_values.data) + __pyx_t_6)) )))), __pyx_v_cutoff); if (unlikely(__pyx_t_8 == ((labeled_aiarray_t *)NULL) && PyErr_Occurred())) __PYX_ERR(1, 97, __pyx_L1_error)
+  __pyx_v_merged_laia = __pyx_t_8;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":100
+ * 
+ *     # Wrap c intervals
+ *     intervals = LabeledIntervalArray()             # <<<<<<<<<<<<<<
+ *     intervals.set_list(merged_laia)
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 100, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_intervals = ((struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":101
+ *     # Wrap c intervals
+ *     intervals = LabeledIntervalArray()
+ *     intervals.set_list(merged_laia)             # <<<<<<<<<<<<<<
+ * 
+ *     # Sort intervals
+ */
+  ((struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray *)__pyx_v_intervals->__pyx_vtab)->set_list(__pyx_v_intervals, __pyx_v_merged_laia); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 101, __pyx_L1_error)
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":104
+ * 
+ *     # Sort intervals
+ *     intervals.construct()             # <<<<<<<<<<<<<<
+ *     intervals.sort()
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_intervals), __pyx_n_s_construct); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 104, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":105
+ *     # Sort intervals
+ *     intervals.construct()
+ *     intervals.sort()             # <<<<<<<<<<<<<<
+ * 
+ *     return intervals
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_intervals), __pyx_n_s_sort); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 105, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 105, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":107
+ *     intervals.sort()
+ * 
+ *     return intervals             # <<<<<<<<<<<<<<
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF((PyObject *)__pyx_v_intervals);
+  __pyx_r = ((PyObject *)__pyx_v_intervals);
+  goto __pyx_L0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":88
+ * 
+ * 
+ * def merge_greater_than(LabeledIntervalArray laia, np.ndarray values, float cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_t_5, 1);
+  __Pyx_AddTraceback("ngsfragments.segment.merge_regions.merge_regions.merge_greater_than", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_c_values, 1);
+  __Pyx_XDECREF((PyObject *)__pyx_v_intervals);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -19681,7 +20887,7 @@ static PyType_Slot __pyx_type___pyx_array_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_array_spec = {
-  "ngsfragments.peak_calling.RunningMean.array",
+  "ngsfragments.segment.merge_regions.merge_regions.array",
   sizeof(struct __pyx_array_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_SEQUENCE,
@@ -19727,7 +20933,7 @@ static PyBufferProcs __pyx_tp_as_buffer_array = {
 
 static PyTypeObject __pyx_type___pyx_array = {
   PyVarObject_HEAD_INIT(0, 0)
-  "ngsfragments.peak_calling.RunningMean.""array", /*tp_name*/
+  "ngsfragments.segment.merge_regions.merge_regions.""array", /*tp_name*/
   sizeof(struct __pyx_array_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_array, /*tp_dealloc*/
@@ -19890,7 +21096,7 @@ static PyType_Slot __pyx_type___pyx_MemviewEnum_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_MemviewEnum_spec = {
-  "ngsfragments.peak_calling.RunningMean.Enum",
+  "ngsfragments.segment.merge_regions.merge_regions.Enum",
   sizeof(struct __pyx_MemviewEnum_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC,
@@ -19900,7 +21106,7 @@ static PyType_Spec __pyx_type___pyx_MemviewEnum_spec = {
 
 static PyTypeObject __pyx_type___pyx_MemviewEnum = {
   PyVarObject_HEAD_INIT(0, 0)
-  "ngsfragments.peak_calling.RunningMean.""Enum", /*tp_name*/
+  "ngsfragments.segment.merge_regions.merge_regions.""Enum", /*tp_name*/
   sizeof(struct __pyx_MemviewEnum_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_Enum, /*tp_dealloc*/
@@ -20200,7 +21406,7 @@ static PyType_Slot __pyx_type___pyx_memoryview_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_memoryview_spec = {
-  "ngsfragments.peak_calling.RunningMean.memoryview",
+  "ngsfragments.segment.merge_regions.merge_regions.memoryview",
   sizeof(struct __pyx_memoryview_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC,
@@ -20246,7 +21452,7 @@ static PyBufferProcs __pyx_tp_as_buffer_memoryview = {
 
 static PyTypeObject __pyx_type___pyx_memoryview = {
   PyVarObject_HEAD_INIT(0, 0)
-  "ngsfragments.peak_calling.RunningMean.""memoryview", /*tp_name*/
+  "ngsfragments.segment.merge_regions.merge_regions.""memoryview", /*tp_name*/
   sizeof(struct __pyx_memoryview_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_memoryview, /*tp_dealloc*/
@@ -20401,7 +21607,7 @@ static PyType_Slot __pyx_type___pyx_memoryviewslice_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_memoryviewslice_spec = {
-  "ngsfragments.peak_calling.RunningMean._memoryviewslice",
+  "ngsfragments.segment.merge_regions.merge_regions._memoryviewslice",
   sizeof(struct __pyx_memoryviewslice_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC|Py_TPFLAGS_SEQUENCE,
@@ -20411,7 +21617,7 @@ static PyType_Spec __pyx_type___pyx_memoryviewslice_spec = {
 
 static PyTypeObject __pyx_type___pyx_memoryviewslice = {
   PyVarObject_HEAD_INIT(0, 0)
-  "ngsfragments.peak_calling.RunningMean.""_memoryviewslice", /*tp_name*/
+  "ngsfragments.segment.merge_regions.merge_regions.""_memoryviewslice", /*tp_name*/
   sizeof(struct __pyx_memoryviewslice_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc__memoryviewslice, /*tp_dealloc*/
@@ -20536,6 +21742,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_IndexError, __pyx_k_IndexError, sizeof(__pyx_k_IndexError), 0, 0, 1, 1},
     {&__pyx_kp_s_Index_out_of_bounds_axis_d, __pyx_k_Index_out_of_bounds_axis_d, sizeof(__pyx_k_Index_out_of_bounds_axis_d), 0, 0, 1, 0},
     {&__pyx_kp_s_Indirect_dimensions_not_supporte, __pyx_k_Indirect_dimensions_not_supporte, sizeof(__pyx_k_Indirect_dimensions_not_supporte), 0, 0, 1, 0},
+    {&__pyx_n_s_IntervalFrame, __pyx_k_IntervalFrame, sizeof(__pyx_k_IntervalFrame), 0, 0, 1, 1},
     {&__pyx_kp_u_Invalid_mode_expected_c_or_fortr, __pyx_k_Invalid_mode_expected_c_or_fortr, sizeof(__pyx_k_Invalid_mode_expected_c_or_fortr), 0, 1, 0, 0},
     {&__pyx_kp_u_Invalid_shape_in_axis, __pyx_k_Invalid_shape_in_axis, sizeof(__pyx_k_Invalid_shape_in_axis), 0, 1, 0, 0},
     {&__pyx_n_s_MemoryError, __pyx_k_MemoryError, sizeof(__pyx_k_MemoryError), 0, 0, 1, 1},
@@ -20551,7 +21758,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
     {&__pyx_n_s_View_MemoryView, __pyx_k_View_MemoryView, sizeof(__pyx_k_View_MemoryView), 0, 0, 1, 1},
     {&__pyx_kp_u__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 1, 0, 0},
-    {&__pyx_n_s__24, __pyx_k__24, sizeof(__pyx_k__24), 0, 0, 1, 1},
+    {&__pyx_n_s__27, __pyx_k__27, sizeof(__pyx_k__27), 0, 0, 1, 1},
     {&__pyx_n_s__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 1, 1},
     {&__pyx_kp_u__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 1, 0, 0},
     {&__pyx_kp_u__7, __pyx_k__7, sizeof(__pyx_k__7), 0, 1, 0, 0},
@@ -20562,18 +21769,19 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_base, __pyx_k_base, sizeof(__pyx_k_base), 0, 0, 1, 1},
     {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
     {&__pyx_n_u_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 1, 0, 1},
+    {&__pyx_n_s_c_values, __pyx_k_c_values, sizeof(__pyx_k_c_values), 0, 0, 1, 1},
     {&__pyx_n_s_class, __pyx_k_class, sizeof(__pyx_k_class), 0, 0, 1, 1},
     {&__pyx_n_s_class_getitem, __pyx_k_class_getitem, sizeof(__pyx_k_class_getitem), 0, 0, 1, 1},
     {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
     {&__pyx_n_s_collections, __pyx_k_collections, sizeof(__pyx_k_collections), 0, 0, 1, 1},
     {&__pyx_kp_s_collections_abc, __pyx_k_collections_abc, sizeof(__pyx_k_collections_abc), 0, 0, 1, 0},
+    {&__pyx_n_s_construct, __pyx_k_construct, sizeof(__pyx_k_construct), 0, 0, 1, 1},
     {&__pyx_kp_s_contiguous_and_direct, __pyx_k_contiguous_and_direct, sizeof(__pyx_k_contiguous_and_direct), 0, 0, 1, 0},
     {&__pyx_kp_s_contiguous_and_indirect, __pyx_k_contiguous_and_indirect, sizeof(__pyx_k_contiguous_and_indirect), 0, 0, 1, 0},
     {&__pyx_n_s_count, __pyx_k_count, sizeof(__pyx_k_count), 0, 0, 1, 1},
+    {&__pyx_n_s_cutoff, __pyx_k_cutoff, sizeof(__pyx_k_cutoff), 0, 0, 1, 1},
     {&__pyx_n_s_dict, __pyx_k_dict, sizeof(__pyx_k_dict), 0, 0, 1, 1},
     {&__pyx_kp_u_disable, __pyx_k_disable, sizeof(__pyx_k_disable), 0, 1, 0, 0},
-    {&__pyx_n_s_double, __pyx_k_double, sizeof(__pyx_k_double), 0, 0, 1, 1},
-    {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
     {&__pyx_n_s_dtype_is_object, __pyx_k_dtype_is_object, sizeof(__pyx_k_dtype_is_object), 0, 0, 1, 1},
     {&__pyx_kp_u_enable, __pyx_k_enable, sizeof(__pyx_k_enable), 0, 1, 0, 0},
     {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
@@ -20591,26 +21799,38 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
     {&__pyx_n_s_index, __pyx_k_index, sizeof(__pyx_k_index), 0, 0, 1, 1},
     {&__pyx_n_s_initializing, __pyx_k_initializing, sizeof(__pyx_k_initializing), 0, 0, 1, 1},
+    {&__pyx_n_s_intervalframe, __pyx_k_intervalframe, sizeof(__pyx_k_intervalframe), 0, 0, 1, 1},
+    {&__pyx_n_s_intervals, __pyx_k_intervals, sizeof(__pyx_k_intervals), 0, 0, 1, 1},
     {&__pyx_n_s_is_coroutine, __pyx_k_is_coroutine, sizeof(__pyx_k_is_coroutine), 0, 0, 1, 1},
     {&__pyx_kp_u_isenabled, __pyx_k_isenabled, sizeof(__pyx_k_isenabled), 0, 1, 0, 0},
     {&__pyx_n_s_itemsize, __pyx_k_itemsize, sizeof(__pyx_k_itemsize), 0, 0, 1, 1},
     {&__pyx_kp_s_itemsize_0_for_cython_array, __pyx_k_itemsize_0_for_cython_array, sizeof(__pyx_k_itemsize_0_for_cython_array), 0, 0, 1, 0},
+    {&__pyx_n_s_laia, __pyx_k_laia, sizeof(__pyx_k_laia), 0, 0, 1, 1},
     {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
     {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
+    {&__pyx_n_s_merge_adjacent, __pyx_k_merge_adjacent, sizeof(__pyx_k_merge_adjacent), 0, 0, 1, 1},
+    {&__pyx_n_s_merge_greater_than, __pyx_k_merge_greater_than, sizeof(__pyx_k_merge_greater_than), 0, 0, 1, 1},
+    {&__pyx_n_s_merge_less_than, __pyx_k_merge_less_than, sizeof(__pyx_k_merge_less_than), 0, 0, 1, 1},
+    {&__pyx_n_s_merged_laia, __pyx_k_merged_laia, sizeof(__pyx_k_merged_laia), 0, 0, 1, 1},
     {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
+    {&__pyx_n_s_n, __pyx_k_n, sizeof(__pyx_k_n), 0, 0, 1, 1},
     {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
     {&__pyx_n_s_name_2, __pyx_k_name_2, sizeof(__pyx_k_name_2), 0, 0, 1, 1},
+    {&__pyx_n_s_ncounts, __pyx_k_ncounts, sizeof(__pyx_k_ncounts), 0, 0, 1, 1},
     {&__pyx_n_s_ndim, __pyx_k_ndim, sizeof(__pyx_k_ndim), 0, 0, 1, 1},
     {&__pyx_n_s_new, __pyx_k_new, sizeof(__pyx_k_new), 0, 0, 1, 1},
-    {&__pyx_kp_s_ngsfragments_peak_calling_Runnin, __pyx_k_ngsfragments_peak_calling_Runnin, sizeof(__pyx_k_ngsfragments_peak_calling_Runnin), 0, 0, 1, 0},
-    {&__pyx_n_s_ngsfragments_peak_calling_Runnin_2, __pyx_k_ngsfragments_peak_calling_Runnin_2, sizeof(__pyx_k_ngsfragments_peak_calling_Runnin_2), 0, 0, 1, 1},
+    {&__pyx_kp_s_ngsfragments_segment_merge_regio, __pyx_k_ngsfragments_segment_merge_regio, sizeof(__pyx_k_ngsfragments_segment_merge_regio), 0, 0, 1, 0},
+    {&__pyx_n_s_ngsfragments_segment_merge_regio_2, __pyx_k_ngsfragments_segment_merge_regio_2, sizeof(__pyx_k_ngsfragments_segment_merge_regio_2), 0, 0, 1, 1},
     {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
     {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
     {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
     {&__pyx_kp_u_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 1, 0, 0},
     {&__pyx_kp_u_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 1, 0, 0},
     {&__pyx_n_s_obj, __pyx_k_obj, sizeof(__pyx_k_obj), 0, 0, 1, 1},
+    {&__pyx_n_s_os, __pyx_k_os, sizeof(__pyx_k_os), 0, 0, 1, 1},
     {&__pyx_n_s_pack, __pyx_k_pack, sizeof(__pyx_k_pack), 0, 0, 1, 1},
+    {&__pyx_n_s_pandas, __pyx_k_pandas, sizeof(__pyx_k_pandas), 0, 0, 1, 1},
+    {&__pyx_n_s_pd, __pyx_k_pd, sizeof(__pyx_k_pd), 0, 0, 1, 1},
     {&__pyx_n_s_pickle, __pyx_k_pickle, sizeof(__pyx_k_pickle), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_checksum, __pyx_k_pyx_checksum, sizeof(__pyx_k_pyx_checksum), 0, 0, 1, 1},
@@ -20624,11 +21844,11 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
     {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
     {&__pyx_n_s_register, __pyx_k_register, sizeof(__pyx_k_register), 0, 0, 1, 1},
-    {&__pyx_n_s_running_mean, __pyx_k_running_mean, sizeof(__pyx_k_running_mean), 0, 0, 1, 1},
     {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
     {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
     {&__pyx_n_s_shape, __pyx_k_shape, sizeof(__pyx_k_shape), 0, 0, 1, 1},
     {&__pyx_n_s_size, __pyx_k_size, sizeof(__pyx_k_size), 0, 0, 1, 1},
+    {&__pyx_n_s_sort, __pyx_k_sort, sizeof(__pyx_k_sort), 0, 0, 1, 1},
     {&__pyx_n_s_spec, __pyx_k_spec, sizeof(__pyx_k_spec), 0, 0, 1, 1},
     {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
     {&__pyx_n_s_step, __pyx_k_step, sizeof(__pyx_k_step), 0, 0, 1, 1},
@@ -20646,8 +21866,6 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
     {&__pyx_n_s_values, __pyx_k_values, sizeof(__pyx_k_values), 0, 0, 1, 1},
     {&__pyx_n_s_version_info, __pyx_k_version_info, sizeof(__pyx_k_version_info), 0, 0, 1, 1},
-    {&__pyx_n_s_window, __pyx_k_window, sizeof(__pyx_k_window), 0, 0, 1, 1},
-    {&__pyx_n_s_zeros, __pyx_k_zeros, sizeof(__pyx_k_zeros), 0, 0, 1, 1},
     {0, 0, 0, 0, 0, 0, 0}
   };
   return __Pyx_InitStrings(__pyx_string_tab);
@@ -20834,17 +22052,38 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__20);
   __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 1, __pyx_L1_error)
 
-  /* "ngsfragments/peak_calling/RunningMean.pyx":14
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":44
  * 
  * 
- * cpdef np.ndarray running_mean(const double[::1] values, int window):             # <<<<<<<<<<<<<<
- * 	"""
- * 	Calculate a running mean across values
+ * def merge_adjacent(LabeledIntervalArray laia, int n):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
  */
-  __pyx_tuple__22 = PyTuple_Pack(2, __pyx_n_s_values, __pyx_n_s_window); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(1, 14, __pyx_L1_error)
+  __pyx_tuple__22 = PyTuple_Pack(5, __pyx_n_s_laia, __pyx_n_s_n, __pyx_n_s_ncounts, __pyx_n_s_merged_laia, __pyx_n_s_intervals); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(1, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ngsfragments_peak_calling_Runnin, __pyx_n_s_running_mean, 14, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(1, 14, __pyx_L1_error)
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ngsfragments_segment_merge_regio, __pyx_n_s_merge_adjacent, 44, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(1, 44, __pyx_L1_error)
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":66
+ * 
+ * 
+ * def merge_less_than(LabeledIntervalArray laia, np.ndarray values, float cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+  __pyx_tuple__24 = PyTuple_Pack(6, __pyx_n_s_laia, __pyx_n_s_values, __pyx_n_s_cutoff, __pyx_n_s_c_values, __pyx_n_s_merged_laia, __pyx_n_s_intervals); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(1, 66, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__24);
+  __Pyx_GIVEREF(__pyx_tuple__24);
+  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ngsfragments_segment_merge_regio, __pyx_n_s_merge_less_than, 66, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(1, 66, __pyx_L1_error)
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":88
+ * 
+ * 
+ * def merge_greater_than(LabeledIntervalArray laia, np.ndarray values, float cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ngsfragments_segment_merge_regio, __pyx_n_s_merge_greater_than, 88, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(1, 88, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -20871,13 +22110,6 @@ static CYTHON_SMALL_CODE int __Pyx_InitConstants(void) {
 static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   /* AssertionsEnabled.init */
   if (likely(__Pyx_init_assertions_enabled() == 0)); else
-
-if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 1, __pyx_L1_error)
-
-  /* InitThreads.init */
-  #if defined(WITH_THREAD) && PY_VERSION_HEX < 0x030700F0
-PyEval_InitThreads();
-#endif
 
 if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 1, __pyx_L1_error)
 
@@ -20924,8 +22156,9 @@ static int __Pyx_modinit_function_export_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_export_code", 0);
   /*--- Function export code ---*/
-  if (__Pyx_ExportFunction("c_running_mean", (void (*)(void))__pyx_f_12ngsfragments_12peak_calling_11RunningMean_c_running_mean, "void (__Pyx_memviewslice, __Pyx_memviewslice, int, int)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("running_mean", (void (*)(void))__pyx_f_12ngsfragments_12peak_calling_11RunningMean_running_mean, "PyArrayObject *(__Pyx_memviewslice, int, int __pyx_skip_dispatch)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_merge_adjacent", (void (*)(void))__pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_adjacent, "labeled_aiarray_t *(labeled_aiarray_t *, uint32_t)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_merge_less_than", (void (*)(void))__pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_less_than, "labeled_aiarray_t *(labeled_aiarray_t *, double *, double)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("_merge_greater_than", (void (*)(void))__pyx_f_12ngsfragments_7segment_13merge_regions_13merge_regions__merge_greater_than, "labeled_aiarray_t *(labeled_aiarray_t *, double *, double)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -21127,6 +22360,22 @@ static int __Pyx_modinit_type_import_code(void) {
   __pyx_ptype_5numpy_character = __Pyx_ImportType_3_0_11(__pyx_t_1, "numpy", "character", sizeof(PyObject), __PYX_GET_STRUCT_ALIGNMENT_3_0_11(PyObject),__Pyx_ImportType_CheckSize_Warn_3_0_11); if (!__pyx_ptype_5numpy_character) __PYX_ERR(2, 827, __pyx_L1_error)
   __pyx_ptype_5numpy_ufunc = __Pyx_ImportType_3_0_11(__pyx_t_1, "numpy", "ufunc", sizeof(PyUFuncObject), __PYX_GET_STRUCT_ALIGNMENT_3_0_11(PyUFuncObject),__Pyx_ImportType_CheckSize_Ignore_3_0_11); if (!__pyx_ptype_5numpy_ufunc) __PYX_ERR(2, 866, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyImport_ImportModule("ailist.Interval_core"); if (unlikely(!__pyx_t_1)) __PYX_ERR(4, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_ptype_6ailist_13Interval_core_Interval = __Pyx_ImportType_3_0_11(__pyx_t_1, "ailist.Interval_core", "Interval", sizeof(struct __pyx_obj_6ailist_13Interval_core_Interval), __PYX_GET_STRUCT_ALIGNMENT_3_0_11(struct __pyx_obj_6ailist_13Interval_core_Interval),__Pyx_ImportType_CheckSize_Warn_3_0_11); if (!__pyx_ptype_6ailist_13Interval_core_Interval) __PYX_ERR(4, 21, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyImport_ImportModule("ailist.AIList_core"); if (unlikely(!__pyx_t_1)) __PYX_ERR(5, 373, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_ptype_6ailist_11AIList_core_AIList = __Pyx_ImportType_3_0_11(__pyx_t_1, "ailist.AIList_core", "AIList", sizeof(struct __pyx_obj_6ailist_11AIList_core_AIList), __PYX_GET_STRUCT_ALIGNMENT_3_0_11(struct __pyx_obj_6ailist_11AIList_core_AIList),__Pyx_ImportType_CheckSize_Warn_3_0_11); if (!__pyx_ptype_6ailist_11AIList_core_AIList) __PYX_ERR(5, 373, __pyx_L1_error)
+  __pyx_vtabptr_6ailist_11AIList_core_AIList = (struct __pyx_vtabstruct_6ailist_11AIList_core_AIList*)__Pyx_GetVtable(__pyx_ptype_6ailist_11AIList_core_AIList); if (unlikely(!__pyx_vtabptr_6ailist_11AIList_core_AIList)) __PYX_ERR(5, 373, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyImport_ImportModule("ailist.LabeledIntervalArray_core"); if (unlikely(!__pyx_t_1)) __PYX_ERR(6, 514, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledInterval = __Pyx_ImportType_3_0_11(__pyx_t_1, "ailist.LabeledIntervalArray_core", "LabeledInterval", sizeof(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledInterval), __PYX_GET_STRUCT_ALIGNMENT_3_0_11(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledInterval),__Pyx_ImportType_CheckSize_Warn_3_0_11); if (!__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledInterval) __PYX_ERR(6, 514, __pyx_L1_error)
+  __pyx_vtabptr_6ailist_25LabeledIntervalArray_core_LabeledInterval = (struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledInterval*)__Pyx_GetVtable(__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledInterval); if (unlikely(!__pyx_vtabptr_6ailist_25LabeledIntervalArray_core_LabeledInterval)) __PYX_ERR(6, 514, __pyx_L1_error)
+  __pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray = __Pyx_ImportType_3_0_11(__pyx_t_1, "ailist.LabeledIntervalArray_core", "LabeledIntervalArray", sizeof(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray), __PYX_GET_STRUCT_ALIGNMENT_3_0_11(struct __pyx_obj_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray),__Pyx_ImportType_CheckSize_Warn_3_0_11); if (!__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray) __PYX_ERR(6, 529, __pyx_L1_error)
+  __pyx_vtabptr_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray = (struct __pyx_vtabstruct_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray*)__Pyx_GetVtable(__pyx_ptype_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray); if (unlikely(!__pyx_vtabptr_6ailist_25LabeledIntervalArray_core_LabeledIntervalArray)) __PYX_ERR(6, 529, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -21145,20 +22394,32 @@ static int __Pyx_modinit_variable_import_code(void) {
 
 static int __Pyx_modinit_function_import_code(void) {
   __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_import_code", 0);
   /*--- Function import code ---*/
+  __pyx_t_1 = PyImport_ImportModule("ailist.array_query_core"); if (!__pyx_t_1) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (__Pyx_ImportFunction_3_0_11(__pyx_t_1, "pointer_to_numpy_array", (void (**)(void))&__pyx_f_6ailist_16array_query_core_pointer_to_numpy_array, "PyArrayObject *(void *, npy_intp)") < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_RefNannyFinishContext();
+  return -1;
 }
 
 
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec_RunningMean(PyObject* module); /*proto*/
+static int __pyx_pymod_exec_merge_regions(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec_RunningMean},
+  {Py_mod_exec, (void*)__pyx_pymod_exec_merge_regions},
   {0, NULL}
 };
 #endif
@@ -21171,7 +22432,7 @@ namespace {
   #endif
   {
       PyModuleDef_HEAD_INIT,
-      "RunningMean",
+      "merge_regions",
       0, /* m_doc */
     #if CYTHON_PEP489_MULTI_PHASE_INIT
       0, /* m_size */
@@ -21219,11 +22480,11 @@ namespace {
 
 
 #if PY_MAJOR_VERSION < 3
-__Pyx_PyMODINIT_FUNC initRunningMean(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC initRunningMean(void)
+__Pyx_PyMODINIT_FUNC initmerge_regions(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC initmerge_regions(void)
 #else
-__Pyx_PyMODINIT_FUNC PyInit_RunningMean(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC PyInit_RunningMean(void)
+__Pyx_PyMODINIT_FUNC PyInit_merge_regions(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC PyInit_merge_regions(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -21304,7 +22565,7 @@ bad:
 }
 
 
-static CYTHON_SMALL_CODE int __pyx_pymod_exec_RunningMean(PyObject *__pyx_pyinit_module)
+static CYTHON_SMALL_CODE int __pyx_pymod_exec_merge_regions(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -21328,7 +22589,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_RunningMean(PyObject *__pyx_pyinit
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m) {
     if (__pyx_m == __pyx_pyinit_module) return 0;
-    PyErr_SetString(PyExc_RuntimeError, "Module 'RunningMean' has already been imported. Re-initialisation is not supported.");
+    PyErr_SetString(PyExc_RuntimeError, "Module 'merge_regions' has already been imported. Re-initialisation is not supported.");
     return -1;
   }
   #elif PY_MAJOR_VERSION >= 3
@@ -21340,13 +22601,13 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_RunningMean(PyObject *__pyx_pyinit
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("RunningMean", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("merge_regions", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   if (unlikely(!__pyx_m)) __PYX_ERR(1, 1, __pyx_L1_error)
   #elif CYTHON_USE_MODULE_STATE
   __pyx_t_1 = PyModule_Create(&__pyx_moduledef); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
   {
     int add_module_result = PyState_AddModule(__pyx_t_1, &__pyx_moduledef);
-    __pyx_t_1 = 0; /* transfer ownership from __pyx_t_1 to "RunningMean" pseudovariable */
+    __pyx_t_1 = 0; /* transfer ownership from __pyx_t_1 to "merge_regions" pseudovariable */
     if (unlikely((add_module_result < 0))) __PYX_ERR(1, 1, __pyx_L1_error)
     pystate_addmodule_run = 1;
   }
@@ -21370,7 +22631,7 @@ if (!__Pyx_RefNanny) {
       Py_FatalError("failed to import 'refnanny' module");
 }
 #endif
-  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_RunningMean(void)", 0);
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_merge_regions(void)", 0);
   if (__Pyx_check_binary_version(__PYX_LIMITED_VERSION_HEX, __Pyx_get_runtime_version(), CYTHON_COMPILING_IN_LIMITED_API) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
@@ -21408,14 +22669,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_ngsfragments__peak_calling__RunningMean) {
+  if (__pyx_module_is_main_ngsfragments__segment__merge_regions__merge_regions) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name_2, __pyx_n_s_main) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(1, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "ngsfragments.peak_calling.RunningMean")) {
-      if (unlikely((PyDict_SetItemString(modules, "ngsfragments.peak_calling.RunningMean", __pyx_m) < 0))) __PYX_ERR(1, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "ngsfragments.segment.merge_regions.merge_regions")) {
+      if (unlikely((PyDict_SetItemString(modules, "ngsfragments.segment.merge_regions.merge_regions", __pyx_m) < 0))) __PYX_ERR(1, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -21430,7 +22691,7 @@ if (!__Pyx_RefNanny) {
   if (unlikely((__Pyx_modinit_type_init_code() < 0))) __PYX_ERR(1, 1, __pyx_L1_error)
   if (unlikely((__Pyx_modinit_type_import_code() < 0))) __PYX_ERR(1, 1, __pyx_L1_error)
   (void)__Pyx_modinit_variable_import_code();
-  (void)__Pyx_modinit_function_import_code();
+  if (unlikely((__Pyx_modinit_function_import_code() < 0))) __PYX_ERR(1, 1, __pyx_L1_error)
   /*--- Execution code ---*/
   #if defined(__Pyx_Generator_USED) || defined(__Pyx_Coroutine_USED)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
@@ -21949,48 +23210,117 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_7) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "ngsfragments/peak_calling/RunningMean.pyx":4
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":5
+ * #cython: language_level=3
  * 
- * from cython.parallel import prange
+ * import os             # <<<<<<<<<<<<<<
+ * cimport cython
+ * from libc.stdint cimport uint32_t, uint8_t, uint64_t, int64_t
+ */
+  __pyx_t_7 = __Pyx_ImportDottedModule(__pyx_n_s_os, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_os, __pyx_t_7) < 0) __PYX_ERR(1, 5, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":9
+ * from libc.stdint cimport uint32_t, uint8_t, uint64_t, int64_t
+ * from ailist.LabeledIntervalArray_core cimport LabeledIntervalArray, labeled_aiarray_t, labeled_aiarray_init, labeled_aiarray_add
+ * from intervalframe import IntervalFrame             # <<<<<<<<<<<<<<
+ * import numpy as np
+ * cimport numpy as np
+ */
+  __pyx_t_7 = PyList_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_INCREF(__pyx_n_s_IntervalFrame);
+  __Pyx_GIVEREF(__pyx_n_s_IntervalFrame);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_7, 0, __pyx_n_s_IntervalFrame)) __PYX_ERR(1, 9, __pyx_L1_error);
+  __pyx_t_4 = __Pyx_Import(__pyx_n_s_intervalframe, __pyx_t_7, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = __Pyx_ImportFrom(__pyx_t_4, __pyx_n_s_IntervalFrame); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_IntervalFrame, __pyx_t_7) < 0) __PYX_ERR(1, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":10
+ * from ailist.LabeledIntervalArray_core cimport LabeledIntervalArray, labeled_aiarray_t, labeled_aiarray_init, labeled_aiarray_add
+ * from intervalframe import IntervalFrame
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as np
  * np.import_array()
  */
-  __pyx_t_7 = __Pyx_ImportDottedModule(__pyx_n_s_numpy, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_7) < 0) __PYX_ERR(1, 4, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_4 = __Pyx_ImportDottedModule(__pyx_n_s_numpy, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 10, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_4) < 0) __PYX_ERR(1, 10, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "ngsfragments/peak_calling/RunningMean.pyx":6
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":12
  * import numpy as np
  * cimport numpy as np
  * np.import_array()             # <<<<<<<<<<<<<<
- * cimport cython
  * 
+ * import pandas as pd
  */
-  __pyx_t_9 = __pyx_f_5numpy_import_array(); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(1, 6, __pyx_L1_error)
+  __pyx_t_9 = __pyx_f_5numpy_import_array(); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(1, 12, __pyx_L1_error)
 
-  /* "ngsfragments/peak_calling/RunningMean.pyx":14
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":14
+ * np.import_array()
+ * 
+ * import pandas as pd             # <<<<<<<<<<<<<<
  * 
  * 
- * cpdef np.ndarray running_mean(const double[::1] values, int window):             # <<<<<<<<<<<<<<
- * 	"""
- * 	Calculate a running mean across values
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_12ngsfragments_12peak_calling_11RunningMean_1running_mean, 0, __pyx_n_s_running_mean, NULL, __pyx_n_s_ngsfragments_peak_calling_Runnin_2, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 14, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_running_mean, __pyx_t_7) < 0) __PYX_ERR(1, 14, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_4 = __Pyx_ImportDottedModule(__pyx_n_s_pandas, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 14, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pd, __pyx_t_4) < 0) __PYX_ERR(1, 14, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "ngsfragments/peak_calling/RunningMean.pyx":1
- * #cython: language_level=3             # <<<<<<<<<<<<<<
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":44
  * 
- * from cython.parallel import prange
+ * 
+ * def merge_adjacent(LabeledIntervalArray laia, int n):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
  */
-  __pyx_t_7 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12ngsfragments_7segment_13merge_regions_13merge_regions_1merge_adjacent, 0, __pyx_n_s_merge_adjacent, NULL, __pyx_n_s_ngsfragments_segment_merge_regio_2, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_adjacent, __pyx_t_4) < 0) __PYX_ERR(1, 44, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":66
+ * 
+ * 
+ * def merge_less_than(LabeledIntervalArray laia, np.ndarray values, float cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12ngsfragments_7segment_13merge_regions_13merge_regions_3merge_less_than, 0, __pyx_n_s_merge_less_than, NULL, __pyx_n_s_ngsfragments_segment_merge_regio_2, __pyx_d, ((PyObject *)__pyx_codeobj__25)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 66, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_less_than, __pyx_t_4) < 0) __PYX_ERR(1, 66, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":88
+ * 
+ * 
+ * def merge_greater_than(LabeledIntervalArray laia, np.ndarray values, float cutoff):             # <<<<<<<<<<<<<<
+ *     """
+ *     """
+ */
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12ngsfragments_7segment_13merge_regions_13merge_regions_5merge_greater_than, 0, __pyx_n_s_merge_greater_than, NULL, __pyx_n_s_ngsfragments_segment_merge_regio_2, __pyx_d, ((PyObject *)__pyx_codeobj__26)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 88, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_merge_greater_than, __pyx_t_4) < 0) __PYX_ERR(1, 88, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "ngsfragments/segment/merge_regions/merge_regions.pyx":1
+ * #cython: embedsignature=True             # <<<<<<<<<<<<<<
+ * #cython: profile=False
+ * #cython: language_level=3
+ */
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_4) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /*--- Wrapped vars code ---*/
 
@@ -22001,7 +23331,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_7);
   if (__pyx_m) {
     if (__pyx_d && stringtab_initialized) {
-      __Pyx_AddTraceback("init ngsfragments.peak_calling.RunningMean", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init ngsfragments.segment.merge_regions.merge_regions", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     #if !CYTHON_USE_MODULE_STATE
     Py_CLEAR(__pyx_m);
@@ -22015,7 +23345,7 @@ if (!__Pyx_RefNanny) {
     }
     #endif
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init ngsfragments.peak_calling.RunningMean");
+    PyErr_SetString(PyExc_ImportError, "init ngsfragments.segment.merge_regions.merge_regions");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -24476,6 +25806,12 @@ static CYTHON_INLINE int __Pyx_HasAttr(PyObject *o, PyObject *n) {
     }
 }
 
+/* PyObjectCallNoArg */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
+    PyObject *arg[2] = {NULL, NULL};
+    return __Pyx_PyObject_FastCall(func, arg + 1, 0 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET);
+}
+
 /* BufferIndexError */
 static void __Pyx_RaiseBufferIndexError(int axis) {
   PyErr_Format(PyExc_IndexError,
@@ -24606,12 +25942,6 @@ static int __Pyx_fix_up_extension_type_from_spec(PyType_Spec *spec, PyTypeObject
     return 0;
 }
 #endif
-
-/* PyObjectCallNoArg */
-static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
-    PyObject *arg[2] = {NULL, NULL};
-    return __Pyx_PyObject_FastCall(func, arg + 1, 0 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET);
-}
 
 /* PyObjectGetMethod */
 static int __Pyx_PyObject_GetMethod(PyObject *obj, PyObject *name, PyObject **method) {
@@ -26761,6 +28091,28 @@ __pyx_slices_overlap(__Pyx_memviewslice *slice1,
     return (start1 < end2) && (start2 < end1);
 }
 
+/* CIntFromPyVerify */
+#define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
+#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
+#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
+    {\
+        func_type value = func_value;\
+        if (sizeof(target_type) < sizeof(func_type)) {\
+            if (unlikely(value != (func_type) (target_type) value)) {\
+                func_type zero = 0;\
+                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
+                    return (target_type) -1;\
+                if (is_unsigned && unlikely(value < zero))\
+                    goto raise_neg_overflow;\
+                else\
+                    goto raise_overflow;\
+            }\
+        }\
+        return (target_type) value;\
+    }
+
 /* IsLittleEndian */
 static CYTHON_INLINE int __Pyx_Is_Little_Endian(void)
 {
@@ -27503,56 +28855,6 @@ fail:
 no_fail:
     __Pyx_RefNannyFinishContext();
     return retval;
-}
-
-/* ObjectToMemviewSlice */
-  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dc_double__const__(PyObject *obj, int writable_flag) {
-    __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
-    __Pyx_BufFmt_StackElem stack[1];
-    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_CONTIG) };
-    int retcode;
-    if (obj == Py_None) {
-        result.memview = (struct __pyx_memoryview_obj *) Py_None;
-        return result;
-    }
-    retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, __Pyx_IS_C_CONTIG,
-                                                 (PyBUF_C_CONTIGUOUS | PyBUF_FORMAT) | writable_flag, 1,
-                                                 &__Pyx_TypeInfo_double__const__, stack,
-                                                 &result, obj);
-    if (unlikely(retcode == -1))
-        goto __pyx_fail;
-    return result;
-__pyx_fail:
-    result.memview = NULL;
-    result.data = NULL;
-    return result;
-}
-
-/* CIntFromPyVerify */
-  #define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
-#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
-#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
-    {\
-        func_type value = func_value;\
-        if (sizeof(target_type) < sizeof(func_type)) {\
-            if (unlikely(value != (func_type) (target_type) value)) {\
-                func_type zero = 0;\
-                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
-                    return (target_type) -1;\
-                if (is_unsigned && unlikely(value < zero))\
-                    goto raise_neg_overflow;\
-                else\
-                    goto raise_overflow;\
-            }\
-        }\
-        return (target_type) value;\
-    }
-
-/* MemviewDtypeToObject */
-  static CYTHON_INLINE PyObject *__pyx_memview_get_double__const__(const char *itemp) {
-    return (PyObject *) PyFloat_FromDouble(*(double const  *) itemp);
 }
 
 /* ObjectToMemviewSlice */
@@ -28355,77 +29657,6 @@ raise_neg_overflow:
     return (int) -1;
 }
 
-/* CIntToPy */
-  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const int neg_one = (int) -1, const_zero = (int) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(int) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(int) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-#endif
-        }
-    }
-    {
-        unsigned char *bytes = (unsigned char *)&value;
-#if !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX >= 0x030d00A4
-        if (is_unsigned) {
-            return PyLong_FromUnsignedNativeBytes(bytes, sizeof(value), -1);
-        } else {
-            return PyLong_FromNativeBytes(bytes, sizeof(value), -1);
-        }
-#elif !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030d0000
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        return _PyLong_FromByteArray(bytes, sizeof(int),
-                                     little, !is_unsigned);
-#else
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        PyObject *from_bytes, *result = NULL;
-        PyObject *py_bytes = NULL, *arg_tuple = NULL, *kwds = NULL, *order_str = NULL;
-        from_bytes = PyObject_GetAttrString((PyObject*)&PyLong_Type, "from_bytes");
-        if (!from_bytes) return NULL;
-        py_bytes = PyBytes_FromStringAndSize((char*)bytes, sizeof(int));
-        if (!py_bytes) goto limited_bad;
-        order_str = PyUnicode_FromString(little ? "little" : "big");
-        if (!order_str) goto limited_bad;
-        arg_tuple = PyTuple_Pack(2, py_bytes, order_str);
-        if (!arg_tuple) goto limited_bad;
-        if (!is_unsigned) {
-            kwds = PyDict_New();
-            if (!kwds) goto limited_bad;
-            if (PyDict_SetItemString(kwds, "signed", __Pyx_NewRef(Py_True))) goto limited_bad;
-        }
-        result = PyObject_Call(from_bytes, arg_tuple, kwds);
-        limited_bad:
-        Py_XDECREF(kwds);
-        Py_XDECREF(arg_tuple);
-        Py_XDECREF(order_str);
-        Py_XDECREF(py_bytes);
-        Py_XDECREF(from_bytes);
-        return result;
-#endif
-    }
-}
-
 /* CIntFromPy */
   static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
@@ -28691,6 +29922,77 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to long");
     return (long) -1;
+}
+
+/* CIntToPy */
+  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const int neg_one = (int) -1, const_zero = (int) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        unsigned char *bytes = (unsigned char *)&value;
+#if !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX >= 0x030d00A4
+        if (is_unsigned) {
+            return PyLong_FromUnsignedNativeBytes(bytes, sizeof(value), -1);
+        } else {
+            return PyLong_FromNativeBytes(bytes, sizeof(value), -1);
+        }
+#elif !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030d0000
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+#else
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        PyObject *from_bytes, *result = NULL;
+        PyObject *py_bytes = NULL, *arg_tuple = NULL, *kwds = NULL, *order_str = NULL;
+        from_bytes = PyObject_GetAttrString((PyObject*)&PyLong_Type, "from_bytes");
+        if (!from_bytes) return NULL;
+        py_bytes = PyBytes_FromStringAndSize((char*)bytes, sizeof(int));
+        if (!py_bytes) goto limited_bad;
+        order_str = PyUnicode_FromString(little ? "little" : "big");
+        if (!order_str) goto limited_bad;
+        arg_tuple = PyTuple_Pack(2, py_bytes, order_str);
+        if (!arg_tuple) goto limited_bad;
+        if (!is_unsigned) {
+            kwds = PyDict_New();
+            if (!kwds) goto limited_bad;
+            if (PyDict_SetItemString(kwds, "signed", __Pyx_NewRef(Py_True))) goto limited_bad;
+        }
+        result = PyObject_Call(from_bytes, arg_tuple, kwds);
+        limited_bad:
+        Py_XDECREF(kwds);
+        Py_XDECREF(arg_tuple);
+        Py_XDECREF(order_str);
+        Py_XDECREF(py_bytes);
+        Py_XDECREF(from_bytes);
+        return result;
+#endif
+    }
 }
 
 /* CIntToPy */
@@ -29041,7 +30343,7 @@ __Pyx_PyType_GetName(PyTypeObject* tp)
     if (unlikely(name == NULL) || unlikely(!PyUnicode_Check(name))) {
         PyErr_Clear();
         Py_XDECREF(name);
-        name = __Pyx_NewRef(__pyx_n_s__24);
+        name = __Pyx_NewRef(__pyx_n_s__27);
     }
     return name;
 }
@@ -29126,6 +30428,44 @@ bad:
     Py_XDECREF(d);
     return -1;
 }
+
+/* FunctionImport */
+  #ifndef __PYX_HAVE_RT_ImportFunction_3_0_11
+#define __PYX_HAVE_RT_ImportFunction_3_0_11
+static int __Pyx_ImportFunction_3_0_11(PyObject *module, const char *funcname, void (**f)(void), const char *sig) {
+    PyObject *d = 0;
+    PyObject *cobj = 0;
+    union {
+        void (*fp)(void);
+        void *p;
+    } tmp;
+    d = PyObject_GetAttrString(module, (char *)"__pyx_capi__");
+    if (!d)
+        goto bad;
+    cobj = PyDict_GetItemString(d, funcname);
+    if (!cobj) {
+        PyErr_Format(PyExc_ImportError,
+            "%.200s does not export expected C function %.200s",
+                PyModule_GetName(module), funcname);
+        goto bad;
+    }
+    if (!PyCapsule_IsValid(cobj, sig)) {
+        PyErr_Format(PyExc_TypeError,
+            "C function %.200s.%.200s has wrong signature (expected %.500s, got %.500s)",
+             PyModule_GetName(module), funcname, sig, PyCapsule_GetName(cobj));
+        goto bad;
+    }
+    tmp.p = PyCapsule_GetPointer(cobj, sig);
+    *f = tmp.fp;
+    if (!(*f))
+        goto bad;
+    Py_DECREF(d);
+    return 0;
+bad:
+    Py_XDECREF(d);
+    return -1;
+}
+#endif
 
 /* InitStrings */
   #if PY_MAJOR_VERSION >= 3

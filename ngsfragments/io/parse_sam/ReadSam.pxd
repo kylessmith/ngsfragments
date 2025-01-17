@@ -3,6 +3,7 @@
 cimport cython
 import numpy as np
 cimport numpy as np
+np.import_array()
 
 from ailist.LabeledIntervalArray_core cimport LabeledIntervalArray, labeled_aiarray_t, labeled_aiarray_init, labeled_aiarray_add
 from ailist.array_query_core cimport pointer_to_numpy_array

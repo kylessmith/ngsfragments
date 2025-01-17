@@ -19,6 +19,7 @@ from ailist.LabeledIntervalArray_core cimport LabeledIntervalArray, labeled_aiar
 
 import numpy as np
 cimport numpy as np
+np.import_array()
 import time
 
 

@@ -239,6 +239,7 @@ def build():
                     'ngsfragments.sequence',
                     'ngsfragments.metrics',
                     'ngsfragments.correct']
+
     package_dirs = {'ngsfragments': 'ngsfragments',
                     'ngsfragments.io': 'ngsfragments/io',
                     'ngsfragments.io.parse_sam': 'ngsfragments/io/parse_sam',
@@ -433,6 +434,9 @@ def build():
             libraries=external_htslib_libraries),
         dict(name="ngsfragments.correct.cylowess.cylowess",
             sources=["ngsfragments.correct.cylowess.cylowess".replace(".", os.path.sep)+".pyx"] + htslib_sources + os_c_files,
+            libraries=external_htslib_libraries),
+        dict(name="ngsfragments.segment.merge_regions.merge_regions",
+            sources=["ngsfragments.segment.merge_regions.merge_regions".replace(".", os.path.sep)+".pyx"] + htslib_sources + os_c_files,
             libraries=external_htslib_libraries),
     ]
 
