@@ -176,7 +176,7 @@ def gc_mappability_correct(values: np.ndarray,
 
 def gc_mappability_bin_correct(values: np.ndarray,
                                 bin_bias: IntervalFrame,
-                                n_bins: int = 25) -> np.ndarray:
+                                modify_chr19: bool = True) -> np.ndarray:
     """
     Correct for gc and mappability together
 
@@ -186,8 +186,6 @@ def gc_mappability_bin_correct(values: np.ndarray,
             Values to correct
         bin_bias : pd.DataFrame
             Bin bias
-        n_bins : int
-            Number of bins to use
 
     Returns
     -------
@@ -203,6 +201,15 @@ def gc_mappability_bin_correct(values: np.ndarray,
 
     # Initialize new values
     new_values = values.copy().astype(float)
+    
+    # Correct chr19
+    #if modify_chr19:
+    #    is_chr19 = bin_bias.index.labels == "chr19"
+    #    mean_chr19 = bin_bias.df.loc[is_chr19,"gc"].values.mean()
+    #    chr19_gc = bin_bias.df.loc[is_chr19,"gc"].values
+    #    chr19_gc -= (mean_chr19 - 0.37)
+        #chr19_gc += 0.07
+    #    bin_bias.df.loc[is_chr19,"gc"] = chr19_gc
 
     # Determine bins
     m_labels = np.round(bin_bias.df.loc[:,"mappability"].values*100).astype(int).astype(str)
@@ -227,7 +234,7 @@ def gc_mappability_bin_correct(values: np.ndarray,
     #bin_bias = bin_bias.copy()
     #bin_bias.df = bin_bias.df.drop(columns=["mappability","blacklist"])
     #if bin_bias.shape[1] > 0:
-    #    new_values = chr_bias_correct_counts(new_values, bin_bias)
+    #    new_values = binned_bias_correct_counts(new_values, bin_bias)
 
     # Add nans
     final_values = np.zeros(n)

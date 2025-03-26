@@ -257,6 +257,8 @@ def annotate_bins(iframe,
         func = np.sum
     elif method == "nansum":
         func = np.nansum
+    elif method == "nanmean":
+        func = np.nanmean
     elif method == "median":
         func = np.median
     elif method == "std":
@@ -322,6 +324,38 @@ def regress_normal(values: np.ndarray,
     return new_ratios
 
 
+def remove_blacklist(bins: IntervalFrame,
+                     blacklist: IntervalFrame,
+                     threshold: float = 0.5) -> IntervalFrame:
+    """
+    Remove blacklist regions from bins.
+
+    Parameters
+    ----------
+        bins : IntervalFrame
+            IntervalFrame of bins.
+        blacklist : IntervalFrame
+            IntervalFrame of blacklist regions.
+        threshold : float
+            Threshold of overlap to remove.
+
+    Returns
+    -------
+        IntervalFrame
+            IntervalFrame of bins with blacklist regions removed.
+    """
+
+    # Calculate overlap
+    overlap = bins.index.percent_coverage(blacklist.index)
+
+    # Filter
+    selected = overlap < threshold
+    bins = bins.iloc[selected,:]
+
+    return bins
+
+
+
 class CNVcaller(object):
     """
     Copy Number Variation caller
@@ -349,6 +383,7 @@ class CNVcaller(object):
                 genome_version: str = "hg38",
                 n_per_bin: int = 10,
                 n_per_bin_hmm: int = 15,
+                chr19_shift: bool = True,
                 verbose: bool = False):
         """
         Initialize CNVcaller
@@ -378,6 +413,7 @@ class CNVcaller(object):
         self.n_mads = n_mads
         self.n_per_bin = n_per_bin
         self.n_per_bin_hmm = n_per_bin_hmm
+        self.chr19_shift = chr19_shift
         self.verbose = verbose
 
 
@@ -445,6 +481,9 @@ class CNVcaller(object):
                     normal_bins: IntervalFrame = None,
                     n_jobs: int = 1,
                     remove_nan: bool = True,
+                    chr19_shift: bool = True,
+                    additional_blacklist: IntervalFrame = None,
+                    additional_blacklist_cutoff: float = 0.5,
                     verbose: bool = False):
         """
         Correct bins
@@ -463,6 +502,8 @@ class CNVcaller(object):
         bias_record = self.genome.calculate_bias(bins.index)
 
         # Correct bins
+        if additional_blacklist is not None:
+            bins = remove_blacklist(bins, additional_blacklist, threshold = additional_blacklist_cutoff)
         bins, bias_record = match_bins(bins,
                                        bias_record)
         bins, bias_record = filter_bins(bins,
@@ -540,12 +581,13 @@ class CNVcaller(object):
             bins = bins.iloc[np.sum(pd.isnull(bins.values), axis=1) == 0,:]
 
         # Correct chr19 if necessary
-        if "chr19" in bins.index.unique_labels:
-            for sample in bins.df.columns:
-                chr19 = np.median(bins.df.loc[bins.index.labels=="chr19",sample].values)
-                if chr19 <= -0.05:
-                    chr19_correction = min([0.1, chr19 * -1])
-                    bins.df.loc[bins.index.labels=="chr19",sample] = bins.df.loc[bins.index.labels=="chr19",sample].values + chr19_correction
+        if chr19_shift:
+            if "chr19" in bins.index.unique_labels:
+                for sample in bins.df.columns:
+                    chr19 = np.median(bins.df.loc[bins.index.labels=="chr19",sample].values)
+                    if chr19 < 0:
+                        chr19_correction = min([0.1, chr19 * -1])
+                        bins.df.loc[bins.index.labels=="chr19",sample] = bins.df.loc[bins.index.labels=="chr19",sample].values + chr19_correction
 
         return bins
     
@@ -612,6 +654,8 @@ class CNVcaller(object):
                     prebinned: bool = False,
                     merge: bool = True,
                     merge_MAD: float = 1.4826,
+                    additional_blacklist: IntervalFrame = None,
+                    additional_blacklist_cutoff: float = 0.5,
                     verbose: bool = True):
         """
         Fit HMM for copy number calling
@@ -653,7 +697,10 @@ class CNVcaller(object):
                     
                 hmm_bins = self.correct_bins(bins = hmm_bins,
                                         normal_bins = normal_hmm_bins,
-                                        n_jobs = 1)
+                                        n_jobs = 1,
+                                        chr19_shift = self.chr19_shift,
+                                        additional_blacklist = additional_blacklist,
+                                        additional_blacklist_cutoff = additional_blacklist_cutoff)
             if prebinned == False:
                 if verbose: print("Binning normals for CNVs...", flush=True)
                 if isinstance(normal_data, IntervalFrame):
@@ -664,49 +711,52 @@ class CNVcaller(object):
                                             use_hmm_bins = False)
             bins = self.correct_bins(bins = bins,
                                     normal_bins = normal_bins,
-                                    n_jobs = 1)
+                                    n_jobs = 1,
+                                    chr19_shift = self.chr19_shift,
+                                    additional_blacklist = additional_blacklist,
+                                    additional_blacklist_cutoff = additional_blacklist_cutoff)
+            if self.hmm_binsize == self.cnv_binsize:
+                hmm_bins = bins.copy()
+                
         else:
             if self.hmm_binsize != self.cnv_binsize:
                 if verbose: print("Correcting for HMMs...", flush=True)
                 hmm_bins = self.correct_bins(bins = hmm_bins,
-                                            n_jobs = 1)
+                                            n_jobs = 1,
+                                            chr19_shift = self.chr19_shift,
+                                            additional_blacklist = additional_blacklist,
+                                            additional_blacklist_cutoff = additional_blacklist_cutoff)
             if verbose: print("Correcting for CNVs...", flush=True)
             bins = self.correct_bins(bins = bins,
-                                        n_jobs = 1)
+                                        n_jobs = 1,
+                                        chr19_shift = self.chr19_shift,
+                                        additional_blacklist = additional_blacklist,
+                                        additional_blacklist_cutoff = additional_blacklist_cutoff)
+            if self.hmm_binsize == self.cnv_binsize:
+                hmm_bins = bins.copy()
         
         # Add bins
         self.pf.add_intervals("cnv_bins", bins)
 
         # Call HMM
         if verbose: print("Predicting purity...", flush=True)
-        if self.hmm_binsize != self.cnv_binsize:
-            hmm_states = self.predict_purity(hmm_bins,
-                                            normal = self.normal,
-                                            ploidy = self.ploidy,
-                                            estimatePloidy = self.estimatePloidy,
-                                            scStates = self.scStates,
-                                            record = True,
-                                            merge = merge,
-                                            merge_MAD = merge_MAD)
-            if verbose: print("Classifying segments..", flush=True)
-            hmm_states = self.predict_purity(bins,
-                                            normal = self.normal,
-                                            ploidy = [2],
-                                            estimatePloidy = False,
-                                            scStates = self.scStates,
-                                            record = False,
-                                            merge = merge,
-                                            merge_MAD = merge_MAD)
-        else:
-            if verbose: print("Classifying segments..", flush=True)
-            hmm_states = self.predict_purity(bins,
-                                            normal = self.normal,
-                                            ploidy = [2],
-                                            estimatePloidy = False,
-                                            scStates = self.scStates,
-                                            record = True,
-                                            merge = merge,
-                                            merge_MAD = merge_MAD)
+        hmm_states = self.predict_purity(hmm_bins,
+                                        normal = self.normal,
+                                        ploidy = self.ploidy,
+                                        estimatePloidy = self.estimatePloidy,
+                                        scStates = self.scStates,
+                                        record = True,
+                                        merge = merge,
+                                        merge_MAD = merge_MAD)
+        if verbose: print("Classifying segments..", flush=True)
+        hmm_states = self.predict_purity(bins,
+                                        normal = self.normal,
+                                        ploidy = [2],
+                                        estimatePloidy = False,
+                                        scStates = self.scStates,
+                                        record = False,
+                                        merge = merge,
+                                        merge_MAD = merge_MAD)
 
 
         for sample in bins.df.columns:
