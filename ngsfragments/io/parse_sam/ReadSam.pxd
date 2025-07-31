@@ -279,6 +279,7 @@ cdef np.ndarray pointer_to_numpy_array_int(void *ptr, np.npy_intp size)
 cdef class MethylFragment(object):
 
 	# Attributes
+	cdef public str name
 	cdef public str chrom
 	cdef public int start
 	cdef public int end

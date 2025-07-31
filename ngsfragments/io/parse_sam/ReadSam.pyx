@@ -128,6 +128,7 @@ cdef class MethylFragment(object):
 
 	def __cinit__(self):
 		#self.chrom = ""
+		self.name
 		self.start = 0
 		self.end = 0
 		self.length = 0
@@ -152,6 +153,7 @@ cdef class MethylFragment(object):
 
 		#cdef bytes bchrom = frag.chrom
 		#self.chrom = bchrom.decode()
+		self.name = frag.name.decode()
 		self.start = frag.start
 		self.end = frag.end
 		self.length = frag.length

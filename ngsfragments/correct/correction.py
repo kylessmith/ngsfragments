@@ -222,7 +222,10 @@ def gc_mappability_bin_correct(values: np.ndarray,
     label_x = pd.Series(values).groupby(labels).median()
 
     # Run 2D loess
-    res = loess_2d.loess_2d(x=label_gc.values, y=label_m.values, z=label_x.values, frac=0.33, degree=2)
+    if len(pd.unique(label_m.values)) == 1:
+        res = loess_1d.loess_1d(x=label_gc.values, y=label_x.values, frac=0.33, degree=2)
+    else:
+        res = loess_2d.loess_2d(x=label_gc.values, y=label_m.values, z=label_x.values, frac=0.33, degree=2)
     res = pd.Series(res[0], index=label_x.index.values)
         
     # Calculate corrected values
