@@ -4,112 +4,191 @@ import numpy as np
 
 from ..fragments import Fragments
 from .parse_sam import read_fragments
+from .parse_sam.ReadSam import read_fragments_region, combine_fragment_arrays
+
+
+def _get_header_info(sam_fn: str):
+    """
+    Open BAM once and return (file_basename, chromosomes, add_chr).
+    Avoids the double-open that existed when get_chromosomes() and read_fragments()
+    each opened the file independently.
+    """
+    with pysam.Samfile(sam_fn) as sf:
+        file_name   = os.path.basename(os.path.normpath(sam_fn))
+        chromosomes = list(sf.references)
+
+    # If ANY chromosome already carries a "chr" prefix, assume all do and don't add it.
+    add_chr = not any(c.startswith("chr") for c in chromosomes)
+    return file_name, chromosomes, add_chr
 
 
 def get_chromosomes(sam_file_fn: str):
-	"""
-	Read genome file
-    
+    """
+    Return the list of reference sequence names from the BAM/SAM header.
+
     Parameters
     ----------
-        sam_file_fn : str
-            SAM file
-    
+    sam_file_fn : str
+        Path to BAM/SAM file.
+
     Returns
     -------
-        chroms : list
-            List of chromosomes
-	"""
+    chroms : list[str]
+    """
+    with pysam.Samfile(sam_file_fn) as sf:
+        chroms = list(sf.references)
+    return chroms
 
-	# Open SAM file
-	sam_file = pysam.Samfile(sam_file_fn)
 
-	# Read chromosomes in SAM file
-	chroms = sam_file.references
+# ---------------------------------------------------------------------------
+# Joblib worker — must be module-level for pickling by the loky backend.
+# Each worker runs in its own process: opens its own BAM handle, loads its
+# own BAM index slice, and returns lightweight numpy arrays back to the parent.
+#
+# NOTE: nthreads here is htslib BGZF decompression threads *per worker*.
+#       Total CPU usage ≈ n_jobs × nthreads.  Keep n_jobs × nthreads ≤ ncores.
+# ---------------------------------------------------------------------------
 
-	# Close SAM file
-	sam_file.close()
-
-	return chroms
+def _read_chrom_worker(sam_fn, chrom, min_size, max_size, paired,
+                       qcfail, mapq_cutoff, proportion, add_chr, nthreads):
+    """
+    Read fragments from one chromosome and return picklable numpy arrays.
+    Intended to be called via joblib.Parallel — do not call directly.
+    """
+    return read_fragments_region(
+        sam_fn, chrom,
+        min_size, max_size, paired, qcfail, mapq_cutoff,
+        proportion, nthreads, add_chr,
+    )
 
 
 def from_sam(sam_fn: str = None,
-                min_size: int = 1,
-                max_size: int = 1000,
-                paired: bool = True,
-                qcfail: bool = False,
-                mapq_cutoff: int = 25,
-                verbose: bool = False,
-                nthreads: int = 1,
-                proportion: float = 1.0,
-                genome_version: str = "hg19",
-                n_frags: int = None,
-                nucleosome_adjust: bool = False,
-                fixed_size: int = 74):
+             min_size: int = 1,
+             max_size: int = 1000,
+             paired: bool = True,
+             qcfail: bool = False,
+             mapq_cutoff: int = 25,
+             verbose: bool = False,
+             nthreads: int = 1,
+             proportion: float = 1.0,
+             genome_version: str = "hg19",
+             n_frags: int = None,
+             nucleosome_adjust: bool = False,
+             fixed_size: int = 74,
+             n_jobs: int = 1):
     """
-    Initialize fragments class
+    Load fragments from a BAM/SAM file into a Fragments object.
 
     Parameters
     ----------
-        sam_fn : str
-            SAM file
-        sam_file : str
-            SAM file
-        min_size : int
-            Minimum fragment size
-        max_size : int
-            Maximum fragment size
-        paired : bool
-            Whether to use paired-end reads
-        qcfail : bool
-            Whether to use QC failed reads
-        mapq_cutoff : int
-            Minimum mapping quality
-        verbose : bool
-            Whether to print progress
-        n_jobs : int
-            Number of threads
-        proportion : float
-            Proportion of fragments to use
-        genome : str
-            Genome version
-        n_frags : int
-            Number of fragments to use
-    
+    sam_fn : str
+        Path to BAM file.
+    min_size : int
+        Minimum fragment length (bp).
+    max_size : int
+        Maximum fragment length (bp).
+    paired : bool
+        True  → paired-end mode: use insert size (isize) for fragment length.
+        False → single-end mode: use read length.
+    qcfail : bool
+        If True, include QC-failed reads (BAM_FQCFAIL).  Default False.
+    mapq_cutoff : int
+        Exclude reads with MAPQ below this threshold.
+    verbose : bool
+        Print progress messages.
+    nthreads : int
+        htslib BGZF decompression threads per file handle.
+        With n_jobs > 1, total CPU ≈ n_jobs × nthreads.
+    proportion : float
+        Fraction of fragments to retain via random downsampling (0 < p ≤ 1).
+    genome_version : str
+        Genome version string passed to Fragments.
+    n_frags : int, optional
+        If provided, downsample to exactly this many fragments after loading.
+        Takes priority over `proportion`.
+    nucleosome_adjust : bool
+        If True, centre a fixed-size window on each read's 5' end (nucleosome
+        occupancy / endpoint analysis) rather than using the full insert span.
+    fixed_size : int
+        Window size (bp) used when nucleosome_adjust=True.
+    n_jobs : int
+        Number of parallel worker processes (joblib).
+        -1 uses all available CPUs.
+        1  (default) runs single-threaded with the whole-file scanner, which
+           avoids the per-chromosome index-load overhead for small BAMs.
+
     Returns
     -------
-        fragments : :class:`~fragments.fragments`
-            :class:`~fragments.fragments`
+    fragments : Fragments
     """
+    # Single BAM open: read header info and derive add_chr in one pass.
+    sam_file, chromosomes, add_chr = _get_header_info(sam_fn)
 
-    # Assign bam file
-    path = os.path.normpath(sam_fn)
-    file_name = path.split(os.sep)[-1]
-    sam_file = file_name
+    if verbose:
+        print(f"Reading {sam_fn}  ({len(chromosomes)} sequences, "
+              f"n_jobs={n_jobs}, nthreads={nthreads})")
 
-    # Read genome
-    chromosomes = get_chromosomes(sam_fn)
-    add_chr = True
-    starts_with_chr = sum(chrom.startswith("chr") for chrom in chromosomes)
-    if starts_with_chr > 0:
-        add_chr = False
+    # ------------------------------------------------------------------
+    # Fragment loading
+    # ------------------------------------------------------------------
+    if n_jobs == 1 or nucleosome_adjust:
+        # Sequential whole-file scan.
+        # nucleosome_adjust stays sequential — sam_nucleosome_add has no
+        # region-based variant yet; adding one is straightforward if needed.
+        frags = read_fragments(
+            sam_fn, min_size, max_size, paired, qcfail, mapq_cutoff,
+            proportion, nthreads=nthreads, add_chr=add_chr,
+            nucleosome_adjust=nucleosome_adjust, fixed_size=fixed_size,
+        )
 
-    # Add fragment intervals
-    if verbose: print("Reading")
-    frags = read_fragments(sam_fn, min_size, max_size, paired, qcfail, mapq_cutoff,
-                           proportion, nthreads=nthreads, add_chr=add_chr,
-                           nucleosome_adjust=nucleosome_adjust, fixed_size = fixed_size)
+    else:
+        # Parallel path: one worker process per chromosome.
+        # Each worker calls sam_iter_add_region (index-based), so it reads
+        # only its slice of the BAM — no worker ever reads the full file.
+        from joblib import Parallel, delayed
 
-    # Downsample
+        if verbose:
+            print(f"  Dispatching {len(chromosomes)} chromosomes to {n_jobs} workers...")
+
+        results = Parallel(n_jobs=n_jobs, prefer="processes")(
+            delayed(_read_chrom_worker)(
+                sam_fn, chrom,
+                min_size, max_size, paired, qcfail, mapq_cutoff,
+                proportion, add_chr, nthreads,
+            )
+            for chrom in chromosomes
+        )
+
+        # Filter out empty chromosomes (no passing reads) to keep merge lean
+        results = [r for r in results if len(r[0]) > 0]
+
+        if verbose:
+            total = sum(len(r[0]) for r in results)
+            print(f"  Merging {total:,} fragments from {len(results)} chromosomes...")
+
+        frags = combine_fragment_arrays(results)
+
+    # ------------------------------------------------------------------
+    # Downsampling
+    # ------------------------------------------------------------------
+    # n_frags (absolute count) takes priority over proportion (fractional).
+    # proportion-based downsampling in the C layer has already been applied
+    # during loading; this second stage is for exact-count requirements.
     if n_frags is not None:
-        proportion = int(frags.size * proportion)
-    if proportion != 1:
-        frags = frags.downsample(proportion)
+        frags = frags.downsample(n_frags)
+    elif proportion < 1.0 and n_jobs != 1:
+        # In the parallel path, downsampling happens per-chromosome inside the
+        # C layer, so the total count is only approximately proportion * N.
+        # A second pass here corrects for cross-chromosome variance if needed.
+        pass  # already downsampled in C; remove this block if exact counts matter
 
-    # Build
-    fragments = Fragments(frags,
-                            sam_file=sam_file,
-                            genome_version=genome_version)
+    # ------------------------------------------------------------------
+    # Build Fragments object
+    # ------------------------------------------------------------------
+    fragments = Fragments(frags, sam_file=sam_file, genome_version=genome_version)
+
+    if verbose:
+        print(f"Done. {fragments.n_fragments:,} fragments loaded.")
 
     return fragments
 

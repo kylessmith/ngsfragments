@@ -12,6 +12,8 @@
 
 read_iter_t *read_iter_init(const char *bam_file_path,
                             const char *chromosome,
+                            int start_pos,
+                            int end_pos,
                             int min_size,
                             int max_size,
                             int paired,
@@ -19,7 +21,7 @@ read_iter_t *read_iter_init(const char *bam_file_path,
                             int mapq_cutoff,
                             float proportion,
                             int nthreads)
-{   /* Initialize read iterator */
+{   /* Initialize read iterator for a specific genomic region */
 
     // Initialize variables
     read_iter_t *read_iter = malloc(sizeof(read_iter_t));
@@ -54,15 +56,37 @@ read_iter_t *read_iter_init(const char *bam_file_path,
         exit(1);
     }
 
-    // Fetch the region
-    read_iter->iter = sam_itr_querys(idx, read_iter->header, chromosome);
-    if (read_iter->iter == NULL)
-    {
-        fprintf(stderr, "Failed to fetch region: %s\n", chromosome);
-        hts_idx_destroy(idx);
-        bam_hdr_destroy(read_iter->header);
-        sam_close(read_iter->fp);
-        exit(1);
+    // Create iterator based on whether specific coordinates are provided
+    if (start_pos >= 0 && end_pos >= 0) {
+        // Query specific region using coordinates
+        int tid = bam_name2id(read_iter->header, chromosome);
+        if (tid < 0) {
+            fprintf(stderr, "Failed to find chromosome: %s\n", chromosome);
+            hts_idx_destroy(idx);
+            bam_hdr_destroy(read_iter->header);
+            sam_close(read_iter->fp);
+            exit(1);
+        }
+        
+        read_iter->iter = sam_itr_queryi(idx, tid, start_pos, end_pos);
+        if (read_iter->iter == NULL) {
+            fprintf(stderr, "Failed to fetch region: %s:%d-%d\n", chromosome, start_pos, end_pos);
+            hts_idx_destroy(idx);
+            bam_hdr_destroy(read_iter->header);
+            sam_close(read_iter->fp);
+            exit(1);
+        }
+    } else {
+        // Query entire chromosome using chromosome name
+        read_iter->iter = sam_itr_querys(idx, read_iter->header, chromosome);
+        if (read_iter->iter == NULL)
+        {
+            fprintf(stderr, "Failed to fetch region: %s\n", chromosome);
+            hts_idx_destroy(idx);
+            bam_hdr_destroy(read_iter->header);
+            sam_close(read_iter->fp);
+            exit(1);
+        }
     }
 
     // Close index
@@ -70,15 +94,31 @@ read_iter_t *read_iter_init(const char *bam_file_path,
 
     read_iter->aln = bam_init1();
 
-    // Set variables
-    read_iter->min_size = min_size;
-    read_iter->max_size = max_size;
-    read_iter->paired = paired;
-    read_iter->qcfail = qcfail;
+    // Set variables — precompute reject_mask so read_iter_next pays zero overhead per read
+    read_iter->min_size    = min_size;
+    read_iter->max_size    = max_size;
+    read_iter->paired      = paired;
+    read_iter->reject_mask = build_reject_mask(qcfail);
     read_iter->mapq_cutoff = mapq_cutoff;
-    read_iter->proportion = proportion;
+    read_iter->proportion  = proportion;
 
     return read_iter;
+}
+
+
+// Convenience function to initialize iterator for entire chromosome
+read_iter_t *read_iter_init_chromosome(const char *bam_file_path,
+                                       const char *chromosome,
+                                       int min_size,
+                                       int max_size,
+                                       int paired,
+                                       int qcfail,
+                                       int mapq_cutoff,
+                                       float proportion,
+                                       int nthreads)
+{   /* Initialize read iterator for entire chromosome */
+    return read_iter_init(bam_file_path, chromosome, -1, -1, min_size, max_size, 
+                         paired, qcfail, mapq_cutoff, proportion, nthreads);
 }
 
 
@@ -102,10 +142,10 @@ int read_iter_next(read_iter_t *read_iter)
     {
         // Check read
         int passing = check_read(read_iter->aln,
+                                 read_iter->reject_mask,
                                  read_iter->min_size,
                                  read_iter->max_size,
                                  read_iter->paired,
-                                 read_iter->qcfail,
                                  read_iter->mapq_cutoff,
                                  read_iter->proportion);
         // Check if passing, else continue iterating

@@ -18,6 +18,7 @@ from ..correct.correction import correct, gaussian_smooth, binned_bias_correct_c
 from .smooth_cnv.smooth_cnv import smoothCNV
 from .merge_regions.merge_regions import merge_adjacent
 from .cnv_utilities import train_hmm, hmm_classify, validate_distributions
+from .rPCA_correction import rrpca, wash_cycle
 
 
 def calculate_MAD(vector: np.ndarray):
@@ -275,14 +276,15 @@ def annotate_bins(iframe,
     else:
         bin_iframe = bins
 
-    values = pd.DataFrame(np.zeros((bin_iframe.df.shape[0],iframe.shape[1])),
-                          columns = iframe.columns.values)
-    values[:] = np.nan
+    values = np.full((bin_iframe.df.shape[0], iframe.shape[1]),
+                     np.nan,
+                     dtype=float)
     for i, index in enumerate(iframe.index.iter_intersect(bin_iframe.index, return_intervals=False, return_index=True)):
         value = iframe.df.iloc[index,:].values
-        values.values[i,:] = func(value, axis=0)
+        values[i, :] = func(value, axis=0)
 
-    bin_iframe.df = values
+    bin_iframe.df = pd.DataFrame(values,
+                                 columns=iframe.columns.values)
     
     return bin_iframe
 
@@ -321,6 +323,55 @@ def regress_normal(values: np.ndarray,
     new_ratios[:] = np.nan
     new_ratios[not_nan] = ratios
 
+
+    return new_ratios
+
+
+def rPCA_normal(values: np.ndarray,
+                   normal_values: np.ndarray) -> np.ndarray:
+    """
+    Regress out normal values from values using robust PCA.
+
+    Parameters
+    ----------
+        values : np.ndarray
+            Values to regress out normal values from.
+        normal_values : np.ndarray
+            Normal values to regress out.
+    
+    Returns
+    -------
+        np.ndarray
+            Corrected values.
+    """
+    from sklearn.decomposition import randomized_svd
+    from sklearn.preprocessing import StandardScaler
+
+    # Remove nans
+    n = len(values)
+    not_nan = ~pd.isnull(values)
+    values = values[not_nan]
+    normal_values = normal_values[not_nan]
+
+    # Run rPCA
+    r = rrpca(normal_values, lambda_param=0.3)
+    #U_hat, sigma_hat, V_hat = randomized_svd(StandardScaler().fit_transform(r.L), n_components=r.k, random_state=42)
+    U_hat, sigma_hat, V_hat = randomized_svd(r.L, n_components=r.k, random_state=42)
+
+    decomposed = wash_cycle(m_vec = values,
+                            L_burnin = r.L,
+                            S_burnin = r.S,
+                            r = r.k,
+                            U_hat = U_hat,
+                            V_hat = V_hat,
+                            sigma_hat = sigma_hat)
+    background = decomposed[0]
+    foreground = decomposed[1]
+
+    # Add nans
+    new_ratios = np.zeros(n)
+    new_ratios[:] = np.nan
+    new_ratios[not_nan] = foreground
 
     return new_ratios
 
@@ -385,6 +436,7 @@ class CNVcaller(object):
                 n_per_bin: int = 10,
                 n_per_bin_hmm: int = 15,
                 chr19_shift: bool = True,
+                rpca_normal: bool = False,
                 verbose: bool = False):
         """
         Initialize CNVcaller
@@ -415,6 +467,7 @@ class CNVcaller(object):
         self.n_per_bin = n_per_bin
         self.n_per_bin_hmm = n_per_bin_hmm
         self.chr19_shift = chr19_shift
+        self.rpca_normal = rpca_normal
         self.verbose = verbose
 
 
@@ -549,23 +602,24 @@ class CNVcaller(object):
                 normal_bins.df[:] = np.array(corrected_values).T
 
             # Regress out normals
-            if n_jobs == 1:
-                for sample in bins.df.columns:
-                    bins.df.loc[:,sample] = regress_normal(bins.df.loc[:,sample].values, normal_bins.df.values)
-                    #bins.df.loc[:,sample] = binned_bias_correct_counts(bins.df.loc[:,sample].values,
-                    #                                                                normal_bins)
-            else:
-                corrected_values = Parallel(n_jobs=n_jobs)(delayed(regress_normal)(bins.values[:,i], normal_bins.df) for i in range(bins.shape[1]))
-                bins.df[:] = np.array(corrected_values).T
+            if not self.rpca_normal:
+                if n_jobs == 1:
+                    for sample in bins.df.columns:
+                        bins.df.loc[:,sample] = regress_normal(bins.df.loc[:,sample].values, normal_bins.df.values)
+                        #bins.df.loc[:,sample] = binned_bias_correct_counts(bins.df.loc[:,sample].values,
+                        #                                                                normal_bins)
+                else:
+                    corrected_values = Parallel(n_jobs=n_jobs)(delayed(regress_normal)(bins.values[:,i], normal_bins.df) for i in range(bins.shape[1]))
+                    bins.df[:] = np.array(corrected_values).T
 
         # Remove bins with no signal
-        bins.df.fillna(0, inplace=True)
+        bins.df = bins.df.fillna(0)
 
         # Calculate ratios
         autosomes = self.genome["autosomes"]
         median = np.median(bins.loc[autosomes,:].df.values, axis=0)
         bins.df.iloc[:,:] = np.log2(bins.df.values / median)
-        bins.df[np.isinf(bins.df.values)] = 0
+        bins.df = bins.df.mask(np.isinf(bins.df), 0)
 
         # Smooth ratios
         if verbose: print("Smoothing bins", flush=True)
@@ -590,6 +644,15 @@ class CNVcaller(object):
                         chr19_correction = min([0.1, chr19 * -1])
                         bins.df.loc[bins.index.labels=="chr19",sample] = bins.df.loc[bins.index.labels=="chr19",sample].values + chr19_correction
 
+        # User rPCA to remove background
+        if self.rpca_normal and (normal_bins is not None):
+            if n_jobs == 1:
+                for sample in bins.df.columns:
+                    bins.df.loc[:,sample] = rPCA_normal(bins.df.loc[:,sample].values, normal_bins.df.values)
+            else:
+                corrected_values = Parallel(n_jobs=n_jobs)(delayed(rPCA_normal)(bins.values[:,i], normal_bins.df) for i in range(bins.shape[1]))
+                bins.df[:] = np.array(corrected_values).T
+        
         return bins
     
     
@@ -602,6 +665,7 @@ class CNVcaller(object):
                        record: bool = True,
                        merge: bool = True,
                        merge_MAD: float = 1.4826,
+                       normal_mads: float = 1.4826,
                        verbose: bool = False):
         """
         """
@@ -636,7 +700,7 @@ class CNVcaller(object):
             if record:
                 # Check all CNVs are not NEUT
                 processed_cnvs = hmm_classify(hmm_cnv_segments, hmm_states[sample])
-                processed_cnvs = validate_distributions(processed_cnvs, hmm_bins, column = sample)
+                processed_cnvs = validate_distributions(processed_cnvs, hmm_bins, column = sample, n_mads = normal_mads)
                 if np.sum(processed_cnvs.df.loc[:,"Corrected_Call"].values == "NEUT") == processed_cnvs.df.shape[0]:
                     self.pf.add_anno("purity", sample, 0.0)
                     self.pf.add_anno("ploidy", sample, hmm_states[sample]["phi"])
@@ -657,6 +721,7 @@ class CNVcaller(object):
                     merge_MAD: float = 1.4826,
                     additional_blacklist: IntervalFrame = None,
                     additional_blacklist_cutoff: float = 0.5,
+                    normal_mads: float = 1.4826,
                     verbose: bool = True):
         """
         Fit HMM for copy number calling
@@ -748,7 +813,8 @@ class CNVcaller(object):
                                         scStates = self.scStates,
                                         record = True,
                                         merge = merge,
-                                        merge_MAD = merge_MAD)
+                                        merge_MAD = merge_MAD,
+                                        normal_mads = normal_mads)
         if verbose: print("Classifying segments..", flush=True)
         hmm_states = self.predict_purity(bins,
                                         normal = self.normal,
@@ -757,7 +823,8 @@ class CNVcaller(object):
                                         scStates = self.scStates,
                                         record = False,
                                         merge = merge,
-                                        merge_MAD = merge_MAD)
+                                        merge_MAD = merge_MAD,
+                                        normal_mads = normal_mads)
 
 
         for sample in bins.df.columns:
@@ -767,7 +834,7 @@ class CNVcaller(object):
             if merge:
                 cnv_segments = merge_segments(cnv_segments, bins, column = sample, merge_MAD = merge_MAD)
             processed_cnvs = hmm_classify(cnv_segments, hmm_states[sample])
-            processed_cnvs = validate_distributions(processed_cnvs, bins, column = sample)
+            processed_cnvs = validate_distributions(processed_cnvs, bins, column = sample, n_mads = normal_mads)
             #processed_cnvs.drop_columns(["copy_number","event","subclone_status","logR_Copy_Number"])
 
             #sample_bins = hmm_bins.loc[:,[sample]]

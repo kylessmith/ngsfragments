@@ -10,7 +10,7 @@ from loess import loess_2d, loess_1d
 from sklearn.cluster import KMeans
 
 # Local imports
-from .cylowess.cylowess import lowess
+#from .cylowess.cylowess import lowess
     
     
 def match_bins(bins : IntervalFrame,
@@ -34,7 +34,7 @@ def match_bins(bins : IntervalFrame,
     """
 
     # Find common chromosomes and sort
-    chroms = bin_bias.index.unique_labels[np.in1d(bin_bias.index.unique_labels, 
+    chroms = bin_bias.index.unique_labels[np.isin(bin_bias.index.unique_labels, 
                                                   bins.index.unique_labels)]
     bins = bins.loc[chroms,:]
     bin_bias = bin_bias.loc[chroms,:]

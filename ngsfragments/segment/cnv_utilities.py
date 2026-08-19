@@ -355,8 +355,21 @@ def correct_direction(segments: IntervalFrame) -> IntervalFrame:
         elif segments.df.loc[index,"Corrected_Call"] == "GAIN" and segments.df.loc[index,"median"] < 0:
             segments.df.loc[index,"Corrected_Call"] = "HETD"
             segments.df.loc[index,"Corrected_Copy_Number"] == 1
+        elif segments.df.loc[index,"median"] < 0 and segments.df.loc[index,"Corrected_Call"] != "HETD":
+            segments.df.loc[index,"Corrected_Call"] = "HETD"
+            segments.df.loc[index,"Corrected_Copy_Number"] == 1
 
     return segments
+
+
+def correct_rainbow(segments: IntervalFrame) -> IntervalFrame:
+    """
+    """
+
+    #
+    is_neut = segments.df.loc[:,"Corrected_Call"].values == "NEUT"
+    not_neut = segments.df.loc[:,"Corrected_Call"].values != "NEUT"
+    pass
 
 
 def median_variance(segments: IntervalFrame,

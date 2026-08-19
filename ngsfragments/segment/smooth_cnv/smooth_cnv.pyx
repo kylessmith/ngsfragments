@@ -40,11 +40,12 @@ def smoothCNV(np.ndarray chroms, np.ndarray genomedat, int smooth_region=10, int
     cdef double smooth_SD = smooth_SD_scale * trimmed_SD
     cdef int k = smooth_region
     cdef int n = len(genomedat)
+    cdef np.ndarray[np.double_t, ndim=1] genomedat_arr = np.array(genomedat, dtype=np.double, order='C', copy=True)
 
     cdef long[:] cfrq = np.diff(np.append(np.sort(np.unique(chroms, return_index=True)[1]), np.array([n]))) 
     cdef int nchr = len(cfrq) # to allow for some chrom with all missing
 
-    cdef double[:] genomedat_mem = genomedat
+    cdef double[:] genomedat_mem = genomedat_arr
     cdef double[:] sgdat = np.zeros(n, dtype=np.double)
 
     smoothRL(n, &genomedat_mem[0], nchr, &cfrq[0], &sgdat[0], k, outlier_SD, smooth_SD)

@@ -41,8 +41,8 @@ CC     = clang
 RANLIB = ranlib
 
 CPPFLAGS = 
-CFLAGS   =  -fno-strict-overflow -Wsign-compare -Wunreachable-code -DNDEBUG -O2 -Wall  -fPIC  -O2  -isystem /opt/anaconda3/envs/cfdna/include -fPIC   -O2 -isystem /opt/anaconda3/envs/cfdna/include  -fvisibility=hidden
-LDFLAGS  = -Wl,-rpath,/opt/anaconda3/envs/cfdna/lib -L/opt/anaconda3/envs/cfdna/lib -Wl,-rpath,/opt/anaconda3/envs/cfdna/lib -L/opt/anaconda3/envs/cfdna/lib -fvisibility=hidden
+CFLAGS   =  -fno-strict-overflow -Wsign-compare -Wunreachable-code -DNDEBUG -O2 -Wall  -fPIC  -O2  -isystem /Users/ksmith10/.local/share/mamba/envs/cfdna_test/include   -arch arm64   -fPIC  -O2  -isystem /Users/ksmith10/.local/share/mamba/envs/cfdna_test/include   -arch arm64  -fvisibility=hidden
+LDFLAGS  = -Wl,-rpath,/Users/ksmith10/.local/share/mamba/envs/cfdna_test/lib -L/Users/ksmith10/.local/share/mamba/envs/cfdna_test/lib   -Wl,-rpath,/Users/ksmith10/.local/share/mamba/envs/cfdna_test/lib -L/Users/ksmith10/.local/share/mamba/envs/cfdna_test/lib -fvisibility=hidden
 LIBS     = -llzma -lbz2 -lz 
 
 PLATFORM   = Darwin

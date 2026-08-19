@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ngsfragments"
-version = "2.4.6"
+version = "2.6.0"
 description = "Python package for Next Generation Sequencing fragment manipulation"
 authors = ["Kyle S. Smith <kyle.smith@stjude.org>"]
 maintainers = ["Kyle S. Smith <kyle.smith@stjude.org>"]
@@ -40,7 +40,7 @@ cython = "^3.0.0"
 pandas = "^2.0.0"
 ailist = ">=2.1.7"
 linear_segment = "^1.2.1"
-pysam = ">=0.22.0"
+pysam = ">=0.23.1"
 intervalframe = ">=1.1.11"
 matplotlib = ">=3.7.1"
 bokeh = ">=3.1.0"
@@ -65,7 +65,7 @@ requires = ["poetry-core>=1.0.0",
             "pandas>=2.0.0",
             "setuptools>=65.5.0",
             "ailist>=2.1.7",
-            "pysam>=0.22.0",
+            "pysam>=0.23.1",
             "genome_info>=1.0.8"]
 build-backend = "poetry.core.masonry.api"
 

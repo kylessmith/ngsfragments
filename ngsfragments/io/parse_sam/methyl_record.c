@@ -220,87 +220,96 @@ void methyl_record_pair_transfer_null(methyl_record_pair_t *pair)
 }
 
 
-int assign_methyl_read(methyl_record_pair_t *pair, methyl_read_t *read)
-{   /* Assign read to methyl record pair */
+/* Jeffreys prior pseudocount for the Beta-Bernoulli posterior methylation rate.
+ * beta_hat = (methyl + A) / (methyl + unmethyl + 2A) is the posterior mean under a
+ * Beta(A, A) prior. A = 0.5 shrinks low-depth sites toward 0.5 so a single 1/0 read
+ * (depth 1) no longer produces a hard 1.0/0.0 that dominates the distance. */
+#define METHYL_BETA_PRIOR 0.1
 
-    // Calculate distances
-    int n1 = 0;
-    int n2 = 0;
-    double sum1 = 0;
-    double sum2 = 0;
+int assign_methyl_read(methyl_record_pair_t *pair, methyl_read_t *read)
+{   /* Assign a read to whichever profile its per-CpG methylation better matches.
+     *
+     * Distance to profile p is a COVERAGE-WEIGHTED mean absolute deviation between
+     * the profile's Beta-Bernoulli posterior methylation rate and this read's
+     * per-CpG call:
+     *
+     *     dist_p = sum_i [ depth_pi * |beta_pi - r_i| ]  /  sum_i depth_pi
+     *
+     * where depth_pi = methyl+unmethyl in profile p at CpG i, r_i in {0,1} is the
+     * read's call, and beta_pi is the pseudocount-shrunk posterior rate. High-depth
+     * (confident) CpGs dominate; depth-0 CpGs contribute nothing to either the
+     * numerator or the denominator and so drop out automatically.
+     *
+     * Fixes vs. the previous version:
+     *  - No division by zero. Previously sum/n with n==0 produced NaN, and
+     *    `sum1 <= NaN` is false, so every read with no coverage in profile 2 was
+     *    silently sent to profile 2 — the side with NO evidence. Now the read goes
+     *    to the side that HAS evidence (or a deterministic default if neither does).
+     *  - Coverage weighting + shrinkage: depth-1 sites no longer count the same as
+     *    depth-100 sites, which is what matters in the low-coverage cfDNA regime.
+     *  - No per-CpG malloc/free: reads record arrays directly via the shared index
+     *    instead of methyl_record_get()'s 2-int16 heap allocation (previously
+     *    4 mallocs per CpG per read, every EM iteration).
+     *
+     * Return contract is unchanged: 0 -> record1, 1 -> record2, ties -> record1. */
+
+    int_index_t *idx1 = pair->record1->index;
+    int_index_t *idx2 = pair->record2->index;
+
+    double num1 = 0.0, den1 = 0.0;   /* weighted deviation sum / total weight, profile 1 */
+    double num2 = 0.0, den2 = 0.0;   /* ... profile 2 */
+
     int i;
     for (i = 0; i < read->ncpgs; i++)
     {
         long pos = read->pos[i];
-        int8_t methyl = read->methyl[i];
-        int16_t *values1 = methyl_record_get(pair->record1, pos);
-        int16_t *values2 = methyl_record_get(pair->record2, pos);
-        //printf("%ld\t%d\t%d\t%d\t%d\n", pos, values1[0], values1[1], values2[0], values2[1]);
-        /*if (values1[0] == 0 && values1[1] == 0)
-        {
-            continue;
-        }
-        if (values2[0] == 0 && values2[1] == 0)
-        {
-            continue;
-        }*/
+        double r = (double)read->methyl[i];   /* 0 or 1 */
 
-        // Calculate beta values
-        double beta1;
-        if (values1[0] != 0 || values1[1] != 0)
+        /* Profile 1 */
+        long j1 = int_index_get(idx1, pos);
+        if (j1 != -1)
         {
-            beta1 = (double)values1[0] / ((double)values1[0] + (double)values1[1]);
-            //beta1 = (beta1 >= 0.5) ? 1 : 0;
-            sum1 += fabs(beta1 - (double)methyl);
-            n1++;
+            double m = (double)pair->record1->methyl[j1];
+            double u = (double)pair->record1->unmethyl[j1];
+            double depth = m + u;
+            if (depth > 0.0)
+            {
+                double beta = (m + METHYL_BETA_PRIOR) / (depth + 2.0 * METHYL_BETA_PRIOR);
+                num1 += depth * fabs(beta - r);
+                den1 += depth;
+            }
         }
 
-        double beta2;
-        if (values2[0] != 0 || values2[1] != 0)
+        /* Profile 2 */
+        long j2 = int_index_get(idx2, pos);
+        if (j2 != -1)
         {
-            beta2 = (double)values2[0] / ((double)values2[0] + (double)values2[1]);
-            //beta2 = (beta2 >= 0.5) ? 1 : 0;
-            sum2 += fabs(beta2 - (double)methyl);
-            n2++;
+            double m = (double)pair->record2->methyl[j2];
+            double u = (double)pair->record2->unmethyl[j2];
+            double depth = m + u;
+            if (depth > 0.0)
+            {
+                double beta = (m + METHYL_BETA_PRIOR) / (depth + 2.0 * METHYL_BETA_PRIOR);
+                num2 += depth * fabs(beta - r);
+                den2 += depth;
+            }
         }
-
-        //double beta1 = (double)values1[0] / ((double)values1[0] + (double)values1[1]);
-        //double beta2 = (double)values2[0] / ((double)values2[0] + (double)values2[1]);
-        // Binarize
-        //beta1 = (beta1 >= 0.5) ? 1 : 0;
-        //beta2 = (beta2 >= 0.5) ? 1 : 0;
-        //sum1 += fabs(beta1 - (double)methyl);
-        //sum2 += fabs(beta2 - (double)methyl);
-        //printf("   %f\t%f\t%d\n", beta1, beta2, methyl);
-        // Euclidean distance
-        //double diff1 = beta1 - (double)methyl;
-        //double diff2 = beta2 - (double)methyl;
-        //sum1 += diff1 * diff1;
-        //sum2 += diff2 * diff2;
-        // Manhattan distance
-        //sum1 += fabs(beta1 - (double)methyl);
-        //sum2 += fabs(beta2 - (double)methyl);
-
-        // Free memory
-        free(values1);
-        free(values2);
     }
 
-    //sum1 = sqrt(sum1);
-    //sum2 = sqrt(sum2);
-    sum1 = sum1 / (double)n1;
-    sum2 = sum2 / (double)n2;
+    /* Assignment with explicit handling of the zero-evidence cases. */
+    if (den1 == 0.0 && den2 == 0.0)
+        return 0;              /* no coverage in EITHER profile at this read's CpGs:
+                                 * genuinely uninformative -> deterministic default
+                                 * (record1), consistent with tie-breaking below. */
+    if (den2 == 0.0)
+        return 0;              /* only profile 1 has evidence -> record1 */
+    if (den1 == 0.0)
+        return 1;              /* only profile 2 has evidence -> record2 */
 
-    // Assign read to record
-    if (sum1 <= sum2)
-    //if (sum1 <= sum2 && read->ncpgs > 0)
-    {
-        return 0;
-    }
-    else
-    {
-       return 1;
-    }    
+    double dist1 = num1 / den1;
+    double dist2 = num2 / den2;
+
+    return (dist1 <= dist2) ? 0 : 1;   /* ties -> record1, matching original */
 }
 
 

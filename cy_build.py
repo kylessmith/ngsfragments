@@ -9,7 +9,23 @@ except ImportError:
 
 from distutils.extension import Extension
 from distutils.sysconfig import get_config_var, get_config_vars, get_python_version
-from pkg_resources import Distribution
+try:
+    from pkg_resources import Distribution
+except ModuleNotFoundError:
+    class Distribution:
+        """Fallback used when setuptools/pkg_resources is unavailable."""
+
+        def __init__(self, _location, _metadata, project_name, version, py_version, platform):
+            self.project_name = project_name
+            self.version = version
+            self.py_version = py_version
+            self.platform = platform
+
+        def egg_name(self):
+            egg = "%s-%s-py%s" % (self.project_name, self.version, self.py_version)
+            if self.platform:
+                egg += "-%s" % self.platform
+            return egg
 
 
 if sys.platform == 'darwin':

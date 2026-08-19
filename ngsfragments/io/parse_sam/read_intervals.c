@@ -7,99 +7,45 @@
 #include <string.h>
 #include "read_intervals.h"
 
+// check_read is now static inline in read_intervals.h — inlined at every call site.
+
+//-----------------------------------------------------------------------------
+// Chromosome name table helpers
+// Build once per file open: maps tid -> "chr"-prefixed (or raw) name.
+// Eliminates strcat + 100-byte stack init + branch from the per-read hot loop.
 //-----------------------------------------------------------------------------
 
+static char **build_chrom_table(sam_hdr_t *sam_hdr, int add_chr)
+{
+    int n = sam_hdr->n_targets;
+    char **table = (char **)malloc(n * sizeof(char *));
+    if (table == NULL) return NULL;
 
-int check_read(bam1_t *aln, int min_size, int max_size, int paired, int qcfail, int mapq_cutoff, float proportion)
-{   /* Check that read passed QC */
-    
-    // Initialize variables
-    uint32_t flag;
-    int is_proper_pair, is_duplicate;
-    int is_qcfail, mate_is_unmapped;
-    int is_unmapped;
-    int mapq, tlen, start;
-    float r;
-    float max = (float)RAND_MAX;
-
-    // Check mapping quality
-    if (aln->core.qual < mapq_cutoff)
+    for (int i = 0; i < n; i++)
     {
-        return 0;
-    }
-
-    // Set flag
-    flag = aln->core.flag;
-
-    // Check qcfail
-    //is_qcfail = (int)(flag & BAM_FQCFAIL);
-    if (aln->core.flag & BAM_FQCFAIL)
-    {
-        return 0;
-    }
-
-    // Check mapping status
-    //is_unmapped = (int)(flag & BAM_FUNMAP);
-    if (aln->core.flag & BAM_FUNMAP)
-    {
-        return 0;
-    }
-
-    // Check duplicate status
-    //is_duplicate = (int)(flag & BAM_FDUP);
-    if (aln->core.flag & BAM_FDUP)
-    {
-        return 0;
-    }
-
-    // Check paired status
-    if (paired == 1)
-    {
-        //is_proper_pair = (int)(flag & BAM_FPROPER_PAIR);
-        //if (aln->core.flag & BAM_FPROPER_PAIR)
-        //{
-        //    return 0;
-        //}
-        //mate_is_unmapped = (int)(flag & BAM_FMUNMAP);
-        if (aln->core.flag & BAM_FMUNMAP)
+        const char *raw = sam_hdr->target_name[i];
+        if (add_chr)
         {
-            return 0;
+            size_t len = strlen(raw);
+            table[i] = (char *)malloc(len + 4);
+            if (table[i]) { table[i][0]='c'; table[i][1]='h'; table[i][2]='r';
+                            memcpy(table[i]+3, raw, len+1); }
+        }
+        else
+        {
+            table[i] = strdup(raw);
         }
     }
-
-    // Record insert/fragment length
-    start = aln->core.pos;
-    if (paired == 1)
-    {
-        tlen = aln->core.isize; // insert size
-    }
-    else {
-        tlen = aln->core.l_qseq; // length of read
-    }
-    
-    // Insert read into interval list
-    if (aln->core.flag & BAM_FPROPER_PAIR)
-    {
-        if (tlen >= min_size && tlen <= max_size)
-        {
-            // Randomly downsample
-            if (proportion < 1.0)
-            {
-                //r = rand() / RAND_MAX;
-                float random = (float)rand();
-                r = (random / max);
-                if (r < proportion)
-                {
-                    return 1;
-                }
-            } else {
-                return 1;
-            }
-        }
-    }
-
-    return 0;
+    return table;
 }
+
+static void free_chrom_table(char **table, int n)
+{
+    for (int i = 0; i < n; i++) free(table[i]);
+    free(table);
+}
+
+//-----------------------------------------------------------------------------
 
 
 void sam_iter_add(char *samfile_name,
@@ -109,69 +55,142 @@ void sam_iter_add(char *samfile_name,
                   int paired,
                   int qcfail,
                   int mapq_cutoff,
-				  float proportion,
+                  float proportion,
                   int nthreads,
                   int add_chr)
-{   /* Add reads from sam file to interval list */
-    
-    // Open sam files
+{   /* Add reads from sam file to interval list (whole-file sequential scan) */
+
     samFile *fp_in = hts_open(samfile_name, "r");
     sam_hdr_t *sam_hdr = sam_hdr_read(fp_in);
     bam1_t *aln = bam_init1();
-	int start;
-	int tlen;
-	int end;
-	int passing;
 
-    // Set number of threads
     if (nthreads > 1)
-    {
         hts_set_threads(fp_in, nthreads);
-    }
 
-    // Iterate over bam reads
+    // Precompute: reject mask (one bitwise op replaces 4+ flag checks per read)
+    uint32_t reject_mask = build_reject_mask(qcfail);
+
+    // Precompute: chrom name table (eliminates strcat + branch from hot loop)
+    char **chrom_table = build_chrom_table(sam_hdr, add_chr);
+
     while (sam_read1(fp_in, sam_hdr, aln) >= 0)
     {
-        // Check read
+        if (!check_read(aln, reject_mask, min_size, max_size, paired, mapq_cutoff, proportion))
+            continue;
 
-        //printf("chrom: %s, chrom0: %s\n", chrom, chrom0);
-
-        passing = check_read(aln, min_size, max_size, paired, qcfail, mapq_cutoff, proportion);
-
-        //printf("passing: %d\n", passing);
-	    
-		// Add read
-		if (passing == 1){
-			start = aln->core.pos;
-		    if (paired == 1)
-		    {
-		        tlen = aln->core.isize; // insert size
-		    }
-		    else {
-		        tlen = aln->core.l_qseq; // length of read
-		    }
-
-            const char *chrom = sam_hdr->target_name[aln->core.tid];
-            if (add_chr == 0)
-            {
-			    labeled_aiarray_add(intervals, start, start+tlen, chrom);
-            }
-            else {
-                //char *tmp_chrom = (char*)chrom;
-                char new_chrom[100] = "chr";
-                strcat(new_chrom, chrom);
-                labeled_aiarray_add(intervals, start, start+tlen, new_chrom);
-            }
-		}
+        /* Paired: emit one interval per fragment. The upstream mate carries the
+         * positive isize and sits at the fragment's leftmost coordinate, so it
+         * alone defines [pos, pos + isize). Skipping isize<=0 de-duplicates the
+         * pair without depending on which mate is R1/R2. */
+        int start = aln->core.pos;
+        int tlen;
+        if (paired == 1)
+        {
+            if (aln->core.isize <= 0)
+                continue;                 /* downstream mate (or unset isize) — already counted */
+            tlen = (int)aln->core.isize;
+        }
+        else
+        {
+            tlen = aln->core.l_qseq;
+        }
+        labeled_aiarray_add(intervals, start, start + tlen, chrom_table[aln->core.tid]);
     }
 
-    // Clean up
-    //printf("cleaning up\n");
+    free_chrom_table(chrom_table, sam_hdr->n_targets);
     bam_destroy1(aln);
     sam_close(fp_in);
     sam_hdr_destroy(sam_hdr);
+}
 
-    return;
+
+void sam_iter_add_region(char *samfile_name,
+                         labeled_aiarray_t *intervals,
+                         const char *chromosome,
+                         int min_size,
+                         int max_size,
+                         int paired,
+                         int qcfail,
+                         int mapq_cutoff,
+                         float proportion,
+                         int nthreads,
+                         int add_chr)
+{   /* Add reads from one chromosome using the BAM index.
+     * Each call is independent: safe to run per-chromosome in parallel processes.
+     * Workers open their own file handle — no shared state. */
+
+    samFile *fp_in = hts_open(samfile_name, "r");
+    if (fp_in == NULL)
+    {
+        fprintf(stderr, "sam_iter_add_region: failed to open %s\n", samfile_name);
+        return;
+    }
+
+    if (nthreads > 1)
+        hts_set_threads(fp_in, nthreads);
+
+    sam_hdr_t *sam_hdr = sam_hdr_read(fp_in);
+    if (sam_hdr == NULL)
+    {
+        fprintf(stderr, "sam_iter_add_region: failed to read header from %s\n", samfile_name);
+        sam_close(fp_in);
+        return;
+    }
+
+    hts_idx_t *idx = sam_index_load(fp_in, samfile_name);
+    if (idx == NULL)
+    {
+        fprintf(stderr, "sam_iter_add_region: failed to load index for %s\n", samfile_name);
+        sam_hdr_destroy(sam_hdr);
+        sam_close(fp_in);
+        return;
+    }
+
+    hts_itr_t *iter = sam_itr_querys(idx, sam_hdr, chromosome);
+    if (iter == NULL)
+    {
+        fprintf(stderr, "sam_iter_add_region: chromosome '%s' not found in %s\n",
+                chromosome, samfile_name);
+        hts_idx_destroy(idx);
+        sam_hdr_destroy(sam_hdr);
+        sam_close(fp_in);
+        return;
+    }
+
+    uint32_t reject_mask = build_reject_mask(qcfail);
+    char **chrom_table   = build_chrom_table(sam_hdr, add_chr);
+
+    bam1_t *aln = bam_init1();
+    while (sam_itr_next(fp_in, iter, aln) >= 0)
+    {
+        if (!check_read(aln, reject_mask, min_size, max_size, paired, mapq_cutoff, proportion))
+            continue;
+
+        /* Paired: emit one interval per fragment. The upstream mate carries the
+         * positive isize and sits at the fragment's leftmost coordinate, so it
+         * alone defines [pos, pos + isize). Skipping isize<=0 de-duplicates the
+         * pair without depending on which mate is R1/R2. */
+        int start = aln->core.pos;
+        int tlen;
+        if (paired == 1)
+        {
+            if (aln->core.isize <= 0)
+                continue;                 /* downstream mate (or unset isize) — already counted */
+            tlen = (int)aln->core.isize;
+        }
+        else
+        {
+            tlen = aln->core.l_qseq;
+        }
+        labeled_aiarray_add(intervals, start, start + tlen, chrom_table[aln->core.tid]);
+    }
+
+    free_chrom_table(chrom_table, sam_hdr->n_targets);
+    bam_destroy1(aln);
+    hts_itr_destroy(iter);
+    hts_idx_destroy(idx);
+    sam_hdr_destroy(sam_hdr);
+    sam_close(fp_in);
 }
 
 
@@ -186,95 +205,43 @@ void sam_nucleosome_add(char *samfile_name,
                         float proportion,
                         int nthreads,
                         int add_chr)
-{   /* Add reads from sam file to inteval list and adjust for nucleosome occupancy */
-    
-    // Open sam files
+{   /* Add reads and centre a fixed-size window on the 5' end of each read strand. */
+
     samFile *fp_in = hts_open(samfile_name, "r");
     sam_hdr_t *sam_hdr = sam_hdr_read(fp_in);
     bam1_t *aln = bam_init1();
-	int start;
-	int tlen;
-	int end;
-	int passing;
 
-    // Set number of threads
     if (nthreads > 1)
-    {
         hts_set_threads(fp_in, nthreads);
-    }
 
-    // Iterate over bam reads
+    uint32_t reject_mask = build_reject_mask(qcfail);
+    char **chrom_table   = build_chrom_table(sam_hdr, add_chr);
+
+    int half = fixed_size / 2;
+
     while (sam_read1(fp_in, sam_hdr, aln) >= 0)
     {
-        // Check read
+        if (!check_read(aln, reject_mask, min_size, max_size, paired, mapq_cutoff, proportion))
+            continue;
 
-        //printf("chrom: %s, chrom0: %s\n", chrom, chrom0);
+        int start = aln->core.pos;
+        /* One window per fragment: keep only the upstream mate (isize>0) when paired. */
+        if (paired == 1 && aln->core.isize <= 0)
+            continue;
+        int tlen  = (paired == 1) ? (int)aln->core.isize : aln->core.l_qseq;
 
-        passing = check_read(aln, min_size, max_size, paired, qcfail, mapq_cutoff, proportion);
+        /* Centre a fixed-size window on the 5' end of each read strand.
+         * For the reverse-strand read the 5' end is at aln->core.pos (leftmost coord).
+         * For the forward-strand read the 5' end is at pos + tlen (right fragment endpoint). */
+        int five_prime  = bam_is_rev(aln) ? start : start + tlen;
+        int fixed_start = five_prime - half;
+        int fixed_end   = fixed_start + fixed_size;
 
-        //printf("passing: %d\n", passing);
-	    
-		// Add read
-		if (passing == 1){
-			start = aln->core.pos;
-		    if (paired == 1)
-		    {
-		        tlen = aln->core.isize; // insert size
-		    }
-		    else {
-		        tlen = aln->core.l_qseq; // length of read
-		    }
-
-            const char *chrom = sam_hdr->target_name[aln->core.tid];
-            //int strand = bam_is_rev(b);
-            if (add_chr == 0)
-            {
-                if (bam_is_rev(aln))
-                {
-                    int midpoint = start;
-                    //midpoint = midpoint - (uint32_t)(tlen / 2);
-                    int fixed_start = midpoint - (fixed_size / 2);
-                    int fixed_end = fixed_start + fixed_size;
-                    labeled_aiarray_add(intervals, fixed_start, fixed_end, chrom);
-                }
-                else
-                {
-                    int midpoint = start + tlen;
-                    //midpoint = midpoint + (uint32_t)(tlen / 2);
-                    int fixed_start = midpoint - (fixed_size / 2);
-                    int fixed_end = fixed_start + fixed_size;
-                    labeled_aiarray_add(intervals, fixed_start, fixed_end, chrom);
-                }
-            }
-            else {
-                //char *tmp_chrom = (char*)chrom;
-                char new_chrom[100] = "chr";
-                strcat(new_chrom, chrom);
-                if (bam_is_rev(aln))
-                {
-                    int midpoint = start;
-                    //midpoint = midpoint + (uint32_t)(tlen / 2);
-                    int fixed_start = midpoint - (fixed_size / 2);
-                    int fixed_end = fixed_start + fixed_size;
-                    labeled_aiarray_add(intervals, fixed_start, fixed_end, new_chrom);
-                }
-                else
-                {
-                    int midpoint = start + tlen;
-                    //midpoint = midpoint - (uint32_t)(tlen / 2);
-                    int fixed_start = midpoint - (fixed_size / 2);
-                    int fixed_end = fixed_start + fixed_size;
-                    labeled_aiarray_add(intervals, fixed_start, fixed_end, new_chrom);
-                }
-            }
-		}
+        labeled_aiarray_add(intervals, fixed_start, fixed_end, chrom_table[aln->core.tid]);
     }
 
-    // Clean up
-    //printf("cleaning up\n");
+    free_chrom_table(chrom_table, sam_hdr->n_targets);
     bam_destroy1(aln);
     sam_close(fp_in);
     sam_hdr_destroy(sam_hdr);
-
-    return;
 }

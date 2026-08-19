@@ -163,11 +163,11 @@ def wps_windows(intervals: Fragments | LabeledIntervalArray,
 
 
 def wps_score_tfs(intervals: Fragments | LabeledIntervalArray,
-                protection: int = 120,
-                min_length: int = 120,
-                max_length: int = 220,
-                upstream: int = 1000,
-                downstream: int = 1000,
+                protection: int = 60,
+                min_length: int = 60,
+                max_length: int = 1000,
+                upstream: int = 5000,
+                downstream: int = 5000,
                 genome_version: str = "hg38",
                 smooth: bool = True,
                 verbose: bool = False) -> pd.DataFrame:

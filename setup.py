@@ -192,7 +192,11 @@ try:
     with open(init_py_path) as f:
         for line in f:
             if line.startswith('__version__'):
-                version = ast.parse(line).body[0].value.s
+                node = ast.parse(line).body[0].value
+                if isinstance(node, ast.Constant):
+                    version = node.value
+                else:
+                    version = node.s
                 break
         else:
             print( "WARNING: Version information not found in '%s', using placeholder '%s'" % (init_py_path, version), file=sys.stderr )
@@ -422,9 +426,6 @@ modules = [
          libraries=external_htslib_libraries),
     dict(name="ngsfragments.segment.smooth_cnv.smooth_cnv",
          sources=["ngsfragments.segment.smooth_cnv.smooth_cnv".replace(".", os.path.sep)+".pyx"] + shared_htslib_sources + os_c_files,
-         libraries=external_htslib_libraries),
-    dict(name="ngsfragments.correct.cylowess.cylowess",
-         sources=["ngsfragments.correct.cylowess.cylowess".replace(".", os.path.sep)+".pyx"] + shared_htslib_sources + os_c_files,
          libraries=external_htslib_libraries),
     dict(name="ngsfragments.segment.merge_regions.merge_regions",
          sources=["ngsfragments.segment.merge_regions.merge_regions".replace(".", os.path.sep)+".pyx"] + shared_htslib_sources + os_c_files,
